@@ -8,7 +8,7 @@
     <!-- ОПТИМИЗАЦИЯ: Раннее подключение к серверам Google -->
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
     
-    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелой 3D модели, нового постера и главного шрифта -->
+    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелой 3D модели, постера и главного шрифта -->
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
@@ -252,7 +252,7 @@
             color: var(--text-body);
         }
 
-        /* --- РАЗДЕЛ: 3D МОДЕЛЬ --- */
+        /* --- РАЗДЕЛ: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ --- */
         .model-section {
             padding: 90px 0;
             background-color: #0a0b0d; 
@@ -269,7 +269,7 @@
         }
 
         .model-text {
-            margin-top: 60px;
+            margin-top: 50px;
         }
 
         .model-title {
@@ -293,31 +293,40 @@
             color: var(--primary-orange);
         }
 
-        /* Список моделей (Лесенка) */
+        /* ИНТЕРАКТИВНОЕ МЕНЮ (Лесенка) */
         .model-features {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            margin-top: 40px;
         }
 
         .feature-tag {
-            display: inline-block;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
+            display: block;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
             border-left: 4px solid var(--primary-orange);
-            padding: 12px 20px;
-            font-size: 1.05rem;
+            padding: 16px 20px;
+            font-size: 0.95rem;
             font-weight: 600;
-            color: var(--text-light);
+            color: var(--text-muted);
             border-radius: 4px;
-            width: fit-content;
+            width: 100%;
+            max-width: 420px;
+            cursor: pointer;
             
+            /* Начальное скрытое состояние */
             transform: translateX(-100px);
             opacity: 0;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
-            will-change: transform, opacity;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        background 0.3s ease, 
+                        border-color 0.3s ease, 
+                        color 0.3s ease,
+                        opacity 0.8s ease-out;
+            will-change: transform, opacity, background-color;
         }
 
+        /* Выезд лесенкой при активации */
         .model-features.visible .feature-tag {
             transform: translateX(0);
             opacity: 1;
@@ -330,6 +339,25 @@
         .model-features.visible .feature-tag:nth-child(5) { transition-delay: 0.6s; }
         .model-features.visible .feature-tag:nth-child(6) { transition-delay: 0.75s; }
 
+        /* Эффект при наведении (если пункт не активен) */
+        .model-features.visible .feature-tag:hover:not(.active) {
+            transform: translateX(8px);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+
+        /* АКТИВНЫЙ (ВЫБРАННЫЙ) ПУНКТ */
+        .model-features.visible .feature-tag.active {
+            transform: translateX(15px) scale(1.03); 
+            background: rgba(255, 107, 0, 0.12); 
+            border-color: rgba(255, 107, 0, 0.4);
+            color: var(--text-light);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        /* 3D БЛОК */
         .model-viewer-wrapper {
             position: relative;
             width: 125%; 
@@ -339,12 +367,37 @@
             border: none; 
             background: transparent; 
             box-shadow: none; 
-            cursor: grab; 
         }
 
-        .model-viewer-wrapper:active {
-            cursor: grabbing;
+        /* Стрелочки переключения */
+        .model-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
         }
+        
+        .model-arrow:hover {
+            background: var(--primary-orange);
+            border-color: var(--primary-orange);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+        }
+
+        .left-arrow { left: 40px; }
+        .right-arrow { right: 40px; }
 
         .model-box {
             width: 100%;
@@ -365,6 +418,18 @@
             height: 100%;
             background-color: transparent;
             --poster-color: transparent;
+            cursor: grab; 
+            transition: opacity 0.4s ease-in-out;
+            opacity: 1;
+        }
+
+        model-viewer:active {
+            cursor: grabbing;
+        }
+
+        /* Класс скрытия модели при анимации смены */
+        model-viewer.fade-out {
+            opacity: 0;
         }
 
         /* Обслуживание и сервис */
@@ -583,6 +648,7 @@
             .model-grid { text-align: center; }
             .model-title { font-size: 2.5rem; }
             .model-features { align-items: center; }
+            .feature-tag { max-width: 100%; }
             
             .model-viewer-wrapper {
                 width: 100%;
@@ -591,12 +657,13 @@
                 height: 400px;
             }
             
+            .left-arrow { left: 10px; }
+            .right-arrow { right: 10px; }
+            
             .model-box { transform: translateY(80px); } 
             .model-section.visible .model-box { transform: translateY(0); }
             
-            .service-grid {
-                grid-template-columns: 1fr;
-            }
+            .service-grid { grid-template-columns: 1fr; }
             .cta-form { flex-direction: column; }
             .cta-form input { width: 100%; }
             .service-header {
@@ -626,7 +693,9 @@
             .model-section { padding: 50px 0; }
             .model-title { font-size: 2rem; }
             .model-text { margin-top: 0; }
-            .feature-tag { font-size: 0.85rem; padding: 10px 15px; width: 100%; text-align: left; }
+            .feature-tag { font-size: 0.8rem; padding: 12px; text-align: left; }
+            
+            .model-arrow { width: 40px; height: 40px; font-size: 1rem; }
             .model-viewer-wrapper { height: 350px; }
             
             .warranty-box { flex-direction: column; padding: 30px 20px; text-align: center; }
@@ -690,25 +759,32 @@
         </div>
     </section>
 
-    <!-- РАЗДЕЛ С 3D МОДЕЛЬЮ И АССОРТИМЕНТОМ -->
+    <!-- РАЗДЕЛ С ИНТЕРАКТИВНОЙ 3D МОДЕЛЬЮ И АССОРТИМЕНТОМ -->
     <section class="model-section">
         <div class="container model-grid">
             
             <div class="model-text">
                 <h2 class="model-title">АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
                 
-                <!-- Список конкретных моделей ЧПУ -->
                 <div class="model-features">
-                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM LIGHT</div>
-                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM DIGITAL</div>
-                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM MINI LIGHT</div>
-                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM MINI DIGITAL</div>
-                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM BASIC LIGHT</div>
-                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM BASIC DIGITAL</div>
+                    <div class="feature-tag active" data-index="0">CNC-11 ЧПУ TITANIUM LIGHT</div>
+                    <div class="feature-tag" data-index="1">CNC-11 ЧПУ TITANIUM DIGITAL</div>
+                    <div class="feature-tag" data-index="2">CNC-11 ЧПУ TITANIUM MINI LIGHT</div>
+                    <div class="feature-tag" data-index="3">CNC-11 ЧПУ TITANIUM MINI DIGITAL</div>
+                    <div class="feature-tag" data-index="4">CNC-11 ЧПУ TITANIUM BASIC LIGHT</div>
+                    <div class="feature-tag" data-index="5">CNC-11 ЧПУ TITANIUM BASIC DIGITAL</div>
                 </div>
             </div>
             
             <div class="model-viewer-wrapper" id="modelWrapper">
+                
+                <div class="model-arrow left-arrow" id="prevModel">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </div>
+                <div class="model-arrow right-arrow" id="nextModel">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+
                 <div class="model-box">
                     <model-viewer 
                         id="cncModel"
@@ -827,11 +903,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            const mainObserver = new IntersectionObserver((entries, observer) => {
+            // 1. Анимация появления заголовка и 3D (МНОГОРАЗОВО)
+            const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); 
+                    } else {
+                        // Класс удаляется, чтобы при повторном скролле анимация проигралась снова
+                        entry.target.classList.remove('visible');
                     }
                 });
             }, { threshold: 0.1 }); 
@@ -839,11 +918,14 @@
             const modelSection = document.querySelector('.model-section');
             if (modelSection) mainObserver.observe(modelSection);
 
-            const featuresObserver = new IntersectionObserver((entries, observer) => {
+            // 2. Анимация списка меню (МНОГОРАЗОВО)
+            const featuresObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); 
+                    } else {
+                        // Удаляем класс для повторной анимации
+                        entry.target.classList.remove('visible');
                     }
                 });
             }, { rootMargin: "0px 0px -20% 0px" }); 
@@ -851,8 +933,60 @@
             const modelFeatures = document.querySelector('.model-features');
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
+
+            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
             const modelViewer = document.getElementById('cncModel');
+            const tags = document.querySelectorAll('.feature-tag');
+            const btnPrev = document.getElementById('prevModel');
+            const btnNext = document.getElementById('nextModel');
+            
+            let currentIndex = 0;
+            let switchTimeout;
             let isDragging = false; 
+
+            const modelsArray = [
+                'model.glb', 
+                'model.glb', 
+                'model.glb', 
+                'model.glb', 
+                'model.glb', 
+                'model.glb'  
+            ];
+
+            function activateModel(index) {
+                if (index === currentIndex) return;
+
+                tags[currentIndex].classList.remove('active');
+                tags[index].classList.add('active');
+                currentIndex = index;
+
+                modelViewer.classList.add('fade-out');
+
+                clearTimeout(switchTimeout);
+                switchTimeout = setTimeout(() => {
+                    modelViewer.src = modelsArray[index];
+                    modelViewer.classList.remove('fade-out');
+                }, 300);
+            }
+
+            tags.forEach((tag) => {
+                tag.addEventListener('mouseenter', () => {
+                    const idx = parseInt(tag.getAttribute('data-index'));
+                    activateModel(idx);
+                });
+            });
+
+            btnPrev.addEventListener('click', () => {
+                let newIndex = currentIndex - 1;
+                if (newIndex < 0) newIndex = tags.length - 1;
+                activateModel(newIndex);
+            });
+
+            btnNext.addEventListener('click', () => {
+                let newIndex = currentIndex + 1;
+                if (newIndex >= tags.length) newIndex = 0;
+                activateModel(newIndex);
+            });
 
             if (modelSection && modelViewer) {
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
