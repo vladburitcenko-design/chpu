@@ -262,7 +262,7 @@
 
         .model-grid {
             display: grid;
-            grid-template-columns: 3.5fr 6.5fr; 
+            grid-template-columns: 3.8fr 6.2fr; 
             gap: 20px;
             align-items: start; 
             min-height: 600px;
@@ -273,9 +273,9 @@
         }
 
         .model-title {
-            font-size: 3.8rem;
+            font-size: 3.5rem;
             line-height: 1.1;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             color: var(--text-light);
             
             transform: translateY(120px); 
@@ -298,61 +298,100 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
+
+        .feature-item-wrapper {
+            width: 100%;
+            max-width: 440px;
+            
+            transform: translateX(-100px);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
+            will-change: transform, opacity;
+        }
+
+        .model-features.visible .feature-item-wrapper {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
+        .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.1s; }
+        .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.2s; }
+        .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.3s; }
+        .model-features.visible .feature-item-wrapper:nth-child(5) { transition-delay: 0.4s; }
+        .model-features.visible .feature-item-wrapper:nth-child(6) { transition-delay: 0.5s; }
 
         .feature-tag {
             display: block;
             background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.06);
             border-left: 4px solid var(--primary-orange);
-            padding: 16px 20px;
+            padding: 14px 18px;
             font-size: 0.95rem;
             font-weight: 600;
             color: var(--text-muted);
             border-radius: 4px;
             width: 100%;
-            max-width: 420px;
             cursor: pointer;
-            
-            transform: translateX(-100px);
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        background 0.3s ease, 
-                        border-color 0.3s ease, 
-                        color 0.3s ease,
-                        opacity 0.8s ease-out;
-            will-change: transform, opacity, background-color;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
         }
 
-        /* Выезд лесенкой при активации */
-        .model-features.visible .feature-tag {
-            transform: translateX(0);
-            opacity: 1;
-        }
-
-        .model-features.visible .feature-tag:nth-child(1) { transition-delay: 0s; }
-        .model-features.visible .feature-tag:nth-child(2) { transition-delay: 0.15s; }
-        .model-features.visible .feature-tag:nth-child(3) { transition-delay: 0.3s; }
-        .model-features.visible .feature-tag:nth-child(4) { transition-delay: 0.45s; }
-        .model-features.visible .feature-tag:nth-child(5) { transition-delay: 0.6s; }
-        .model-features.visible .feature-tag:nth-child(6) { transition-delay: 0.75s; }
-
-        .model-features.visible .feature-tag:hover:not(.active) {
-            transform: translateX(8px);
+        .model-features .feature-item-wrapper:hover:not(.active) .feature-tag {
+            transform: translateX(6px);
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-light);
         }
 
         /* АКТИВНЫЙ ПУНКТ */
-        .model-features.visible .feature-tag.active {
-            transform: translateX(15px) scale(1.03); 
+        .feature-item-wrapper.active .feature-tag {
+            transform: translateX(12px) scale(1.02); 
             background: rgba(255, 107, 0, 0.12); 
             border-color: rgba(255, 107, 0, 0.4);
             color: var(--text-light);
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            z-index: 2;
-            position: relative;
+        }
+
+        /* Список характеристик под активной моделью (с анимацией барабана) */
+        .model-specs {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 16px;
+            border-left: 2px dashed rgba(255, 107, 0, 0.3);
+            margin-left: 12px;
+            
+            /* Плавная анимация ухода и появления характеристик синхронно с 3D */
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.4s ease-in-out, 
+                        margin-top 0.4s ease-in-out;
+        }
+
+        .feature-item-wrapper.active .model-specs {
+            max-height: 160px;
+            opacity: 1;
+            margin-top: 10px;
+            margin-bottom: 6px;
+        }
+
+        .spec-item {
+            font-size: 0.85rem;
+            color: var(--text-body);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spec-item::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background-color: var(--primary-orange);
+            border-radius: 50%;
         }
 
         /* 3D БЛОК */
@@ -361,7 +400,7 @@
             width: 125%; 
             height: 650px; 
             margin-right: -25%; 
-            margin-top: -60px; 
+            margin-top: -30px; 
             border: none; 
             background: transparent; 
             box-shadow: none; 
@@ -397,7 +436,6 @@
         .left-arrow { left: 40px; }
         .right-arrow { right: 40px; }
 
-        /* Внешний контейнер (выезжает при скролле) */
         .model-box {
             width: 100%;
             height: 100%;
@@ -412,16 +450,13 @@
             opacity: 1;
         }
 
-        /* Сам плеер 3D */
         model-viewer {
             width: 100%;
             height: 100%;
             background-color: transparent;
             --poster-color: transparent;
             cursor: grab; 
-            
-            /* Базовая плавная анимация появления/перемещения при переключении меню */
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out;
             transform: translateY(0);
             opacity: 1;
         }
@@ -430,16 +465,14 @@
             cursor: grabbing;
         }
 
-        /* КЛАССЫ ДЛЯ АНИМАЦИИ ПЕРЕКЛЮЧЕНИЯ ЧПУ */
-        /* Старая модель уходит вниз и исчезает */
+        /* Классы анимации барабана для 3D модели */
         model-viewer.slide-down {
             transform: translateY(100%);
             opacity: 0;
         }
 
-        /* Мгновенная, невидимая телепортация модели наверх */
         model-viewer.snap-top {
-            transition: none !important; /* Отключаем плавность для мгновенного прыжка */
+            transition: none !important; 
             transform: translateY(-100%);
             opacity: 0;
         }
@@ -660,7 +693,8 @@
             .model-grid { text-align: center; }
             .model-title { font-size: 2.5rem; }
             .model-features { align-items: center; }
-            .feature-tag { max-width: 100%; }
+            .feature-item-wrapper { max-width: 100%; }
+            .model-specs { padding-left: 0; border-left: none; }
             
             .model-viewer-wrapper {
                 width: 100%;
@@ -771,7 +805,7 @@
         </div>
     </section>
 
-    <!-- РАЗДЕЛ С ИНТЕРАКТИВНОЙ 3D МОДЕЛЬЮ И АССОРТИМЕНТОМ -->
+    <!-- РАЗДЕЛ С ИНТЕРАКТИВНОЙ 3D МОДЕЛЬЮ И ХАРАКТЕРИСТИКАМИ -->
     <section class="model-section">
         <div class="container model-grid">
             
@@ -779,12 +813,66 @@
                 <h2 class="model-title">АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
                 
                 <div class="model-features">
-                    <div class="feature-tag active" data-index="0">CNC-11 ЧПУ TITANIUM LIGHT</div>
-                    <div class="feature-tag" data-index="1">CNC-11 ЧПУ TITANIUM DIGITAL</div>
-                    <div class="feature-tag" data-index="2">CNC-11 ЧПУ TITANIUM MINI LIGHT</div>
-                    <div class="feature-tag" data-index="3">CNC-11 ЧПУ TITANIUM MINI DIGITAL</div>
-                    <div class="feature-tag" data-index="4">CNC-11 ЧПУ TITANIUM BASIC LIGHT</div>
-                    <div class="feature-tag" data-index="5">CNC-11 ЧПУ TITANIUM BASIC DIGITAL</div>
+                    <!-- Пункт 1 -->
+                    <div class="feature-item-wrapper active" data-index="0">
+                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM LIGHT</div>
+                        <div class="model-specs">
+                            <div class="spec-item">Количество осей: до 4-х</div>
+                            <div class="spec-item">Поддержка EtherCAT: Да</div>
+                            <div class="spec-item">Экран: 10.4" LCD Touchscreen</div>
+                            <div class="spec-item">Защита корпуса: IP65</div>
+                        </div>
+                    </div>
+                    <!-- Пункт 2 -->
+                    <div class="feature-item-wrapper" data-index="1">
+                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM DIGITAL</div>
+                        <div class="model-specs">
+                            <div class="spec-item">Количество осей: до 5-ти</div>
+                            <div class="spec-item">Поддержка EtherCAT: Да (High-speed)</div>
+                            <div class="spec-item">Экран: 15" Промышленный HD</div>
+                            <div class="spec-item">Интерфейсы: CAN, USB, Ethernet</div>
+                        </div>
+                    </div>
+                    <!-- Пункт 3 -->
+                    <div class="feature-item-wrapper" data-index="2">
+                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM MINI LIGHT</div>
+                        <div class="model-specs">
+                            <div class="spec-item">Количество осей: до 3-х</div>
+                            <div class="spec-item">Поддержка EtherCAT: Опционально</div>
+                            <div class="spec-item">Исполнение: Компактный моноблок</div>
+                            <div class="spec-item">Энергопотребление: Ультранизкое</div>
+                        </div>
+                    </div>
+                    <!-- Пункт 4 -->
+                    <div class="feature-item-wrapper" data-index="3">
+                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM MINI DIGITAL</div>
+                        <div class="model-specs">
+                            <div class="spec-item">Количество осей: до 4-х</div>
+                            <div class="spec-item">Поддержка EtherCAT: Да</div>
+                            <div class="spec-item">Дисплей: 8.4" Сенсорный мультитач</div>
+                            <div class="spec-item">Маховик ручного управления: В комплекте</div>
+                        </div>
+                    </div>
+                    <!-- Пункт 5 -->
+                    <div class="feature-item-wrapper" data-index="4">
+                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM BASIC LIGHT</div>
+                        <div class="model-specs">
+                            <div class="spec-item">Количество осей: 2-3 оси</div>
+                            <div class="spec-item">Поддержка EtherCAT: Базовая</div>
+                            <div class="spec-item">Назначение: Для малых станков</div>
+                            <div class="spec-item">Гарантия: 2 года</div>
+                        </div>
+                    </div>
+                    <!-- Пункт 6 -->
+                    <div class="feature-item-wrapper" data-index="5">
+                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM BASIC DIGITAL</div>
+                        <div class="model-specs">
+                            <div class="spec-item">Количество осей: до 4-х</div>
+                            <div class="spec-item">Поддержка EtherCAT: Полная</div>
+                            <div class="spec-item">Процессор: Высокопроизводительный ARM</div>
+                            <div class="spec-item">Охлаждение: Пассивное (без кулеров)</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -915,13 +1003,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления заголовка и 3D (МНОГОРАЗОВО, без unobserve)
+            // 1. Анимация появления заголовка и 3D (МНОГОРАЗОВО)
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // Убираем класс, когда блок прокручен, чтобы анимация сработала заново
                         entry.target.classList.remove('visible');
                     }
                 });
@@ -947,7 +1034,7 @@
 
             // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ (Карусель сверху-вниз)
             const modelViewer = document.getElementById('cncModel');
-            const tags = document.querySelectorAll('.feature-tag');
+            const wrappers = document.querySelectorAll('.feature-item-wrapper');
             const btnPrev = document.getElementById('prevModel');
             const btnNext = document.getElementById('nextModel');
             
@@ -955,7 +1042,6 @@
             let switchTimeout;
             let isDragging = false; 
 
-            // Массив с путями к моделям (пока у нас один файл model.glb)
             const modelsArray = [
                 'model.glb', 
                 'model.glb', 
@@ -965,60 +1051,49 @@
                 'model.glb'  
             ];
 
-            // Функция карусельной смены модели
             function activateModel(index) {
                 if (index === currentIndex) return;
 
-                // Переключаем активный класс в меню
-                tags[currentIndex].classList.remove('active');
-                tags[index].classList.add('active');
+                wrappers[currentIndex].classList.remove('active');
+                wrappers[index].classList.add('active');
                 currentIndex = index;
 
-                // 1. Отправляем текущую модель вниз (класс описан в CSS)
+                // 1. Отправляем модель вниз
                 modelViewer.classList.add('slide-down');
 
-                // 2. Ждем пока она уедет (400мс)
+                // 2. Ждем 400мс, телепортируем наверх и меняем источник
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
-                    
-                    // Невидимо телепортируем модель наверх
                     modelViewer.classList.add('snap-top');
                     modelViewer.classList.remove('slide-down');
                     
-                    // Меняем источник модели
                     modelViewer.src = modelsArray[index];
 
-                    // Форсируем перерисовку, чтобы браузер понял, что модель наверху
                     void modelViewer.offsetWidth;
 
-                    // Убираем класс телепортации - модель плавно падает в центр
                     modelViewer.classList.remove('snap-top');
-                    
                 }, 400); 
             }
 
-            // Назначаем события для меню при наведении мыши
-            tags.forEach((tag) => {
-                tag.addEventListener('mouseenter', () => {
-                    const idx = parseInt(tag.getAttribute('data-index'));
+            wrappers.forEach((wrapper) => {
+                wrapper.addEventListener('mouseenter', () => {
+                    const idx = parseInt(wrapper.getAttribute('data-index'));
                     activateModel(idx);
                 });
             });
 
-            // Назначаем события на стрелки
             btnPrev.addEventListener('click', () => {
                 let newIndex = currentIndex - 1;
-                if (newIndex < 0) newIndex = tags.length - 1;
+                if (newIndex < 0) newIndex = wrappers.length - 1;
                 activateModel(newIndex);
             });
 
             btnNext.addEventListener('click', () => {
                 let newIndex = currentIndex + 1;
-                if (newIndex >= tags.length) newIndex = 0;
+                if (newIndex >= wrappers.length) newIndex = 0;
                 activateModel(newIndex);
             });
 
-            // Умное вращение за курсором, когда не перетаскиваем пальцем
             if (modelSection && modelViewer) {
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
