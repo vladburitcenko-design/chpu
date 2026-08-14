@@ -69,7 +69,7 @@
             padding: 0 20px;
         }
 
-        /* Применяем Benzin ко всем заголовкам для мощного индустриального вида */
+        /* Применяем Benzin ко всем заголовкам */
         h1, h2, h3, h4 {
             font-family: 'Benzin', 'Segoe UI', sans-serif;
             font-weight: 800;
@@ -238,23 +238,23 @@
             color: var(--text-body);
         }
 
-        /* --- НОВЫЙ РАЗДЕЛ: 3D МОДЕЛЬ --- */
+        /* --- ОБНОВЛЕННЫЙ РАЗДЕЛ: 3D МОДЕЛЬ --- */
         .model-section {
-            padding: 100px 0;
-            background-color: #111316; /* Чуть темнее для контраста */
+            padding: 90px 0;
+            background-color: transparent; /* Убрали выделение цветом */
             border-bottom: 1px solid var(--border-color);
         }
 
         .model-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: 3.5fr 6.5fr; /* Текст 35%, Модель 65% */
+            gap: 20px;
             align-items: center;
         }
 
         .model-text h2 {
             font-size: 3.5rem;
-            line-height: 1.2;
+            line-height: 1.1;
             margin-bottom: 0;
             color: var(--text-light);
         }
@@ -263,29 +263,34 @@
             color: var(--primary-orange);
         }
 
-        /* Обёртка, которая скрывает выход модели за рамки */
         .model-viewer-wrapper {
             position: relative;
             width: 100%;
-            height: 450px;
-            border-radius: 8px;
-            border: 1px solid var(--border-highlight);
-            background: linear-gradient(135deg, #22262a 0%, #15171a 100%);
-            overflow: hidden; /* Скрывает выпадающую сверху модель */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            height: 600px; /* Увеличили высоту, чтобы модель была крупнее */
+            border: none; /* Убрали рамку */
+            background: transparent; /* Убрали темный фон */
+            overflow: hidden; /* Скрываем выпадающую сверху модель */
+            box-shadow: none; /* Убрали тени */
+            margin-right: -40px; /* Сдвигаем ближе к правому краю */
         }
 
-        /* Внутренний контейнер с анимацией */
         .model-box {
             width: 100%;
             height: 100%;
-            transform: translateY(-100%); /* Прячем наверх */
-            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(-110%); /* Прячем высоко наверх */
+            /* Делаем падение более медленным (2.5с) и очень плавным в конце */
+            transition: transform 2.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* Класс, который добавляет скрипт при скролле */
         .model-viewer-wrapper.visible .model-box {
-            transform: translateY(0); /* Модель падает на место */
+            transform: translateY(0);
+        }
+
+        /* Анимация легкого покачивания */
+        @keyframes swayModel {
+            0% { transform: rotateY(-12deg) scale(1.15); }
+            50% { transform: rotateY(12deg) scale(1.15); }
+            100% { transform: rotateY(-12deg) scale(1.15); }
         }
 
         model-viewer {
@@ -293,6 +298,8 @@
             height: 100%;
             background-color: transparent;
             --poster-color: transparent;
+            /* Применяем покачивание и немного увеличиваем саму модель scale(1.15) */
+            animation: swayModel 12s ease-in-out infinite; 
         }
 
         /* Каталог продукции */
@@ -338,7 +345,7 @@
             margin-top: 15px;
         }
 
-        /* Популярные решения (Модернизация) */
+        /* Популярные решения */
         .popular-section {
             padding: 90px 0;
             background-color: #1a1d21;
@@ -648,9 +655,12 @@
             .hero-grid, .model-grid, .warranty-box, .delivery-content, .cta-grid {
                 grid-template-columns: 1fr;
             }
-            .model-text h2 {
-                font-size: 2.5rem;
+            .model-grid {
                 text-align: center;
+            }
+            .model-viewer-wrapper {
+                height: 450px;
+                margin-right: 0;
             }
             .catalog-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -724,13 +734,11 @@
             
             <div class="model-viewer-wrapper" id="modelWrapper">
                 <div class="model-box">
-                    <!-- Модель, которую вы сконвертируете в format .glb -->
+                    <!-- Убран auto-rotate, поворот осуществляется через CSS анимацию swayModel -->
                     <model-viewer 
                         src="model.glb" 
                         alt="3D модель ЧПУ панели" 
-                        auto-rotate 
                         camera-controls 
-                        rotation-per-second="30deg"
                         interaction-prompt="none"
                         disable-zoom>
                     </model-viewer>
@@ -949,14 +957,12 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Модель появляется, когда вы до нее докрутили
                         entry.target.classList.add('visible');
                     } else {
-                        // Модель уезжает наверх, если прокрутить обратно
                         entry.target.classList.remove('visible');
                     }
                 });
-            }, { threshold: 0.3 }); // Срабатывает, когда видно 30% блока
+            }, { threshold: 0.3 });
 
             const modelWrapper = document.getElementById('modelWrapper');
             if (modelWrapper) {
