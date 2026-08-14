@@ -30,7 +30,7 @@
             font-display: swap;
         }
 
-        /* Обновленная палитра: глубокий контраст */
+        /* Обновленная палитра */
         :root {
             --bg-card: #15171a;          
             --bg-card-hover: #0a0b0d;    
@@ -69,7 +69,7 @@
             padding: 0 20px;
         }
 
-        /* Применяем Benzin ко всем заголовкам */
+        /* Заголовки */
         h1, h2, h3, h4 {
             font-family: 'Benzin', 'Segoe UI', sans-serif;
             font-weight: 800;
@@ -238,16 +238,17 @@
             color: var(--text-body);
         }
 
-        /* --- ОБНОВЛЕННЫЙ РАЗДЕЛ: 3D МОДЕЛЬ --- */
+        /* --- НОВЫЙ РАЗДЕЛ: 3D МОДЕЛЬ --- */
         .model-section {
-            padding: 90px 0;
-            background-color: transparent; /* Убрали выделение цветом */
+            padding: 100px 0;
+            /* Единый черный фон для всего раздела */
+            background-color: #111316; 
             border-bottom: 1px solid var(--border-color);
         }
 
         .model-grid {
             display: grid;
-            grid-template-columns: 3.5fr 6.5fr; /* Текст 35%, Модель 65% */
+            grid-template-columns: 3fr 7fr; /* Текст 30%, Модель 70% */
             gap: 20px;
             align-items: center;
         }
@@ -266,31 +267,27 @@
         .model-viewer-wrapper {
             position: relative;
             width: 100%;
-            height: 600px; /* Увеличили высоту, чтобы модель была крупнее */
-            border: none; /* Убрали рамку */
-            background: transparent; /* Убрали темный фон */
-            overflow: hidden; /* Скрываем выпадающую сверху модель */
-            box-shadow: none; /* Убрали тени */
-            margin-right: -40px; /* Сдвигаем ближе к правому краю */
+            height: 650px; /* Увеличили размер модели */
+            border: none; 
+            background: transparent; /* Убрали фон у контейнера - сливается с секцией */
+            overflow: hidden; /* Скрывает выпадающую сверху модель */
+            box-shadow: none; 
+            margin-right: -40px; /* Сдвигаем ближе к краю */
+            cursor: grab;
         }
 
         .model-box {
             width: 100%;
             height: 100%;
-            transform: translateY(-110%); /* Прячем высоко наверх */
-            /* Делаем падение более медленным (2.5с) и очень плавным в конце */
-            transition: transform 2.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateY(-130%); /* Прячем высоко наверх */
+            opacity: 0;
+            /* Очень медленное и плавное падение */
+            transition: transform 3.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2.5s ease-in-out;
         }
 
         .model-viewer-wrapper.visible .model-box {
             transform: translateY(0);
-        }
-
-        /* Анимация легкого покачивания */
-        @keyframes swayModel {
-            0% { transform: rotateY(-12deg) scale(1.15); }
-            50% { transform: rotateY(12deg) scale(1.15); }
-            100% { transform: rotateY(-12deg) scale(1.15); }
+            opacity: 1;
         }
 
         model-viewer {
@@ -298,8 +295,6 @@
             height: 100%;
             background-color: transparent;
             --poster-color: transparent;
-            /* Применяем покачивание и немного увеличиваем саму модель scale(1.15) */
-            animation: swayModel 12s ease-in-out infinite; 
         }
 
         /* Каталог продукции */
@@ -734,13 +729,15 @@
             
             <div class="model-viewer-wrapper" id="modelWrapper">
                 <div class="model-box">
-                    <!-- Убран auto-rotate, поворот осуществляется через CSS анимацию swayModel -->
+                    <!-- Модель, вращением которой мы управляем через курсор -->
                     <model-viewer 
+                        id="cncModel"
                         src="model.glb" 
                         alt="3D модель ЧПУ панели" 
-                        camera-controls 
+                        camera-orbit="0deg 80deg auto"
                         interaction-prompt="none"
-                        disable-zoom>
+                        disable-zoom
+                        disable-pan>
                     </model-viewer>
                 </div>
             </div>
@@ -951,9 +948,11 @@
         </div>
     </footer>
 
-    <!-- JS Скрипт для анимации появления 3D модели при скролле -->
+    <!-- JS Скрипт для анимации появления 3D модели и отслеживания мыши -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Плавное падение при скролле
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -962,11 +961,39 @@
                         entry.target.classList.remove('visible');
                     }
                 });
-            }, { threshold: 0.3 });
+            }, { threshold: 0.2 });
 
             const modelWrapper = document.getElementById('modelWrapper');
             if (modelWrapper) {
                 observer.observe(modelWrapper);
+            }
+
+            // 2. Интерактивный поворот за мышкой (максимум на 70 градусов)
+            const modelSection = document.querySelector('.model-section');
+            const modelViewer = document.getElementById('cncModel');
+
+            if (modelSection && modelViewer) {
+                modelSection.addEventListener('mousemove', (e) => {
+                    // Вычисляем позицию мыши относительно блока (от -0.5 до 0.5)
+                    const rect = modelSection.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                    // Задаем угол поворота. 
+                    // x * 70 дает диапазон от -35 до +35 градусов (в сумме 70)
+                    const yaw = x * 70; 
+                    
+                    // Легкий наклон вверх/вниз для эффекта объема
+                    const pitch = 80 + (y * 20); 
+
+                    // Применяем к 3D модели
+                    modelViewer.cameraOrbit = `${yaw}deg ${pitch}deg auto`;
+                });
+
+                // Возврат в исходное положение, если мышка ушла из блока
+                modelSection.addEventListener('mouseleave', () => {
+                    modelViewer.cameraOrbit = `0deg 80deg auto`;
+                });
             }
         });
     </script>
