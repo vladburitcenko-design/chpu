@@ -13,7 +13,7 @@
     <link rel="preload" href="cnc.jpeg" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- Подключаем библиотеку Google для отображения 3D моделей (асинхронно) -->
+    <!-- Подключаем библиотеку Google для отображения 3D моделей -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
@@ -25,7 +25,7 @@
                  url('Benzin-Bold.ttf') format('truetype');
             font-weight: 700;
             font-style: normal;
-            font-display: swap; /* ОПТИМИЗАЦИЯ: Текст покажется сразу системным шрифтом, пока грузится Benzin */
+            font-display: swap; 
         }
 
         @font-face {
@@ -188,7 +188,7 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* Главный экран / О НАС */
+        /* Главный экран */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -281,7 +281,7 @@
             transform: translateY(120px); 
             opacity: 0;
             transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-out;
-            will-change: transform, opacity; /* ОПТИМИЗАЦИЯ: Ускоряет анимацию */
+            will-change: transform, opacity; 
         }
 
         .model-section.visible .model-title {
@@ -293,7 +293,7 @@
             color: var(--primary-orange);
         }
 
-        /* Характеристики */
+        /* Список моделей (Лесенка) */
         .model-features {
             display: flex;
             flex-direction: column;
@@ -328,6 +328,7 @@
         .model-features.visible .feature-tag:nth-child(3) { transition-delay: 0.3s; }
         .model-features.visible .feature-tag:nth-child(4) { transition-delay: 0.45s; }
         .model-features.visible .feature-tag:nth-child(5) { transition-delay: 0.6s; }
+        .model-features.visible .feature-tag:nth-child(6) { transition-delay: 0.75s; }
 
         .model-viewer-wrapper {
             position: relative;
@@ -363,7 +364,6 @@
             width: 100%;
             height: 100%;
             background-color: transparent;
-            /* ОПТИМИЗАЦИЯ: Прозрачный постер, чтобы 2D картинка не перекрывала фон грубо */
             --poster-color: transparent;
         }
 
@@ -591,12 +591,8 @@
                 height: 400px;
             }
             
-            .model-box {
-                transform: translateY(80px); 
-            }
-            .model-section.visible .model-box {
-                transform: translateY(0); 
-            }
+            .model-box { transform: translateY(80px); } 
+            .model-section.visible .model-box { transform: translateY(0); }
             
             .service-grid {
                 grid-template-columns: 1fr;
@@ -694,25 +690,26 @@
         </div>
     </section>
 
-    <!-- РАЗДЕЛ С 3D МОДЕЛЬЮ И ХАРАКТЕРИСТИКАМИ -->
+    <!-- РАЗДЕЛ С 3D МОДЕЛЬЮ И АССОРТИМЕНТОМ -->
     <section class="model-section">
         <div class="container model-grid">
             
             <div class="model-text">
                 <h2 class="model-title">АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
                 
+                <!-- Список конкретных моделей ЧПУ -->
                 <div class="model-features">
-                    <div class="feature-tag">Высокая точность обработки</div>
-                    <div class="feature-tag">Поддержка до 4-х осей одновременно</div>
-                    <div class="feature-tag">Промышленный сенсорный дисплей</div>
-                    <div class="feature-tag">Надежная защита корпуса IP65</div>
-                    <div class="feature-tag">Расширенная гарантия 2 года</div>
+                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM LIGHT</div>
+                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM DIGITAL</div>
+                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM MINI LIGHT</div>
+                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM MINI DIGITAL</div>
+                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM BASIC LIGHT</div>
+                    <div class="feature-tag">CNC-11 ЧПУ TITANIUM BASIC DIGITAL</div>
                 </div>
             </div>
             
             <div class="model-viewer-wrapper" id="modelWrapper">
                 <div class="model-box">
-                    <!-- ОПТИМИЗАЦИЯ: loading="eager" и атрибут poster для мгновенного отображения -->
                     <model-viewer 
                         id="cncModel"
                         src="model.glb" 
@@ -830,7 +827,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления модели и заголовка (ЕДИНОРАЗОВО)
             const mainObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -843,7 +839,6 @@
             const modelSection = document.querySelector('.model-section');
             if (modelSection) mainObserver.observe(modelSection);
 
-            // 2. Анимация плашек характеристик (ЕДИНОРАЗОВО)
             const featuresObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -856,7 +851,6 @@
             const modelFeatures = document.querySelector('.model-features');
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
-            // 3. Умное управление вращением модели
             const modelViewer = document.getElementById('cncModel');
             let isDragging = false; 
 
