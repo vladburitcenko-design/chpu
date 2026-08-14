@@ -30,7 +30,7 @@
             font-display: swap;
         }
 
-        /* Обновленная палитра */
+        /* Палитра */
         :root {
             --bg-card: #15171a;          
             --bg-card-hover: #0a0b0d;    
@@ -58,7 +58,7 @@
         }
 
         html, body {
-            overflow-x: hidden; /* Строгая защита от горизонтального скролла на мобильных */
+            overflow-x: hidden; 
         }
 
         body {
@@ -73,7 +73,6 @@
             padding: 0 20px;
         }
 
-        /* Заголовки */
         h1, h2, h3, h4 {
             font-family: 'Benzin', 'Segoe UI', sans-serif;
             font-weight: 800;
@@ -175,13 +174,13 @@
             color: var(--text-light);
             text-transform: uppercase;
             text-decoration: none;
-            white-space: nowrap; /* Запрещает перенос названия на новую строку */
+            white-space: nowrap; 
         }
 
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* Главный экран / О НАС */
+        /* Главный экран */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -245,7 +244,7 @@
             color: var(--text-body);
         }
 
-        /* --- РАЗДЕЛ: 3D МОДЕЛЬ --- */
+        /* --- 3D МОДЕЛЬ --- */
         .model-section {
             padding: 90px 0;
             background-color: #0a0b0d; 
@@ -271,7 +270,6 @@
             margin-bottom: 30px;
             color: var(--text-light);
             
-            /* Анимация заголовка снизу-вверх */
             transform: translateY(120px); 
             opacity: 0;
             transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-out;
@@ -286,7 +284,7 @@
             color: var(--primary-orange);
         }
 
-        /* Список характеристик */
+        /* Характеристики */
         .model-features {
             display: flex;
             flex-direction: column;
@@ -305,19 +303,16 @@
             border-radius: 4px;
             width: fit-content;
             
-            /* Начальное состояние: смещены влево и прозрачны */
             transform: translateX(-100px);
             opacity: 0;
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
         }
 
-        /* Появление лесенкой при активации отдельного класса .visible */
         .model-features.visible .feature-tag {
             transform: translateX(0);
             opacity: 1;
         }
 
-        /* Задержки для каждой отдельной плашки */
         .model-features.visible .feature-tag:nth-child(1) { transition-delay: 0s; }
         .model-features.visible .feature-tag:nth-child(2) { transition-delay: 0.15s; }
         .model-features.visible .feature-tag:nth-child(3) { transition-delay: 0.3s; }
@@ -333,13 +328,16 @@
             border: none; 
             background: transparent; 
             box-shadow: none; 
-            cursor: default; 
+            cursor: grab; /* Иконка хватания, т.к. теперь можно крутить */
+        }
+
+        .model-viewer-wrapper:active {
+            cursor: grabbing;
         }
 
         .model-box {
             width: 100%;
             height: 100%;
-            /* Прячем модель справа */
             transform: translateX(80%); 
             opacity: 0;
             transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
@@ -592,39 +590,27 @@
             border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* --- Адаптивность для Планшетов --- */
+        /* --- Адаптивность Планшеты --- */
         @media (max-width: 992px) {
             .hero-grid, .model-grid, .warranty-box, .delivery-content, .cta-grid {
                 grid-template-columns: 1fr;
             }
-            .model-grid {
-                text-align: center;
-            }
-            .model-title {
-                font-size: 2.5rem;
-            }
-            .model-features {
-                align-items: center;
-            }
+            .model-grid { text-align: center; }
+            .model-title { font-size: 2.5rem; }
+            .model-features { align-items: center; }
             .model-viewer-wrapper {
                 width: 100%;
                 margin-right: 0;
                 margin-top: 0;
                 height: 450px;
             }
-            /* На мобильных устройствах появление модели работает снизу-вверх во избежание бага с шириной экрана */
-            .model-box {
-                transform: translateY(10%); 
-            }
+            .model-box { transform: translateY(10%); } /* На мобильных выезжает снизу */
+            
             .service-grid, .finance-grid, .stats-grid {
                 grid-template-columns: 1fr;
             }
-            .cta-form {
-                flex-direction: column;
-            }
-            .cta-form input {
-                width: 100%;
-            }
+            .cta-form { flex-direction: column; }
+            .cta-form input { width: 100%; }
             .service-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -632,10 +618,9 @@
             }
         }
 
-        /* --- Адаптивность специально для Телефонов --- */
+        /* --- Адаптивность Телефоны --- */
         @media (max-width: 768px) {
             h2 { font-size: 1.6rem; }
-            
             .header-content { padding: 12px 0; gap: 10px; }
             .logo { font-size: 1.1rem; gap: 8px; }
             .logo-img { height: 26px; }
@@ -724,7 +709,6 @@
             <div class="model-text">
                 <h2 class="model-title">АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
                 
-                <!-- Характеристики (Будут выезжать лесенкой с задержкой) -->
                 <div class="model-features">
                     <div class="feature-tag">Высокая точность обработки</div>
                     <div class="feature-tag">Поддержка до 4-х осей одновременно</div>
@@ -736,21 +720,26 @@
             
             <div class="model-viewer-wrapper" id="modelWrapper">
                 <div class="model-box">
+                    <!-- Управление камерой включено. Строгие лимиты на 70 градусов (от -35 до 35) -->
                     <model-viewer 
                         id="cncModel"
                         src="model.glb" 
                         alt="3D модель ЧПУ панели" 
+                        camera-controls
                         camera-orbit="0deg 80deg auto"
+                        min-camera-orbit="-35deg 60deg auto"
+                        max-camera-orbit="35deg 100deg auto"
                         interaction-prompt="none"
                         disable-zoom
-                        disable-pan>
+                        disable-pan
+                        style="touch-action: pan-y;">
                     </model-viewer>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- СКРЫТЫЕ РАЗДЕЛЫ КАТАЛОГА И МОДЕРНИЗАЦИИ (удалены по вашей просьбе для облегчения главной страницы) -->
+    <!-- СКРЫТЫЕ РАЗДЕЛЫ КАТАЛОГА И МОДЕРНИЗАЦИИ (удалены из кода) -->
 
     <section class="service-section">
         <div class="container">
@@ -871,7 +860,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Наблюдатель для появления 3D-модели и заголовка
+            // 1. Анимация появления модели и заголовка
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -885,7 +874,7 @@
             const modelSection = document.querySelector('.model-section');
             if (modelSection) mainObserver.observe(modelSection);
 
-            // 2. Отдельный наблюдатель для плашек (срабатывает ПОЗЖЕ)
+            // 2. Анимация плашек характеристик (срабатывает позже)
             const featuresObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -894,15 +883,23 @@
                         entry.target.classList.remove('visible');
                     }
                 });
-            }, { rootMargin: "0px 0px -25% 0px" }); // Активируется только когда вы проскроллите ниже
+            }, { rootMargin: "0px 0px -25% 0px" });
 
             const modelFeatures = document.querySelector('.model-features');
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
-            // 3. Интерактивный поворот за мышкой
+            // 3. Умное управление вращением модели
             const modelViewer = document.getElementById('cncModel');
+            let isDragging = false; // Флаг, чтобы скрипт мыши не перебивал касание пальцем
+
             if (modelSection && modelViewer) {
+                // Отслеживаем, когда пользователь сам крутит модель
+                modelViewer.addEventListener('pointerdown', () => isDragging = true);
+                window.addEventListener('pointerup', () => isDragging = false);
+
                 modelSection.addEventListener('mousemove', (e) => {
+                    if (isDragging) return; // Если человек крутит сам - не мешаем
+                    
                     const rect = modelSection.getBoundingClientRect();
                     const x = (e.clientX - rect.left) / rect.width - 0.5;
                     const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -913,7 +910,9 @@
                     modelViewer.cameraOrbit = `${yaw}deg ${pitch}deg auto`;
                 });
 
+                // При уводе курсора возвращаем модель в центр
                 modelSection.addEventListener('mouseleave', () => {
+                    if (isDragging) return;
                     modelViewer.cameraOrbit = `0deg 80deg auto`;
                 });
             }
