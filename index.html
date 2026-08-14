@@ -242,7 +242,7 @@
         /* --- РАЗДЕЛ: 3D МОДЕЛЬ --- */
         .model-section {
             padding: 90px 0;
-            background-color: #0a0b0d; 
+            background-color: #111316; 
             border-bottom: 1px solid var(--border-color);
             overflow: hidden; 
         }
@@ -256,29 +256,31 @@
         }
 
         .model-text {
-            margin-top: 60px; /* Немного уменьшили отступ, чтобы влезли характеристики */
+            margin-top: 60px;
+        }
+
+        .model-title {
+            font-size: 3.8rem;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            color: var(--text-light);
+            
+            /* Анимация заголовка снизу-вверх */
             transform: translateY(120px); 
             opacity: 0;
             transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-out;
         }
 
-        .model-section.visible .model-text {
+        .model-section.visible .model-title {
             transform: translateY(0);
             opacity: 1;
         }
 
-        .model-text h2 {
-            font-size: 3.8rem;
-            line-height: 1.1;
-            margin-bottom: 30px;
-            color: var(--text-light);
-        }
-
-        .model-text span {
+        .model-title span {
             color: var(--primary-orange);
         }
 
-        /* Стиль для характеристик 3D модели */
+        /* Список характеристик */
         .model-features {
             display: flex;
             flex-direction: column;
@@ -296,12 +298,30 @@
             color: var(--text-light);
             border-radius: 4px;
             width: fit-content;
+            
+            /* Начальное состояние: смещены влево и прозрачны */
+            transform: translateX(-100px);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
         }
+
+        /* Появление лесенкой при активации класса .visible */
+        .model-features.visible .feature-tag {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* Задержки для каждой отдельной плашки */
+        .model-features.visible .feature-tag:nth-child(1) { transition-delay: 0s; }
+        .model-features.visible .feature-tag:nth-child(2) { transition-delay: 0.15s; }
+        .model-features.visible .feature-tag:nth-child(3) { transition-delay: 0.3s; }
+        .model-features.visible .feature-tag:nth-child(4) { transition-delay: 0.45s; }
+        .model-features.visible .feature-tag:nth-child(5) { transition-delay: 0.6s; }
 
         .model-viewer-wrapper {
             position: relative;
             width: 125%; 
-            height: 750px; 
+            height: 650px; 
             margin-right: -25%; 
             margin-top: -60px; 
             border: none; 
@@ -313,6 +333,7 @@
         .model-box {
             width: 100%;
             height: 100%;
+            /* Прячем модель справа */
             transform: translateX(80%); 
             opacity: 0;
             transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
@@ -395,6 +416,7 @@
             border-radius: 8px;
             border-top: 3px solid var(--primary-orange);
             border: 1px solid var(--border-color);
+            border-top: 3px solid var(--primary-orange);
             transition: transform 0.3s, background-color 0.3s;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
@@ -685,9 +707,8 @@
             .model-grid {
                 text-align: center;
             }
-            .model-text {
-                margin-top: 20px;
-                transform: translateY(60px);
+            .model-title {
+                font-size: 2.5rem;
             }
             .model-features {
                 align-items: center;
@@ -769,9 +790,9 @@
         <div class="container model-grid">
             
             <div class="model-text">
-                <h2>АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
+                <h2 class="model-title">АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
                 
-                <!-- Характеристики в виде индустриальных плашек -->
+                <!-- Характеристики (Будут выезжать лесенкой с задержкой) -->
                 <div class="model-features">
                     <div class="feature-tag">Высокая точность обработки</div>
                     <div class="feature-tag">Поддержка до 4-х осей одновременно</div>
@@ -1001,11 +1022,12 @@
         </div>
     </footer>
 
-    <!-- JS Скрипт для анимаций и отслеживания курсора -->
+    <!-- JS Скрипты -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            const observer = new IntersectionObserver((entries) => {
+            // 1. Наблюдатель для появления 3D-модели и заголовка (срабатывает, когда видно 20% секции)
+            const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
@@ -1016,12 +1038,24 @@
             }, { threshold: 0.2 });
 
             const modelSection = document.querySelector('.model-section');
-            if (modelSection) {
-                observer.observe(modelSection);
-            }
+            if (modelSection) mainObserver.observe(modelSection);
 
+            // 2. Отдельный наблюдатель для плашек (срабатывает ПОЗЖЕ, только когда мы скроллим глубже)
+            const featuresObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { rootMargin: "0px 0px -25% 0px" }); // Активируется с задержкой (когда список поднимется на 25% от низа экрана)
+
+            const modelFeatures = document.querySelector('.model-features');
+            if (modelFeatures) featuresObserver.observe(modelFeatures);
+
+            // 3. Интерактивный поворот за мышкой
             const modelViewer = document.getElementById('cncModel');
-
             if (modelSection && modelViewer) {
                 modelSection.addEventListener('mousemove', (e) => {
                     const rect = modelSection.getBoundingClientRect();
