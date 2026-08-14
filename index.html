@@ -293,7 +293,7 @@
             color: var(--primary-orange);
         }
 
-        /* ИНТЕРАКТИВНОЕ МЕНЮ (Лесенка) */
+        /* ИНТЕРАКТИВНОЕ МЕНЮ */
         .model-features {
             display: flex;
             flex-direction: column;
@@ -315,7 +315,6 @@
             max-width: 420px;
             cursor: pointer;
             
-            /* Начальное скрытое состояние */
             transform: translateX(-100px);
             opacity: 0;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -339,14 +338,13 @@
         .model-features.visible .feature-tag:nth-child(5) { transition-delay: 0.6s; }
         .model-features.visible .feature-tag:nth-child(6) { transition-delay: 0.75s; }
 
-        /* Эффект при наведении (если пункт не активен) */
         .model-features.visible .feature-tag:hover:not(.active) {
             transform: translateX(8px);
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-light);
         }
 
-        /* АКТИВНЫЙ (ВЫБРАННЫЙ) ПУНКТ */
+        /* АКТИВНЫЙ ПУНКТ */
         .model-features.visible .feature-tag.active {
             transform: translateX(15px) scale(1.03); 
             background: rgba(255, 107, 0, 0.12); 
@@ -399,6 +397,7 @@
         .left-arrow { left: 40px; }
         .right-arrow { right: 40px; }
 
+        /* Внешний контейнер (выезжает при скролле) */
         .model-box {
             width: 100%;
             height: 100%;
@@ -413,13 +412,17 @@
             opacity: 1;
         }
 
+        /* Сам плеер 3D */
         model-viewer {
             width: 100%;
             height: 100%;
             background-color: transparent;
             --poster-color: transparent;
             cursor: grab; 
-            transition: opacity 0.4s ease-in-out;
+            
+            /* Базовая плавная анимация появления/перемещения при переключении меню */
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
+            transform: translateY(0);
             opacity: 1;
         }
 
@@ -427,8 +430,17 @@
             cursor: grabbing;
         }
 
-        /* Класс скрытия модели при анимации смены */
-        model-viewer.fade-out {
+        /* КЛАССЫ ДЛЯ АНИМАЦИИ ПЕРЕКЛЮЧЕНИЯ ЧПУ */
+        /* Старая модель уходит вниз и исчезает */
+        model-viewer.slide-down {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        /* Мгновенная, невидимая телепортация модели наверх */
+        model-viewer.snap-top {
+            transition: none !important; /* Отключаем плавность для мгновенного прыжка */
+            transform: translateY(-100%);
             opacity: 0;
         }
 
@@ -903,13 +915,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления заголовка и 3D (МНОГОРАЗОВО)
+            // 1. Анимация появления заголовка и 3D (МНОГОРАЗОВО, без unobserve)
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // Класс удаляется, чтобы при повторном скролле анимация проигралась снова
+                        // Убираем класс, когда блок прокручен, чтобы анимация сработала заново
                         entry.target.classList.remove('visible');
                     }
                 });
@@ -924,7 +936,6 @@
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // Удаляем класс для повторной анимации
                         entry.target.classList.remove('visible');
                     }
                 });
@@ -934,7 +945,7 @@
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
 
-            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
+            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ (Карусель сверху-вниз)
             const modelViewer = document.getElementById('cncModel');
             const tags = document.querySelectorAll('.feature-tag');
             const btnPrev = document.getElementById('prevModel');
@@ -944,6 +955,7 @@
             let switchTimeout;
             let isDragging = false; 
 
+            // Массив с путями к моделям (пока у нас один файл model.glb)
             const modelsArray = [
                 'model.glb', 
                 'model.glb', 
@@ -953,22 +965,39 @@
                 'model.glb'  
             ];
 
+            // Функция карусельной смены модели
             function activateModel(index) {
                 if (index === currentIndex) return;
 
+                // Переключаем активный класс в меню
                 tags[currentIndex].classList.remove('active');
                 tags[index].classList.add('active');
                 currentIndex = index;
 
-                modelViewer.classList.add('fade-out');
+                // 1. Отправляем текущую модель вниз (класс описан в CSS)
+                modelViewer.classList.add('slide-down');
 
+                // 2. Ждем пока она уедет (400мс)
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
+                    
+                    // Невидимо телепортируем модель наверх
+                    modelViewer.classList.add('snap-top');
+                    modelViewer.classList.remove('slide-down');
+                    
+                    // Меняем источник модели
                     modelViewer.src = modelsArray[index];
-                    modelViewer.classList.remove('fade-out');
-                }, 300);
+
+                    // Форсируем перерисовку, чтобы браузер понял, что модель наверху
+                    void modelViewer.offsetWidth;
+
+                    // Убираем класс телепортации - модель плавно падает в центр
+                    modelViewer.classList.remove('snap-top');
+                    
+                }, 400); 
             }
 
+            // Назначаем события для меню при наведении мыши
             tags.forEach((tag) => {
                 tag.addEventListener('mouseenter', () => {
                     const idx = parseInt(tag.getAttribute('data-index'));
@@ -976,6 +1005,7 @@
                 });
             });
 
+            // Назначаем события на стрелки
             btnPrev.addEventListener('click', () => {
                 let newIndex = currentIndex - 1;
                 if (newIndex < 0) newIndex = tags.length - 1;
@@ -988,6 +1018,7 @@
                 activateModel(newIndex);
             });
 
+            // Умное вращение за курсором, когда не перетаскиваем пальцем
             if (modelSection && modelViewer) {
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
