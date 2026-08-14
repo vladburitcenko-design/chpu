@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ТД НЭТ | Системы ЧПУ и Комплектующие</title>
     
-    <!-- Подключаем библиотеку Google для отображения 3D моделей -->
+    <!-- ОПТИМИЗАЦИЯ: Раннее подключение к серверам Google -->
+    <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
+    
+    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелой 3D модели и главного шрифта -->
+    <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="cnc.jpeg" as="image">
+    <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Подключаем библиотеку Google для отображения 3D моделей (асинхронно) -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
@@ -17,7 +25,7 @@
                  url('Benzin-Bold.ttf') format('truetype');
             font-weight: 700;
             font-style: normal;
-            font-display: swap;
+            font-display: swap; /* ОПТИМИЗАЦИЯ: Текст покажется сразу системным шрифтом, пока грузится Benzin */
         }
 
         @font-face {
@@ -180,7 +188,7 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* Главный экран */
+        /* Главный экран / О НАС */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -244,7 +252,7 @@
             color: var(--text-body);
         }
 
-        /* --- 3D МОДЕЛЬ --- */
+        /* --- РАЗДЕЛ: 3D МОДЕЛЬ --- */
         .model-section {
             padding: 90px 0;
             background-color: #0a0b0d; 
@@ -273,6 +281,7 @@
             transform: translateY(120px); 
             opacity: 0;
             transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-out;
+            will-change: transform, opacity; /* ОПТИМИЗАЦИЯ: Ускоряет анимацию */
         }
 
         .model-section.visible .model-title {
@@ -306,6 +315,7 @@
             transform: translateX(-100px);
             opacity: 0;
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
+            will-change: transform, opacity;
         }
 
         .model-features.visible .feature-tag {
@@ -328,7 +338,7 @@
             border: none; 
             background: transparent; 
             box-shadow: none; 
-            cursor: grab; /* Иконка хватания, т.к. теперь можно крутить */
+            cursor: grab; 
         }
 
         .model-viewer-wrapper:active {
@@ -341,6 +351,7 @@
             transform: translateX(80%); 
             opacity: 0;
             transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
+            will-change: transform, opacity;
         }
 
         .model-section.visible .model-box {
@@ -352,6 +363,7 @@
             width: 100%;
             height: 100%;
             background-color: transparent;
+            /* ОПТИМИЗАЦИЯ: Прозрачный постер, чтобы 2D картинка не перекрывала фон грубо */
             --poster-color: transparent;
         }
 
@@ -434,33 +446,6 @@
 
         .warranty-text h2 {
             margin-bottom: 20px;
-        }
-
-        /* Кредит и Лизинг */
-        .finance-section {
-            padding: 90px 0;
-            background: var(--bg-grad-alt);
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .finance-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 50px;
-            text-align: left;
-        }
-
-        .finance-item h4 {
-            font-size: 1.15rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .finance-item p {
-            color: var(--text-body);
-            font-size: 1rem;
         }
 
         /* Доставка */
@@ -598,15 +583,22 @@
             .model-grid { text-align: center; }
             .model-title { font-size: 2.5rem; }
             .model-features { align-items: center; }
+            
             .model-viewer-wrapper {
                 width: 100%;
                 margin-right: 0;
                 margin-top: 0;
-                height: 450px;
+                height: 400px;
             }
-            .model-box { transform: translateY(10%); } /* На мобильных выезжает снизу */
             
-            .service-grid, .finance-grid, .stats-grid {
+            .model-box {
+                transform: translateY(80px); 
+            }
+            .model-section.visible .model-box {
+                transform: translateY(0); 
+            }
+            
+            .service-grid {
                 grid-template-columns: 1fr;
             }
             .cta-form { flex-direction: column; }
@@ -720,10 +712,11 @@
             
             <div class="model-viewer-wrapper" id="modelWrapper">
                 <div class="model-box">
-                    <!-- Управление камерой включено. Строгие лимиты на 70 градусов (от -35 до 35) -->
+                    <!-- ОПТИМИЗАЦИЯ: loading="eager" и атрибут poster для мгновенного отображения -->
                     <model-viewer 
                         id="cncModel"
                         src="model.glb" 
+                        poster="cnc.jpeg"
                         alt="3D модель ЧПУ панели" 
                         camera-controls
                         camera-orbit="0deg 80deg auto"
@@ -732,14 +725,13 @@
                         interaction-prompt="none"
                         disable-zoom
                         disable-pan
+                        loading="eager"
                         style="touch-action: pan-y;">
                     </model-viewer>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- СКРЫТЫЕ РАЗДЕЛЫ КАТАЛОГА И МОДЕРНИЗАЦИИ (удалены из кода) -->
 
     <section class="service-section">
         <div class="container">
@@ -776,28 +768,6 @@
                     <h2>Сертификация и Гарантия до 2х лет</h2>
                     <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Вся изготавливаемая продукция сопровождается сертификатами соответствия. Паспорта качества имеют защитную голограмму и содержат полную информацию по эксплуатации.</p>
                     <a href="#" class="btn">Подробнее</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="finance-section">
-        <div class="container">
-            <h2>Финансовые решения</h2>
-            <p style="color: var(--text-body); margin-bottom: 50px; font-size: 1.1rem;">Гибкие условия оплаты для модернизации вашего производства</p>
-            
-            <div class="finance-grid">
-                <div class="finance-item">
-                    <h4>Лизинг для юр. лиц</h4>
-                    <p>Сотрудничество с проверенными лизинговыми компаниями для масштабного обновления цехов.</p>
-                </div>
-                <div class="finance-item">
-                    <h4>Кредит для физ. лиц</h4>
-                    <p>Удобный старт или модернизация бизнеса с минимальными вложениями через ведущие банки.</p>
-                </div>
-                <div class="finance-item">
-                    <h4>Госзакупки и тендеры</h4>
-                    <p>Полная юридическая и техническая поддержка при участии в государственных закупках.</p>
                 </div>
             </div>
         </div>
@@ -860,45 +830,42 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления модели и заголовка
-            const mainObserver = new IntersectionObserver((entries) => {
+            // 1. Анимация появления модели и заголовка (ЕДИНОРАЗОВО)
+            const mainObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                    } else {
-                        entry.target.classList.remove('visible');
+                        observer.unobserve(entry.target); 
                     }
                 });
-            }, { threshold: 0.2 });
+            }, { threshold: 0.1 }); 
 
             const modelSection = document.querySelector('.model-section');
             if (modelSection) mainObserver.observe(modelSection);
 
-            // 2. Анимация плашек характеристик (срабатывает позже)
-            const featuresObserver = new IntersectionObserver((entries) => {
+            // 2. Анимация плашек характеристик (ЕДИНОРАЗОВО)
+            const featuresObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                    } else {
-                        entry.target.classList.remove('visible');
+                        observer.unobserve(entry.target); 
                     }
                 });
-            }, { rootMargin: "0px 0px -25% 0px" });
+            }, { rootMargin: "0px 0px -20% 0px" }); 
 
             const modelFeatures = document.querySelector('.model-features');
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
             // 3. Умное управление вращением модели
             const modelViewer = document.getElementById('cncModel');
-            let isDragging = false; // Флаг, чтобы скрипт мыши не перебивал касание пальцем
+            let isDragging = false; 
 
             if (modelSection && modelViewer) {
-                // Отслеживаем, когда пользователь сам крутит модель
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
 
                 modelSection.addEventListener('mousemove', (e) => {
-                    if (isDragging) return; // Если человек крутит сам - не мешаем
+                    if (isDragging) return; 
                     
                     const rect = modelSection.getBoundingClientRect();
                     const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -910,7 +877,6 @@
                     modelViewer.cameraOrbit = `${yaw}deg ${pitch}deg auto`;
                 });
 
-                // При уводе курсора возвращаем модель в центр
                 modelSection.addEventListener('mouseleave', () => {
                     if (isDragging) return;
                     modelViewer.cameraOrbit = `0deg 80deg auto`;
