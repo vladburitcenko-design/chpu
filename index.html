@@ -8,9 +8,9 @@
     <!-- ОПТИМИЗАЦИЯ: Раннее подключение к серверам Google -->
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
     
-    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелой 3D модели и главного шрифта -->
+    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелой 3D модели, нового постера и главного шрифта -->
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="cnc.jpeg" as="image">
+    <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Подключаем библиотеку Google для отображения 3D моделей -->
@@ -713,7 +713,7 @@
                     <model-viewer 
                         id="cncModel"
                         src="model.glb" 
-                        poster="cnc.jpeg"
+                        poster="image_c63bc3.png"
                         alt="3D модель ЧПУ панели" 
                         camera-controls
                         camera-orbit="0deg 80deg auto"
