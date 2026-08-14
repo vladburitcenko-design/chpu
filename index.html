@@ -262,7 +262,7 @@
 
         .model-grid {
             display: grid;
-            grid-template-columns: 3.8fr 6.2fr; 
+            grid-template-columns: 3.5fr 6.5fr; 
             gap: 20px;
             align-items: start; 
             min-height: 600px;
@@ -273,9 +273,9 @@
         }
 
         .model-title {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             line-height: 1.1;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             color: var(--text-light);
             
             transform: translateY(120px); 
@@ -298,118 +298,139 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 20px;
+            margin-top: 40px;
         }
-
-        .feature-item-wrapper {
-            width: 100%;
-            max-width: 440px;
-            
-            transform: translateX(-100px);
-            opacity: 0;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
-            will-change: transform, opacity;
-        }
-
-        .model-features.visible .feature-item-wrapper {
-            transform: translateX(0);
-            opacity: 1;
-        }
-
-        .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
-        .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.1s; }
-        .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.2s; }
-        .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.3s; }
-        .model-features.visible .feature-item-wrapper:nth-child(5) { transition-delay: 0.4s; }
-        .model-features.visible .feature-item-wrapper:nth-child(6) { transition-delay: 0.5s; }
 
         .feature-tag {
             display: block;
             background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.06);
             border-left: 4px solid var(--primary-orange);
-            padding: 14px 18px;
+            padding: 16px 20px;
             font-size: 0.95rem;
             font-weight: 600;
             color: var(--text-muted);
             border-radius: 4px;
             width: 100%;
+            max-width: 420px;
             cursor: pointer;
-            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            
+            transform: translateX(-100px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        background 0.3s ease, 
+                        border-color 0.3s ease, 
+                        color 0.3s ease,
+                        opacity 0.8s ease-out;
+            will-change: transform, opacity, background-color;
         }
 
-        .model-features .feature-item-wrapper:hover:not(.active) .feature-tag {
-            transform: translateX(6px);
+        .model-features.visible .feature-tag {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .model-features.visible .feature-tag:nth-child(1) { transition-delay: 0s; }
+        .model-features.visible .feature-tag:nth-child(2) { transition-delay: 0.15s; }
+        .model-features.visible .feature-tag:nth-child(3) { transition-delay: 0.3s; }
+        .model-features.visible .feature-tag:nth-child(4) { transition-delay: 0.45s; }
+        .model-features.visible .feature-tag:nth-child(5) { transition-delay: 0.6s; }
+        .model-features.visible .feature-tag:nth-child(6) { transition-delay: 0.75s; }
+
+        .model-features.visible .feature-tag:hover:not(.active) {
+            transform: translateX(8px);
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-light);
         }
 
         /* АКТИВНЫЙ ПУНКТ */
-        .feature-item-wrapper.active .feature-tag {
-            transform: translateX(12px) scale(1.02); 
+        .model-features.visible .feature-tag.active {
+            transform: translateX(15px) scale(1.03); 
             background: rgba(255, 107, 0, 0.12); 
             border-color: rgba(255, 107, 0, 0.4);
             color: var(--text-light);
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            z-index: 2;
+            position: relative;
         }
 
-        /* Список характеристик под активной моделью (с анимацией барабана) */
-        .model-specs {
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding-left: 16px;
-            border-left: 2px dashed rgba(255, 107, 0, 0.3);
-            margin-left: 12px;
-            
-            /* Плавная анимация ухода и появления характеристик синхронно с 3D */
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-                        opacity 0.4s ease-in-out, 
-                        margin-top 0.4s ease-in-out;
-        }
-
-        .feature-item-wrapper.active .model-specs {
-            max-height: 160px;
-            opacity: 1;
-            margin-top: 10px;
-            margin-bottom: 6px;
-        }
-
-        .spec-item {
-            font-size: 0.85rem;
-            color: var(--text-body);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .spec-item::before {
-            content: '';
-            width: 5px;
-            height: 5px;
-            background-color: var(--primary-orange);
-            border-radius: 50%;
-        }
-
-        /* 3D БЛОК */
+        /* 3D БЛОК И КОНТЕЙНЕР ОПИСАНИЯ */
         .model-viewer-wrapper {
             position: relative;
             width: 125%; 
-            height: 650px; 
+            height: 560px; /* Немного уменьшили высоту, чтобы оставить место под текст снизу */
             margin-right: -25%; 
-            margin-top: -30px; 
+            margin-top: -60px; 
             border: none; 
             background: transparent; 
             box-shadow: none; 
         }
 
+        /* БЛОК ДИНАМИЧЕСКОГО ОПИСАНИЯ ПОД 3D МОДЕЛЬЮ */
+        .model-info-card {
+            width: 100%;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: 40px;
+            background: rgba(20, 22, 26, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 3px solid var(--primary-orange);
+            padding: 24px 30px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            
+            /* Анимация затухания и появления текста при переключении */
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .model-info-card.fade-out {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .info-card-title {
+            font-family: 'Benzin', sans-serif;
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-card-desc {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .info-card-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .info-spec-item {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .info-spec-item span {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
         /* Стрелочки переключения */
         .model-arrow {
             position: absolute;
-            top: 50%;
+            top: 45%;
             transform: translateY(-50%);
             width: 48px;
             height: 48px;
@@ -693,14 +714,17 @@
             .model-grid { text-align: center; }
             .model-title { font-size: 2.5rem; }
             .model-features { align-items: center; }
-            .feature-item-wrapper { max-width: 100%; }
-            .model-specs { padding-left: 0; border-left: none; }
+            .feature-tag { max-width: 100%; }
             
             .model-viewer-wrapper {
                 width: 100%;
                 margin-right: 0;
                 margin-top: 0;
                 height: 400px;
+            }
+            .model-info-card {
+                margin-right: auto;
+                max-width: 100%;
             }
             
             .left-arrow { left: 10px; }
@@ -743,6 +767,8 @@
             
             .model-arrow { width: 40px; height: 40px; font-size: 1rem; }
             .model-viewer-wrapper { height: 350px; }
+            .model-info-card { padding: 16px 20px; }
+            .info-card-specs { grid-template-columns: 1fr; }
             
             .warranty-box { flex-direction: column; padding: 30px 20px; text-align: center; }
             .warranty-box .img-placeholder { width: 100%; height: 200px; margin-bottom: 20px; }
@@ -805,7 +831,7 @@
         </div>
     </section>
 
-    <!-- РАЗДЕЛ С ИНТЕРАКТИВНОЙ 3D МОДЕЛЬЮ И ХАРАКТЕРИСТИКАМИ -->
+    <!-- РАЗДЕЛ С ИНТЕРАКТИВНОЙ 3D МОДЕЛЬЮ И ОПИСАНИЕМ -->
     <section class="model-section">
         <div class="container model-grid">
             
@@ -813,66 +839,12 @@
                 <h2 class="model-title">АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
                 
                 <div class="model-features">
-                    <!-- Пункт 1 -->
-                    <div class="feature-item-wrapper active" data-index="0">
-                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM LIGHT</div>
-                        <div class="model-specs">
-                            <div class="spec-item">Количество осей: до 4-х</div>
-                            <div class="spec-item">Поддержка EtherCAT: Да</div>
-                            <div class="spec-item">Экран: 10.4" LCD Touchscreen</div>
-                            <div class="spec-item">Защита корпуса: IP65</div>
-                        </div>
-                    </div>
-                    <!-- Пункт 2 -->
-                    <div class="feature-item-wrapper" data-index="1">
-                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM DIGITAL</div>
-                        <div class="model-specs">
-                            <div class="spec-item">Количество осей: до 5-ти</div>
-                            <div class="spec-item">Поддержка EtherCAT: Да (High-speed)</div>
-                            <div class="spec-item">Экран: 15" Промышленный HD</div>
-                            <div class="spec-item">Интерфейсы: CAN, USB, Ethernet</div>
-                        </div>
-                    </div>
-                    <!-- Пункт 3 -->
-                    <div class="feature-item-wrapper" data-index="2">
-                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM MINI LIGHT</div>
-                        <div class="model-specs">
-                            <div class="spec-item">Количество осей: до 3-х</div>
-                            <div class="spec-item">Поддержка EtherCAT: Опционально</div>
-                            <div class="spec-item">Исполнение: Компактный моноблок</div>
-                            <div class="spec-item">Энергопотребление: Ультранизкое</div>
-                        </div>
-                    </div>
-                    <!-- Пункт 4 -->
-                    <div class="feature-item-wrapper" data-index="3">
-                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM MINI DIGITAL</div>
-                        <div class="model-specs">
-                            <div class="spec-item">Количество осей: до 4-х</div>
-                            <div class="spec-item">Поддержка EtherCAT: Да</div>
-                            <div class="spec-item">Дисплей: 8.4" Сенсорный мультитач</div>
-                            <div class="spec-item">Маховик ручного управления: В комплекте</div>
-                        </div>
-                    </div>
-                    <!-- Пункт 5 -->
-                    <div class="feature-item-wrapper" data-index="4">
-                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM BASIC LIGHT</div>
-                        <div class="model-specs">
-                            <div class="spec-item">Количество осей: 2-3 оси</div>
-                            <div class="spec-item">Поддержка EtherCAT: Базовая</div>
-                            <div class="spec-item">Назначение: Для малых станков</div>
-                            <div class="spec-item">Гарантия: 2 года</div>
-                        </div>
-                    </div>
-                    <!-- Пункт 6 -->
-                    <div class="feature-item-wrapper" data-index="5">
-                        <div class="feature-tag">CNC-11 ЧПУ TITANIUM BASIC DIGITAL</div>
-                        <div class="model-specs">
-                            <div class="spec-item">Количество осей: до 4-х</div>
-                            <div class="spec-item">Поддержка EtherCAT: Полная</div>
-                            <div class="spec-item">Процессор: Высокопроизводительный ARM</div>
-                            <div class="spec-item">Охлаждение: Пассивное (без кулеров)</div>
-                        </div>
-                    </div>
+                    <div class="feature-tag active" data-index="0">CNC-11 ЧПУ TITANIUM LIGHT</div>
+                    <div class="feature-tag" data-index="1">CNC-11 ЧПУ TITANIUM DIGITAL</div>
+                    <div class="feature-tag" data-index="2">CNC-11 ЧПУ TITANIUM MINI LIGHT</div>
+                    <div class="feature-tag" data-index="3">CNC-11 ЧПУ TITANIUM MINI DIGITAL</div>
+                    <div class="feature-tag" data-index="4">CNC-11 ЧПУ TITANIUM BASIC LIGHT</div>
+                    <div class="feature-tag" data-index="5">CNC-11 ЧПУ TITANIUM BASIC DIGITAL</div>
                 </div>
             </div>
             
@@ -902,6 +874,19 @@
                         style="touch-action: pan-y;">
                     </model-viewer>
                 </div>
+
+                <!-- Блок описания под 3D моделью -->
+                <div class="model-info-card" id="infoCard">
+                    <h3 class="info-card-title" id="infoTitle">CNC-11 ЧПУ TITANIUM LIGHT</h3>
+                    <p class="info-card-desc" id="infoDesc">Базовая высокопроизводительная система с оптимизированным софтом для стандартных задач металлообработки.</p>
+                    <div class="info-card-specs">
+                        <div class="info-spec-item">Осей: <span id="specAxes">До 4-х</span></div>
+                        <div class="info-spec-item">EtherCAT: <span id="specEthercat">Поддерживается</span></div>
+                        <div class="info-spec-item">Дисплей: <span id="specScreen">10.4" LCD Touch</span></div>
+                        <div class="info-spec-item">Защита: <span id="specProtection">IP65 (Пыль/Влага)</span></div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -1003,7 +988,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления заголовка и 3D (МНОГОРАЗОВО)
+            // 1. Анимация появления заголовка и 3D
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1017,7 +1002,7 @@
             const modelSection = document.querySelector('.model-section');
             if (modelSection) mainObserver.observe(modelSection);
 
-            // 2. Анимация списка меню (МНОГОРАЗОВО)
+            // 2. Анимация списка меню
             const featuresObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1032,68 +1017,140 @@
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
 
-            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ (Карусель сверху-вниз)
+            // 3. БАЗА ДАННЫХ ХАРАКТЕРИСТИК ДЛЯ КАЖДОЙ МОДЕЛИ
+            const specsData = [
+                {
+                    title: "CNC-11 ЧПУ TITANIUM LIGHT",
+                    desc: "Оптимальное решение для стандартных токарных и фрезерных станков с интуитивным управлением.",
+                    axes: "До 4-х осей",
+                    ethercat: "Поддерживается",
+                    screen: "10.4\" LCD Touch",
+                    protection: "IP65 (Пыль/Влага)"
+                },
+                {
+                    title: "CNC-11 ЧПУ TITANIUM DIGITAL",
+                    desc: "Флагманская высокоскоростная стойка с расширенным цифровым интерфейсом и поддержкой многоосевой обработки.",
+                    axes: "До 5-ти осей",
+                    ethercat: "Да (High-speed)",
+                    screen: "15\" HD Touchscreen",
+                    protection: "IP65 (Промышленное)"
+                },
+                {
+                    title: "CNC-11 ЧПУ TITANIUM MINI LIGHT",
+                    desc: "Компактная моноблочная серия для небольших станков и автоматизированных комплексов.",
+                    axes: "До 3-х осей",
+                    ethercat: "Опционально",
+                    screen: "8.4\" Компактный",
+                    protection: "IP54 (Брызгозащита)"
+                },
+                {
+                    title: "CNC-11 ЧПУ TITANIUM MINI DIGITAL",
+                    desc: "Универсальный цифровой мини-комплекс повышенной точности с выносным маховиком.",
+                    axes: "До 4-х осей",
+                    ethercat: "Поддерживается",
+                    screen: "8.4\" Мультитач",
+                    protection: "IP65 (Усиленный)"
+                },
+                {
+                    title: "CNC-11 ЧПУ TITANIUM BASIC LIGHT",
+                    desc: "Надежная базовая система для модернизации старого парка станков с минимальными затратами.",
+                    axes: "2-3 оси",
+                    ethercat: "Базовая",
+                    screen: "9\" Монохром/Цвет",
+                    protection: "IP54"
+                },
+                {
+                    title: "CNC-11 ЧПУ TITANIUM BASIC DIGITAL",
+                    desc: "Сбалансированная цифровая система управления с пассивным охлаждением и полным комплектом интерфейсов.",
+                    axes: "До 4-х осей",
+                    ethercat: "Полная",
+                    screen: "10.4\" Промышленный",
+                    protection: "IP65 (Полная защита)"
+                }
+            ];
+
+
+            // 4. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И СИНХРОННОЙ АНИМАЦИИ
             const modelViewer = document.getElementById('cncModel');
-            const wrappers = document.querySelectorAll('.feature-item-wrapper');
+            const tags = document.querySelectorAll('.feature-item-wrapper');
             const btnPrev = document.getElementById('prevModel');
             const btnNext = document.getElementById('nextModel');
             
+            const infoCard = document.getElementById('infoCard');
+            const infoTitle = document.getElementById('infoTitle');
+            const infoDesc = document.getElementById('infoDesc');
+            const specAxes = document.getElementById('specAxes');
+            const specEthercat = document.getElementById('specEthercat');
+            const specScreen = document.getElementById('specScreen');
+            const specProtection = document.getElementById('specProtection');
+
             let currentIndex = 0;
             let switchTimeout;
             let isDragging = false; 
 
             const modelsArray = [
-                'model.glb', 
-                'model.glb', 
-                'model.glb', 
-                'model.glb', 
-                'model.glb', 
-                'model.glb'  
+                'model.glb', 'model.glb', 'model.glb', 
+                'model.glb', 'model.glb', 'model.glb'  
             ];
 
             function activateModel(index) {
                 if (index === currentIndex) return;
 
-                wrappers[currentIndex].classList.remove('active');
-                wrappers[index].classList.add('active');
+                tags[currentIndex].classList.remove('active');
+                tags[index].classList.add('active');
                 currentIndex = index;
 
-                // 1. Отправляем модель вниз
+                // 1. 3D модель уезжает вниз, а карточка текста затухает синхронно
                 modelViewer.classList.add('slide-down');
+                infoCard.classList.add('fade-out');
 
-                // 2. Ждем 400мс, телепортируем наверх и меняем источник
+                // 2. Ждем окончания анимации (400мс)
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
+                    // Телепортируем 3D модель наверх и меняем данные текста
                     modelViewer.classList.add('snap-top');
                     modelViewer.classList.remove('slide-down');
                     
                     modelViewer.src = modelsArray[index];
 
+                    // Обновляем текст характеристик
+                    const data = specsData[index];
+                    infoTitle.textContent = data.title;
+                    infoDesc.textContent = data.desc;
+                    specAxes.textContent = data.axes;
+                    specEthercat.textContent = data.ethercat;
+                    specScreen.textContent = data.screen;
+                    specProtection.textContent = data.protection;
+
                     void modelViewer.offsetWidth;
 
+                    // Возвращаем модель на место и проявляем текст
                     modelViewer.classList.remove('snap-top');
+                    infoCard.classList.remove('fade-out');
+                    
                 }, 400); 
             }
 
-            wrappers.forEach((wrapper) => {
-                wrapper.addEventListener('mouseenter', () => {
-                    const idx = parseInt(wrapper.getAttribute('data-index'));
+            tags.forEach((tag, idx) => {
+                tag.addEventListener('mouseenter', () => {
                     activateModel(idx);
                 });
             });
 
             btnPrev.addEventListener('click', () => {
                 let newIndex = currentIndex - 1;
-                if (newIndex < 0) newIndex = wrappers.length - 1;
+                if (newIndex < 0) newIndex = tags.length - 1;
                 activateModel(newIndex);
             });
 
             btnNext.addEventListener('click', () => {
                 let newIndex = currentIndex + 1;
-                if (newIndex >= wrappers.length) newIndex = 0;
+                if (newIndex >= tags.length) newIndex = 0;
                 activateModel(newIndex);
             });
 
+            // Умное вращение за мышкой
+            const modelSection = document.querySelector('.model-section');
             if (modelSection && modelViewer) {
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
