@@ -61,6 +61,7 @@
             color: var(--text-light);
             background: var(--bg-grad-main);
             line-height: 1.6;
+            overflow-x: hidden; /* Защита от горизонтального скролла */
         }
 
         .container {
@@ -238,23 +239,37 @@
             color: var(--text-body);
         }
 
-        /* --- НОВЫЙ РАЗДЕЛ: 3D МОДЕЛЬ --- */
+        /* --- ОБНОВЛЕННЫЙ РАЗДЕЛ: 3D МОДЕЛЬ --- */
         .model-section {
-            padding: 100px 0;
-            /* Единый черный фон для всего раздела */
-            background-color: #111316; 
+            padding: 90px 0;
+            background-color: #0a0b0d; /* Глубокий черный фон для всего раздела */
             border-bottom: 1px solid var(--border-color);
+            overflow: hidden; /* Важно, чтобы скрывать модель, выходящую за рамки экрана */
         }
 
         .model-grid {
             display: grid;
-            grid-template-columns: 3fr 7fr; /* Текст 30%, Модель 70% */
+            grid-template-columns: 3.5fr 6.5fr; /* Текст 35%, Модель 65% */
             gap: 20px;
-            align-items: center;
+            align-items: start; /* Поднимаем элементы максимально наверх */
+            min-height: 600px;
+        }
+
+        .model-text {
+            margin-top: 130px; /* Позиционируем текст выше */
+            transform: translateY(120px); /* Текст начинает свой путь снизу-вверх */
+            opacity: 0;
+            transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-out;
+        }
+
+        /* Появление текста */
+        .model-section.visible .model-text {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         .model-text h2 {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             line-height: 1.1;
             margin-bottom: 0;
             color: var(--text-light);
@@ -266,27 +281,28 @@
 
         .model-viewer-wrapper {
             position: relative;
-            width: 100%;
-            height: 650px; /* Увеличили размер модели */
+            width: 125%; /* Увеличили блок, чтобы модель заняла весь край */
+            height: 750px; /* Сделали ее огромной */
+            margin-right: -25%; /* Сместили максимально вправо к границе экрана */
+            margin-top: -60px; /* Подняли наверх */
             border: none; 
-            background: transparent; /* Убрали фон у контейнера - сливается с секцией */
-            overflow: hidden; /* Скрывает выпадающую сверху модель */
+            background: transparent; /* Убрали фон у контейнера */
             box-shadow: none; 
-            margin-right: -40px; /* Сдвигаем ближе к краю */
-            cursor: grab;
+            cursor: default; /* Убрали иконку руки */
         }
 
         .model-box {
             width: 100%;
             height: 100%;
-            transform: translateY(-130%); /* Прячем высоко наверх */
+            transform: translateX(80%); /* Прячем модель сильно справа */
             opacity: 0;
-            /* Очень медленное и плавное падение */
-            transition: transform 3.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2.5s ease-in-out;
+            /* Очень медленное и плавное появление СПРАВА НАЛЕВО */
+            transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
         }
 
-        .model-viewer-wrapper.visible .model-box {
-            transform: translateY(0);
+        /* Появление 3D модели */
+        .model-section.visible .model-box {
+            transform: translateX(0);
             opacity: 1;
         }
 
@@ -653,9 +669,18 @@
             .model-grid {
                 text-align: center;
             }
+            .model-text {
+                margin-top: 20px;
+                transform: translateY(60px);
+            }
             .model-viewer-wrapper {
-                height: 450px;
+                width: 100%;
                 margin-right: 0;
+                margin-top: 0;
+                height: 450px;
+            }
+            .model-box {
+                transform: translateX(30%); /* Мобильная анимация */
             }
             .catalog-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -720,16 +745,17 @@
         </div>
     </section>
 
-    <!-- НОВЫЙ РАЗДЕЛ С 3D МОДЕЛЬЮ И АНИМАЦИЕЙ -->
+    <!-- ОБНОВЛЕННЫЙ РАЗДЕЛ С 3D МОДЕЛЬЮ И ИНТЕРАКТИВНОЙ АНИМАЦИЕЙ -->
     <section class="model-section">
         <div class="container model-grid">
+            <!-- Текст появляется снизу вверх -->
             <div class="model-text">
                 <h2>АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
             </div>
             
             <div class="model-viewer-wrapper" id="modelWrapper">
+                <!-- Модель появляется справа налево и следит за курсором -->
                 <div class="model-box">
-                    <!-- Модель, вращением которой мы управляем через курсор -->
                     <model-viewer 
                         id="cncModel"
                         src="model.glb" 
@@ -948,49 +974,48 @@
         </div>
     </footer>
 
-    <!-- JS Скрипт для анимации появления 3D модели и отслеживания мыши -->
+    <!-- JS Скрипт для анимаций и отслеживания курсора -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Плавное падение при скролле
+            // 1. Плавное выплывание при скролле
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
+                        // Убирает класс для повторной анимации (можно закомментировать, чтобы анимация сработала 1 раз)
                         entry.target.classList.remove('visible');
                     }
                 });
             }, { threshold: 0.2 });
 
-            const modelWrapper = document.getElementById('modelWrapper');
-            if (modelWrapper) {
-                observer.observe(modelWrapper);
+            const modelSection = document.querySelector('.model-section');
+            if (modelSection) {
+                observer.observe(modelSection);
             }
 
-            // 2. Интерактивный поворот за мышкой (максимум на 70 градусов)
-            const modelSection = document.querySelector('.model-section');
+            // 2. Интерактивный поворот модели за мышкой (максимум на 70 градусов)
             const modelViewer = document.getElementById('cncModel');
 
             if (modelSection && modelViewer) {
                 modelSection.addEventListener('mousemove', (e) => {
-                    // Вычисляем позицию мыши относительно блока (от -0.5 до 0.5)
                     const rect = modelSection.getBoundingClientRect();
+                    // Вычисляем позицию мыши относительно блока (от -0.5 до 0.5)
                     const x = (e.clientX - rect.left) / rect.width - 0.5;
                     const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-                    // Задаем угол поворота. 
-                    // x * 70 дает диапазон от -35 до +35 градусов (в сумме 70)
+                    // Задаем угол поворота (x * 70 дает диапазон от -35 до +35 градусов, в сумме 70)
                     const yaw = x * 70; 
                     
                     // Легкий наклон вверх/вниз для эффекта объема
                     const pitch = 80 + (y * 20); 
 
-                    // Применяем к 3D модели
+                    // Применяем новые углы к 3D модели
                     modelViewer.cameraOrbit = `${yaw}deg ${pitch}deg auto`;
                 });
 
-                // Возврат в исходное положение, если мышка ушла из блока
+                // Возврат в центральное положение, если мышка ушла из блока
                 modelSection.addEventListener('mouseleave', () => {
                     modelViewer.cameraOrbit = `0deg 80deg auto`;
                 });
