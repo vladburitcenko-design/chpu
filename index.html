@@ -265,7 +265,7 @@
             grid-template-columns: 3.8fr 6.2fr; 
             gap: 20px;
             align-items: start; 
-            min-height: 850px; /* Увеличена минимальная высота секции */
+            min-height: 850px; 
         }
 
         .model-text {
@@ -344,7 +344,7 @@
             color: var(--text-light);
         }
 
-        /* АКТИВНЫЙ ПУНКТ */
+        /* АКТИВНЫЙ ПУНКТ МЕНЮ */
         .feature-item-wrapper.active .feature-tag {
             transform: translateX(12px) scale(1.02); 
             background: rgba(255, 107, 0, 0.12); 
@@ -353,7 +353,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
-        /* Список характеристик под активной моделью (с анимацией барабана) */
+        /* Список характеристик под активной моделью */
         .model-specs {
             max-height: 0;
             overflow: hidden;
@@ -365,7 +365,6 @@
             border-left: 2px dashed rgba(255, 107, 0, 0.3);
             margin-left: 12px;
             
-            /* Плавная анимация ухода и появления характеристик синхронно с 3D */
             transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
                         opacity 0.4s ease-in-out, 
                         margin-top 0.4s ease-in-out;
@@ -394,7 +393,7 @@
             border-radius: 50%;
         }
 
-        /* 3D БЛОК */
+        /* 3D БЛОК И ОПИСАНИЯ */
         .model-viewer-container {
             display: flex;
             flex-direction: column;
@@ -403,7 +402,8 @@
             width: 125%; 
             margin-right: -25%; 
             margin-top: -30px; 
-            min-height: 750px; /* Увеличена минимальная высота */
+            min-height: 750px; 
+            transition: all 0.4s ease; /* Для плавности при переброске на мобильных */
         }
 
         .model-viewer-wrapper {
@@ -418,8 +418,8 @@
         /* Описание под 3D моделью */
         .cnc-description-wrapper {
             position: relative;
-            min-height: 60px; /* Фиксированная высота для предотвращения скачков */
-            width: 80%; /* Ограничение ширины описания */
+            min-height: 60px; 
+            width: 80%; 
             margin-top: 20px;
             text-align: center;
         }
@@ -435,7 +435,6 @@
             color: var(--text-body);
             line-height: 1.5;
             
-            /* Настройка анимации */
             opacity: 0;
             transform: translateY(10px);
             transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
@@ -511,7 +510,7 @@
             cursor: grabbing;
         }
 
-        /* Классы анимации барабана для 3D модели */
+        /* Анимации барабана для 3D модели */
         model-viewer.slide-down {
             transform: translateY(100%);
             opacity: 0;
@@ -736,24 +735,28 @@
             .hero-grid, .model-grid, .warranty-box, .delivery-content, .cta-grid {
                 grid-template-columns: 1fr;
             }
-            .model-grid { text-align: center; min-height: auto; }
+            .model-grid { 
+                text-align: center; 
+                min-height: auto; 
+            }
             .model-title { font-size: 2.5rem; }
             .model-features { align-items: center; }
             .feature-item-wrapper { max-width: 100%; }
-            .model-specs { padding-left: 0; border-left: none; }
+            .model-specs { padding-left: 0; border-left: none; align-items: center; }
             
+            /* На мобильных контейнер с 3D уходит ВНУТРЬ списка */
             .model-viewer-container {
                 width: 100%;
                 margin-right: 0;
-                margin-top: 0;
-                min-height: 500px;
+                margin-top: 15px;
+                min-height: auto;
             }
 
             .model-viewer-wrapper {
-                height: 400px;
+                height: 350px;
             }
             
-            .cnc-description-wrapper { width: 100%; }
+            .cnc-description-wrapper { width: 100%; min-height: 80px;}
 
             .left-arrow { left: 10px; }
             .right-arrow { right: 10px; }
@@ -794,7 +797,9 @@
             .feature-tag { font-size: 0.8rem; padding: 12px; text-align: left; }
             
             .model-arrow { width: 40px; height: 40px; font-size: 1rem; }
-            .model-viewer-wrapper { height: 350px; }
+            .model-viewer-wrapper { height: 280px; }
+            .cnc-description-wrapper { min-height: 100px; }
+            .cnc-desc { font-size: 0.85rem; }
             
             .warranty-box { flex-direction: column; padding: 30px 20px; text-align: center; }
             .warranty-box .img-placeholder { width: 100%; height: 200px; margin-bottom: 20px; }
@@ -928,7 +933,7 @@
                 </div>
             </div>
             
-            <div class="model-viewer-container">
+            <div class="model-viewer-container" id="mainModelContainer">
                 <div class="model-viewer-wrapper" id="modelWrapper">
                     
                     <div class="model-arrow left-arrow" id="prevModel">
@@ -1108,12 +1113,14 @@
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
 
-            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ И ОПИСАНИЙ
+            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ, ОПИСАНИЙ И МОБИЛЬНАЯ АДАПТАЦИЯ
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
-            const descriptions = document.querySelectorAll('.cnc-desc'); // Выбираем все описания
+            const descriptions = document.querySelectorAll('.cnc-desc'); 
             const btnPrev = document.getElementById('prevModel');
             const btnNext = document.getElementById('nextModel');
+            const mainModelContainer = document.getElementById('mainModelContainer');
+            const modelGrid = document.querySelector('.model-grid');
             
             let currentIndex = 0;
             let switchTimeout;
@@ -1128,6 +1135,27 @@
                 'model.glb'  
             ];
 
+            // Функция для правильного расположения контейнера 3D на телефонах и ПК
+            function updateContainerPosition(index) {
+                if (window.innerWidth <= 992) {
+                    // Если мобильный телефон/планшет - помещаем всю модель внутрь выбранного пункта
+                    wrappers[index].appendChild(mainModelContainer);
+                } else {
+                    // Если ПК - возвращаем модель обратно в основную сетку справа
+                    modelGrid.appendChild(mainModelContainer);
+                }
+            }
+
+            // Вызываем при загрузке страницы, чтобы сразу поставить модель куда надо
+            updateContainerPosition(currentIndex);
+
+            // И при изменении размера окна браузера тоже проверяем позицию
+            window.addEventListener('resize', () => {
+                updateContainerPosition(currentIndex);
+            });
+
+
+            // Функция переключения модели
             function activateModel(index) {
                 if (index === currentIndex) return;
 
@@ -1140,6 +1168,12 @@
                 descriptions[index].classList.add('active');
 
                 currentIndex = index;
+
+                // СРАЗУ перекидываем контейнер в новый пункт (для мобильных телефонов), 
+                // чтобы аккордеон раскрылся и модель плавно появилась уже в новом месте
+                if (window.innerWidth <= 992) {
+                    wrappers[index].appendChild(mainModelContainer);
+                }
 
                 // 1. Отправляем модель вниз
                 modelViewer.classList.add('slide-down');
@@ -1159,19 +1193,22 @@
             }
 
             wrappers.forEach((wrapper) => {
-                wrapper.addEventListener('mouseenter', () => {
+                // Изменено на click, чтобы на телефонах тоже отлично работало
+                wrapper.addEventListener('click', () => {
                     const idx = parseInt(wrapper.getAttribute('data-index'));
                     activateModel(idx);
                 });
             });
 
-            btnPrev.addEventListener('click', () => {
+            btnPrev.addEventListener('click', (e) => {
+                e.stopPropagation(); // Защита от лишних срабатываний при клике на стрелку внутри списка на мобильных
                 let newIndex = currentIndex - 1;
                 if (newIndex < 0) newIndex = wrappers.length - 1;
                 activateModel(newIndex);
             });
 
-            btnNext.addEventListener('click', () => {
+            btnNext.addEventListener('click', (e) => {
+                e.stopPropagation();
                 let newIndex = currentIndex + 1;
                 if (newIndex >= wrappers.length) newIndex = 0;
                 activateModel(newIndex);
