@@ -265,7 +265,7 @@
             grid-template-columns: 3.8fr 6.2fr; 
             gap: 20px;
             align-items: start; 
-            min-height: 600px;
+            min-height: 850px; /* Увеличена минимальная высота секции */
         }
 
         .model-text {
@@ -395,15 +395,61 @@
         }
 
         /* 3D БЛОК */
-        .model-viewer-wrapper {
+        .model-viewer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
             width: 125%; 
-            height: 650px; 
             margin-right: -25%; 
             margin-top: -30px; 
+            min-height: 750px; /* Увеличена минимальная высота */
+        }
+
+        .model-viewer-wrapper {
+            position: relative;
+            width: 100%; 
+            height: 650px; 
             border: none; 
             background: transparent; 
             box-shadow: none; 
+        }
+
+        /* Описание под 3D моделью */
+        .cnc-description-wrapper {
+            position: relative;
+            min-height: 60px; /* Фиксированная высота для предотвращения скачков */
+            width: 80%; /* Ограничение ширины описания */
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .cnc-desc {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 1rem;
+            color: var(--text-body);
+            line-height: 1.5;
+            
+            /* Настройка анимации */
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            pointer-events: none;
+        }
+
+        .cnc-desc.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .cnc-desc strong {
+            color: var(--primary-orange);
         }
 
         /* Стрелочки переключения */
@@ -690,19 +736,25 @@
             .hero-grid, .model-grid, .warranty-box, .delivery-content, .cta-grid {
                 grid-template-columns: 1fr;
             }
-            .model-grid { text-align: center; }
+            .model-grid { text-align: center; min-height: auto; }
             .model-title { font-size: 2.5rem; }
             .model-features { align-items: center; }
             .feature-item-wrapper { max-width: 100%; }
             .model-specs { padding-left: 0; border-left: none; }
             
-            .model-viewer-wrapper {
+            .model-viewer-container {
                 width: 100%;
                 margin-right: 0;
                 margin-top: 0;
+                min-height: 500px;
+            }
+
+            .model-viewer-wrapper {
                 height: 400px;
             }
             
+            .cnc-description-wrapper { width: 100%; }
+
             .left-arrow { left: 10px; }
             .right-arrow { right: 10px; }
             
@@ -876,31 +928,55 @@
                 </div>
             </div>
             
-            <div class="model-viewer-wrapper" id="modelWrapper">
-                
-                <div class="model-arrow left-arrow" id="prevModel">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </div>
-                <div class="model-arrow right-arrow" id="nextModel">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <div class="model-viewer-container">
+                <div class="model-viewer-wrapper" id="modelWrapper">
+                    
+                    <div class="model-arrow left-arrow" id="prevModel">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </div>
+                    <div class="model-arrow right-arrow" id="nextModel">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+
+                    <div class="model-box">
+                        <model-viewer 
+                            id="cncModel"
+                            src="model.glb" 
+                            poster="image_c63bc3.png"
+                            alt="3D модель ЧПУ панели" 
+                            camera-controls
+                            camera-orbit="0deg 80deg auto"
+                            min-camera-orbit="-35deg 60deg auto"
+                            max-camera-orbit="35deg 100deg auto"
+                            interaction-prompt="none"
+                            disable-zoom
+                            disable-pan
+                            loading="eager"
+                            style="touch-action: pan-y;">
+                        </model-viewer>
+                    </div>
                 </div>
 
-                <div class="model-box">
-                    <model-viewer 
-                        id="cncModel"
-                        src="model.glb" 
-                        poster="image_c63bc3.png"
-                        alt="3D модель ЧПУ панели" 
-                        camera-controls
-                        camera-orbit="0deg 80deg auto"
-                        min-camera-orbit="-35deg 60deg auto"
-                        max-camera-orbit="35deg 100deg auto"
-                        interaction-prompt="none"
-                        disable-zoom
-                        disable-pan
-                        loading="eager"
-                        style="touch-action: pan-y;">
-                    </model-viewer>
+                <!-- Блок с описаниями под 3D-моделью -->
+                <div class="cnc-description-wrapper">
+                    <p class="cnc-desc active" data-desc-index="0">
+                        <strong>TITANIUM LIGHT:</strong> Оптимальное решение для базовых задач. Высокая надежность и интуитивно понятный интерфейс обеспечивают стабильную работу оборудования.
+                    </p>
+                    <p class="cnc-desc" data-desc-index="1">
+                        <strong>TITANIUM DIGITAL:</strong> Продвинутая цифровая система для сложных производств. Обеспечивает максимальную точность и поддерживает интеграцию с современными промышленными сетями.
+                    </p>
+                    <p class="cnc-desc" data-desc-index="2">
+                        <strong>TITANIUM MINI LIGHT:</strong> Компактная версия без компромиссов в функционале. Идеально подходит для станков с ограниченным пространством установки.
+                    </p>
+                    <p class="cnc-desc" data-desc-index="3">
+                        <strong>TITANIUM MINI DIGITAL:</strong> Мощь цифровых технологий в миниатюрном корпусе. Быстрый отклик и поддержка EtherCAT делают её лидером в своем классе.
+                    </p>
+                    <p class="cnc-desc" data-desc-index="4">
+                        <strong>TITANIUM BASIC LIGHT:</strong> Экономичное и надежное решение. Проверенная временем архитектура гарантирует бесперебойную работу годами.
+                    </p>
+                    <p class="cnc-desc" data-desc-index="5">
+                        <strong>TITANIUM BASIC DIGITAL:</strong> Сочетание базовой надежности и современных цифровых возможностей. Полный контроль и гибкость настроек для любых задач.
+                    </p>
                 </div>
             </div>
         </div>
@@ -1032,9 +1108,10 @@
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
 
-            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ (Карусель сверху-вниз)
+            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ И ОПИСАНИЙ
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
+            const descriptions = document.querySelectorAll('.cnc-desc'); // Выбираем все описания
             const btnPrev = document.getElementById('prevModel');
             const btnNext = document.getElementById('nextModel');
             
@@ -1054,8 +1131,14 @@
             function activateModel(index) {
                 if (index === currentIndex) return;
 
+                // Переключение активного класса в левом меню
                 wrappers[currentIndex].classList.remove('active');
                 wrappers[index].classList.add('active');
+                
+                // Переключение активного описания с анимацией
+                descriptions[currentIndex].classList.remove('active');
+                descriptions[index].classList.add('active');
+
                 currentIndex = index;
 
                 // 1. Отправляем модель вниз
