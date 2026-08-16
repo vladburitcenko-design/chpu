@@ -234,7 +234,7 @@
             will-change: transform, opacity;
         }
 
-        /* Квадраты: задержка старта увеличена до 1.5s, убран рывок, добавлено 3D-ускорение */
+        /* Квадраты: задержка старта 1.5s, 3D-ускорение */
         .stat-wrapper:nth-child(1) { 
             transform: translate3d(-30%, -30%, 0) scale(0.4); 
             transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.5s, opacity 1.2s ease-out 1.5s; 
@@ -310,7 +310,7 @@
             margin-top: 50px;
         }
 
-        /* ОПТИМИЗАЦИЯ 3D-заголовка */
+        /* Заголовок ЧПУ секции */
         .model-title {
             font-size: 3.5rem;
             line-height: 1.1;
@@ -1149,12 +1149,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления для главного экрана и 3D секции (МНОГОРАЗОВО)
+            // 1. Анимация появления (МНОГОРАЗОВО)
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
+                        // Важно: мы удаляем класс, только когда секция ПОЛНОСТЬЮ уходит за экран (threshold: 0),
+                        // иначе анимация будет дергаться при частичном скролле
                         entry.target.classList.remove('visible');
                     }
                 });
