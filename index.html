@@ -182,17 +182,18 @@
             align-items: center;
         }
 
+        /* Заголовок: Очень плавное появление */
         .hero-title-group {
             opacity: 0;
-            transform: translate3d(-40px, -40px, 0);
-            transition: transform 0.4s ease, opacity 0.4s ease; 
+            transform: translate3d(-50px, -30px, 0);
+            transition: transform 0.8s ease, opacity 0.8s ease; 
             will-change: transform, opacity;
         }
 
         .hero-section.visible .hero-title-group {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease-out; 
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease-out; 
         }
 
         .hero-title-group h1 {
@@ -202,17 +203,18 @@
             text-transform: uppercase;
         }
 
+        /* Описание */
         .hero-desc-group {
             opacity: 0;
-            transform: translate3d(0, 50px, 0);
-            transition: transform 0.4s ease, opacity 0.4s ease; 
+            transform: translate3d(0, 40px, 0);
+            transition: transform 0.8s ease, opacity 0.8s ease; 
             will-change: transform, opacity;
         }
 
         .hero-section.visible .hero-desc-group {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s;
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, opacity 1.5s ease-out 0.4s;
         }
 
         .hero-desc-group p {
@@ -221,33 +223,44 @@
             margin-bottom: 20px;
         }
 
+        /* Блок 4-х карточек статистики */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
+        /* Квадраты: плавное, мягкое затухание при скрытии */
         .stat-wrapper {
             display: flex;
             opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease; 
+            transition: transform 0.6s ease, opacity 0.6s ease; 
             will-change: transform, opacity;
         }
 
-        .stat-wrapper:nth-child(1) { transform: translate3d(-30%, -30%, 0) scale(0.4); }
-        .stat-wrapper:nth-child(2) { transform: translate3d(30%, -30%, 0) scale(0.4); }
-        .stat-wrapper:nth-child(3) { transform: translate3d(-30%, 30%, 0) scale(0.4); }
-        .stat-wrapper:nth-child(4) { transform: translate3d(30%, 30%, 0) scale(0.4); }
+        .stat-wrapper:nth-child(1) { transform: translate3d(-20%, -20%, 0) scale(0.6); }
+        .stat-wrapper:nth-child(2) { transform: translate3d(20%, -20%, 0) scale(0.6); }
+        .stat-wrapper:nth-child(3) { transform: translate3d(-20%, 20%, 0) scale(0.6); }
+        .stat-wrapper:nth-child(4) { transform: translate3d(20%, 20%, 0) scale(0.6); }
 
         .hero-section.visible .stat-wrapper {
             opacity: 1;
             transform: translate3d(0, 0, 0) scale(1);
         }
 
-        .hero-section.visible .stat-wrapper:nth-child(1) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, opacity 1.2s ease-out 0.8s; }
-        .hero-section.visible .stat-wrapper:nth-child(2) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.95s, opacity 1.2s ease-out 0.95s; }
-        .hero-section.visible .stat-wrapper:nth-child(3) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.1s, opacity 1.2s ease-out 1.1s; }
-        .hero-section.visible .stat-wrapper:nth-child(4) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.25s, opacity 1.2s ease-out 1.25s; }
+        /* Длинные тайминги появления (1.8s) и задержки лесенкой */
+        .hero-section.visible .stat-wrapper:nth-child(1) { 
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s; 
+        }
+        .hero-section.visible .stat-wrapper:nth-child(2) { 
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, opacity 1.5s ease-out 0.8s; 
+        }
+        .hero-section.visible .stat-wrapper:nth-child(3) { 
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.0s, opacity 1.5s ease-out 1.0s; 
+        }
+        .hero-section.visible .stat-wrapper:nth-child(4) { 
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, opacity 1.5s ease-out 1.2s; 
+        }
 
         .stat-item {
             width: 100%;
@@ -302,15 +315,16 @@
             margin-top: 50px;
         }
 
+        /* Заголовок секции с 3D моделью */
         .model-title {
             font-size: 3.5rem;
             line-height: 1.1;
             margin-bottom: 25px;
             color: var(--text-light);
             
-            transform: translate3d(0, 120px, 0); 
+            transform: translate3d(0, 100px, 0); 
             opacity: 0;
-            transition: transform 0.4s ease, opacity 0.4s ease; 
+            transition: transform 0.8s ease, opacity 0.8s ease; 
             will-change: transform, opacity; 
         }
 
@@ -338,22 +352,21 @@
             
             transform: translate3d(-100px, 0, 0);
             opacity: 0;
-            transition: transform 0.4s ease, opacity 0.4s ease;
+            transition: transform 0.6s ease, opacity 0.6s ease;
             will-change: transform, opacity;
         }
 
         .model-features.visible .feature-item-wrapper {
             transform: translate3d(0, 0, 0);
             opacity: 1;
-            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease-out;
         }
 
-        .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
-        .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.15s; }
-        .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.3s; }
-        .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.45s; }
-        .model-features.visible .feature-item-wrapper:nth-child(5) { transition-delay: 0.6s; }
-        .model-features.visible .feature-item-wrapper:nth-child(6) { transition-delay: 0.75s; }
+        .model-features.visible .feature-item-wrapper:nth-child(1) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0s, opacity 1.5s ease-out 0s; }
+        .model-features.visible .feature-item-wrapper:nth-child(2) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, opacity 1.5s ease-out 0.15s; }
+        .model-features.visible .feature-item-wrapper:nth-child(3) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1.5s ease-out 0.3s; }
+        .model-features.visible .feature-item-wrapper:nth-child(4) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.45s, opacity 1.5s ease-out 0.45s; }
+        .model-features.visible .feature-item-wrapper:nth-child(5) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s; }
+        .model-features.visible .feature-item-wrapper:nth-child(6) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.75s, opacity 1.5s ease-out 0.75s; }
 
         .feature-tag {
             display: block;
@@ -367,7 +380,7 @@
             border-radius: 4px;
             width: 100%;
             cursor: pointer;
-            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .model-features .feature-item-wrapper:hover:not(.active) .feature-tag {
@@ -397,9 +410,9 @@
             border-left: 2px dashed rgba(255, 107, 0, 0.3);
             margin-left: 12px;
             
-            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.4s ease-in-out, 
-                        margin-top 0.4s ease-in-out;
+            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.5s ease-in-out, 
+                        margin-top 0.5s ease-in-out;
         }
 
         .feature-item-wrapper.active .model-specs {
@@ -469,7 +482,7 @@
             
             opacity: 0;
             transform: translate3d(0, 15px, 0);
-            transition: opacity 0.5s ease-in-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.5s ease-in-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
 
@@ -513,19 +526,20 @@
         .left-arrow { left: 40px; }
         .right-arrow { right: 40px; }
 
+        /* Внешний контейнер модели: Плавное появление при скролле */
         .model-box {
             width: 100%;
             height: 100%;
             transform: translate3d(80%, 0, 0); 
             opacity: 0;
-            transition: transform 0.4s ease, opacity 0.4s ease;
+            transition: transform 0.6s ease, opacity 0.6s ease;
             will-change: transform, opacity;
         }
 
         .model-section.visible .model-box {
             transform: translate3d(0, 0, 0);
             opacity: 1;
-            transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
+            transition: transform 3s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-in-out;
         }
 
         model-viewer {
@@ -534,7 +548,7 @@
             background-color: transparent;
             --poster-color: transparent;
             cursor: grab; 
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-in-out;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-in-out;
             transform: translate3d(0, 0, 0);
             opacity: 1;
         }
@@ -1143,13 +1157,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления для главного экрана и 3D секции (МНОГОРАЗОВО)
+            // 1. Анимация появления (МНОГОРАЗОВО)
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // Убираем класс только когда секция полностью покинула экран, чтобы избежать мерцания
+                        // Убираем класс, только когда секция полностью покинула экран
                         entry.target.classList.remove('visible');
                     }
                 });
@@ -1176,7 +1190,7 @@
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
 
-            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
+            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ, ОПИСАНИЙ И МОБИЛЬНАЯ АДАПТАЦИЯ
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
             const descriptions = document.querySelectorAll('.cnc-desc'); 
@@ -1242,19 +1256,14 @@
                 }, 400); 
             }
 
-            // ПК: Наведение мыши
-            // Телефоны: Клик по пункту
             wrappers.forEach((wrapper) => {
-                // Изменили на mouseenter для ПК, но на телефонах он сработает как touch
                 wrapper.addEventListener('mouseenter', () => {
-                    // Проверка, чтобы на мобильных устройствах не переключалось при случайном свайпе
                     if (window.innerWidth > 992) {
                         const idx = parseInt(wrapper.getAttribute('data-index'));
                         activateModel(idx);
                     }
                 });
                 
-                // Специальный клик для мобильных
                 wrapper.addEventListener('click', () => {
                     if (window.innerWidth <= 992) {
                         const idx = parseInt(wrapper.getAttribute('data-index'));
