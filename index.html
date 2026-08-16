@@ -167,7 +167,9 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* --- ГЛАВНЫЙ ЭКРАН (С ОПТИМИЗИРОВАННЫМИ АНИМАЦИЯМИ) --- */
+        /* =========================================
+           РАЗДЕЛ 1: ГЛАВНЫЙ ЭКРАН (БЫСТРЫЙ И ОПТИМИЗИРОВАННЫЙ)
+           ========================================= */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -182,18 +184,17 @@
             align-items: center;
         }
 
-        /* Заголовок: Очень плавное появление */
         .hero-title-group {
             opacity: 0;
-            transform: translate3d(-50px, -30px, 0);
-            transition: transform 0.8s ease, opacity 0.8s ease; 
+            transform: translate3d(-40px, -40px, 0);
+            transition: transform 0.4s ease, opacity 0.4s ease; 
             will-change: transform, opacity;
         }
 
         .hero-section.visible .hero-title-group {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease-out; 
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease-out; 
         }
 
         .hero-title-group h1 {
@@ -203,18 +204,17 @@
             text-transform: uppercase;
         }
 
-        /* Описание */
         .hero-desc-group {
             opacity: 0;
-            transform: translate3d(0, 40px, 0);
-            transition: transform 0.8s ease, opacity 0.8s ease; 
+            transform: translate3d(0, 50px, 0);
+            transition: transform 0.4s ease, opacity 0.4s ease; 
             will-change: transform, opacity;
         }
 
         .hero-section.visible .hero-desc-group {
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, opacity 1.5s ease-out 0.4s;
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s;
         }
 
         .hero-desc-group p {
@@ -223,44 +223,33 @@
             margin-bottom: 20px;
         }
 
-        /* Блок 4-х карточек статистики */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
-        /* Квадраты: плавное, мягкое затухание при скрытии */
         .stat-wrapper {
             display: flex;
             opacity: 0;
-            transition: transform 0.6s ease, opacity 0.6s ease; 
+            transition: transform 0.3s ease, opacity 0.3s ease; 
             will-change: transform, opacity;
         }
 
-        .stat-wrapper:nth-child(1) { transform: translate3d(-20%, -20%, 0) scale(0.6); }
-        .stat-wrapper:nth-child(2) { transform: translate3d(20%, -20%, 0) scale(0.6); }
-        .stat-wrapper:nth-child(3) { transform: translate3d(-20%, 20%, 0) scale(0.6); }
-        .stat-wrapper:nth-child(4) { transform: translate3d(20%, 20%, 0) scale(0.6); }
+        .stat-wrapper:nth-child(1) { transform: translate3d(-30%, -30%, 0) scale(0.4); }
+        .stat-wrapper:nth-child(2) { transform: translate3d(30%, -30%, 0) scale(0.4); }
+        .stat-wrapper:nth-child(3) { transform: translate3d(-30%, 30%, 0) scale(0.4); }
+        .stat-wrapper:nth-child(4) { transform: translate3d(30%, 30%, 0) scale(0.4); }
 
         .hero-section.visible .stat-wrapper {
             opacity: 1;
             transform: translate3d(0, 0, 0) scale(1);
         }
 
-        /* Длинные тайминги появления (1.8s) и задержки лесенкой */
-        .hero-section.visible .stat-wrapper:nth-child(1) { 
-            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s; 
-        }
-        .hero-section.visible .stat-wrapper:nth-child(2) { 
-            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, opacity 1.5s ease-out 0.8s; 
-        }
-        .hero-section.visible .stat-wrapper:nth-child(3) { 
-            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.0s, opacity 1.5s ease-out 1.0s; 
-        }
-        .hero-section.visible .stat-wrapper:nth-child(4) { 
-            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, opacity 1.5s ease-out 1.2s; 
-        }
+        .hero-section.visible .stat-wrapper:nth-child(1) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, opacity 1.2s ease-out 0.8s; }
+        .hero-section.visible .stat-wrapper:nth-child(2) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.95s, opacity 1.2s ease-out 0.95s; }
+        .hero-section.visible .stat-wrapper:nth-child(3) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.1s, opacity 1.2s ease-out 1.1s; }
+        .hero-section.visible .stat-wrapper:nth-child(4) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.25s, opacity 1.2s ease-out 1.25s; }
 
         .stat-item {
             width: 100%;
@@ -295,7 +284,9 @@
             margin: 0;
         }
 
-        /* --- РАЗДЕЛ: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ --- */
+        /* =========================================
+           РАЗДЕЛ 2: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ (ПЛАВНЫЙ И МЕДЛЕННЫЙ)
+           ========================================= */
         .model-section {
             padding: 90px 0;
             background-color: #0a0b0d; 
@@ -324,6 +315,7 @@
             
             transform: translate3d(0, 100px, 0); 
             opacity: 0;
+            /* Плавное затухание при уходе с экрана */
             transition: transform 0.8s ease, opacity 0.8s ease; 
             will-change: transform, opacity; 
         }
@@ -331,14 +323,15 @@
         .model-section.visible .model-title {
             transform: translate3d(0, 0, 0);
             opacity: 1;
-            transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-out;
+            /* Медленное кинематографичное появление */
+            transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2.5s ease-out;
         }
 
         .model-title span {
             color: var(--primary-orange);
         }
 
-        /* ИНТЕРАКТИВНОЕ МЕНЮ */
+        /* ИНТЕРАКТИВНОЕ МЕНЮ (Лесенка) */
         .model-features {
             display: flex;
             flex-direction: column;
@@ -352,21 +345,25 @@
             
             transform: translate3d(-100px, 0, 0);
             opacity: 0;
-            transition: transform 0.6s ease, opacity 0.6s ease;
+            /* Плавный сброс для премиальности */
+            transition: transform 0.8s ease, opacity 0.8s ease;
             will-change: transform, opacity;
         }
 
         .model-features.visible .feature-item-wrapper {
             transform: translate3d(0, 0, 0);
             opacity: 1;
+            /* Удлиненная плавная анимация появления (1.8s) */
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.8s ease-out;
         }
 
-        .model-features.visible .feature-item-wrapper:nth-child(1) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0s, opacity 1.5s ease-out 0s; }
-        .model-features.visible .feature-item-wrapper:nth-child(2) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, opacity 1.5s ease-out 0.15s; }
-        .model-features.visible .feature-item-wrapper:nth-child(3) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1.5s ease-out 0.3s; }
-        .model-features.visible .feature-item-wrapper:nth-child(4) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.45s, opacity 1.5s ease-out 0.45s; }
-        .model-features.visible .feature-item-wrapper:nth-child(5) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s; }
-        .model-features.visible .feature-item-wrapper:nth-child(6) { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.75s, opacity 1.5s ease-out 0.75s; }
+        /* Увеличенная задержка для красивого эффекта "волны" */
+        .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
+        .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.2s; }
+        .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.4s; }
+        .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.6s; }
+        .model-features.visible .feature-item-wrapper:nth-child(5) { transition-delay: 0.8s; }
+        .model-features.visible .feature-item-wrapper:nth-child(6) { transition-delay: 1.0s; }
 
         .feature-tag {
             display: block;
@@ -380,7 +377,7 @@
             border-radius: 4px;
             width: 100%;
             cursor: pointer;
-            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .model-features .feature-item-wrapper:hover:not(.active) .feature-tag {
@@ -398,7 +395,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
-        /* Список характеристик под активной моделью */
+        /* Список характеристик (Аккордеон) */
         .model-specs {
             max-height: 0;
             overflow: hidden;
@@ -410,9 +407,10 @@
             border-left: 2px dashed rgba(255, 107, 0, 0.3);
             margin-left: 12px;
             
-            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.5s ease-in-out, 
-                        margin-top 0.5s ease-in-out;
+            /* Медленное плавное раскрытие */
+            transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.6s ease-in-out, 
+                        margin-top 0.6s ease-in-out;
         }
 
         .feature-item-wrapper.active .model-specs {
@@ -448,7 +446,7 @@
             margin-right: -25%; 
             margin-top: -30px; 
             min-height: 750px; 
-            transition: all 0.4s ease; 
+            transition: all 0.6s ease; 
         }
 
         .model-viewer-wrapper {
@@ -482,7 +480,8 @@
             
             opacity: 0;
             transform: translate3d(0, 15px, 0);
-            transition: opacity 0.5s ease-in-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Плавное, мягкое затухание текста */
+            transition: opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
 
@@ -532,23 +531,27 @@
             height: 100%;
             transform: translate3d(80%, 0, 0); 
             opacity: 0;
-            transition: transform 0.6s ease, opacity 0.6s ease;
+            /* Мягкий сброс */
+            transition: transform 0.8s ease, opacity 0.8s ease;
             will-change: transform, opacity;
         }
 
         .model-section.visible .model-box {
             transform: translate3d(0, 0, 0);
             opacity: 1;
-            transition: transform 3s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-in-out;
+            /* Очень медленный и плавный выезд из-за экрана (4 секунды) */
+            transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
         }
 
+        /* САМ 3D ПЛЕЕР (АНИМАЦИЯ ПЕРЕКЛЮЧЕНИЯ МОДЕЛЕЙ) */
         model-viewer {
             width: 100%;
             height: 100%;
             background-color: transparent;
             --poster-color: transparent;
             cursor: grab; 
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-in-out;
+            /* Более медленное и плавное переключение "барабана" */
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out;
             transform: translate3d(0, 0, 0);
             opacity: 1;
         }
@@ -557,12 +560,13 @@
             cursor: grabbing;
         }
 
-        /* Анимации барабана для 3D модели */
+        /* Модель медленно и плавно уезжает вниз */
         model-viewer.slide-down {
             transform: translate3d(0, 100%, 0);
             opacity: 0;
         }
 
+        /* Телепортация (без анимации) наверх перед выездом новой */
         model-viewer.snap-top {
             transition: none !important; 
             transform: translate3d(0, -100%, 0);
@@ -1157,13 +1161,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления (МНОГОРАЗОВО)
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // Убираем класс, только когда секция полностью покинула экран
+                        // Класс удаляется ТОЛЬКО при полном уходе с экрана, 
+                        // что предотвращает зависания при коротких скроллах
                         entry.target.classList.remove('visible');
                     }
                 });
@@ -1175,7 +1179,6 @@
             const modelSection = document.querySelector('.model-section');
             if (modelSection) mainObserver.observe(modelSection);
 
-            // 2. Анимация списка меню (МНОГОРАЗОВО)
             const featuresObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1190,7 +1193,7 @@
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
 
-            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ, ОПИСАНИЙ И МОБИЛЬНАЯ АДАПТАЦИЯ
+            // ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
             const descriptions = document.querySelectorAll('.cnc-desc'); 
@@ -1243,6 +1246,7 @@
 
                 modelViewer.classList.add('slide-down');
 
+                // Увеличенный таймаут для более плавной и медленной смены ЧПУ
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
                     modelViewer.classList.add('snap-top');
@@ -1253,7 +1257,7 @@
                     void modelViewer.offsetWidth;
 
                     modelViewer.classList.remove('snap-top');
-                }, 400); 
+                }, 600); 
             }
 
             wrappers.forEach((wrapper) => {
