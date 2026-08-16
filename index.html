@@ -131,27 +131,6 @@
             color: #ffffff;
         }
 
-        .img-placeholder {
-            background-color: var(--bg-placeholder);
-            width: 100%;
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            overflow: hidden; 
-        }
-        
-        .img-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-        }
-
         /* Шапка */
         header {
             background-color: #1a1d21;
@@ -188,11 +167,12 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* Главный экран */
+        /* --- ГЛАВНЫЙ ЭКРАН (С АНИМАЦИЯМИ) --- */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
             border-bottom: 1px solid var(--border-color);
+            overflow: hidden; /* Скрываем вылет элементов за рамки секции */
         }
 
         .hero-grid {
@@ -202,26 +182,89 @@
             align-items: center;
         }
 
-        .hero-text h1 {
+        /* Группа заголовка (вылетает из левого верхнего угла) */
+        .hero-title-group {
+            opacity: 0;
+            transform: translate(-40px, -40px);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease-out;
+            will-change: transform, opacity;
+        }
+
+        .hero-section.visible .hero-title-group {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        .hero-title-group h1 {
             font-size: 2.8rem;
             margin-bottom: 25px;
             line-height: 1.2;
             text-transform: uppercase;
         }
 
-        .hero-text p {
+        /* Группа описания (выплывает снизу) */
+        .hero-desc-group {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease-out 0.3s;
+            will-change: transform, opacity;
+        }
+
+        .hero-section.visible .hero-desc-group {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-desc-group p {
             color: var(--text-body);
             font-size: 1.1rem;
             margin-bottom: 20px;
         }
 
+        /* Блок 4-х карточек статистики */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
+        /* Обёртка карточек для стартовой позиции (из углов) */
+        .stat-wrapper {
+            display: flex;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        /* Карточка 1: Летит из левого верхнего угла */
+        .stat-wrapper:nth-child(1) { 
+            transform: translate(-30%, -30%) scale(0.4); 
+            transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1.1) 0.6s, opacity 0.6s ease-out 0.6s; 
+        }
+        /* Карточка 2: Летит из правого верхнего угла */
+        .stat-wrapper:nth-child(2) { 
+            transform: translate(30%, -30%) scale(0.4); 
+            transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1.1) 0.75s, opacity 0.6s ease-out 0.75s; 
+        }
+        /* Карточка 3: Летит из левого нижнего угла */
+        .stat-wrapper:nth-child(3) { 
+            transform: translate(-30%, 30%) scale(0.4); 
+            transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1.1) 0.9s, opacity 0.6s ease-out 0.9s; 
+        }
+        /* Карточка 4: Летит из правого нижнего угла */
+        .stat-wrapper:nth-child(4) { 
+            transform: translate(30%, 30%) scale(0.4); 
+            transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1.1) 1.05s, opacity 0.6s ease-out 1.05s; 
+        }
+
+        /* Состояние после завершения анимации */
+        .hero-section.visible .stat-wrapper {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+
+        /* Сама карточка и ховер-эффект */
         .stat-item {
+            width: 100%;
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             padding: 30px 20px;
@@ -229,7 +272,7 @@
             text-align: center;
             border-bottom: 4px solid var(--primary-orange);
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s, background-color 0.3s;
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
         }
         
         .stat-item:hover {
@@ -250,6 +293,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-body);
+            margin: 0;
         }
 
         /* --- РАЗДЕЛ: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ --- */
@@ -403,7 +447,7 @@
             margin-right: -25%; 
             margin-top: -30px; 
             min-height: 750px; 
-            transition: all 0.4s ease; /* Для плавности при переброске на мобильных */
+            transition: all 0.4s ease; 
         }
 
         .model-viewer-wrapper {
@@ -592,6 +636,21 @@
             box-shadow: 0 15px 40px rgba(0,0,0,0.35);
         }
 
+        .img-placeholder {
+            background-color: var(--bg-placeholder);
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            overflow: hidden; 
+        }
+
         .warranty-box .img-placeholder {
             width: 280px;
             height: 220px;
@@ -744,7 +803,6 @@
             .feature-item-wrapper { max-width: 100%; }
             .model-specs { padding-left: 0; border-left: none; align-items: center; }
             
-            /* На мобильных контейнер с 3D уходит ВНУТРЬ списка */
             .model-viewer-container {
                 width: 100%;
                 margin-right: 0;
@@ -836,27 +894,39 @@
     <section class="hero-section">
         <div class="container hero-grid">
             <div class="hero-text">
-                <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">Торговый Дом Новые Электронные Технологии</p>
-                <h1>Производитель и поставщик инновационного отечественного ЧПУ</h1>
-                <p>Мы — передовая компания-изготовитель в России по разработке систем числового программного управления и комплексному оснащению станкового оборудования.</p>
-                <p>С 2007 года мы предлагаем рынку новые решения, участвуем в промышленных выставках и опережаем конкурентов благодаря собственному конструкторскому отделу и строгим стандартам качества.</p>
+                <div class="hero-title-group">
+                    <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">Торговый Дом Новые Электронные Технологии</p>
+                    <h1>Производитель и поставщик инновационного отечественного ЧПУ</h1>
+                </div>
+                <div class="hero-desc-group">
+                    <p>Мы — передовая компания-изготовитель в России по разработке систем числового программного управления и комплексному оснащению станкового оборудования.</p>
+                    <p>С 2007 года мы предлагаем рынку новые решения, участвуем в промышленных выставках и опережаем конкурентов благодаря собственному конструкторскому отделу и строгим стандартам качества.</p>
+                </div>
             </div>
             <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>19 лет</h3>
-                    <p>На рынке</p>
+                <div class="stat-wrapper">
+                    <div class="stat-item">
+                        <h3>19 лет</h3>
+                        <p>На рынке</p>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <h3>1000+</h3>
-                    <p>Станков с нашим ЧПУ</p>
+                <div class="stat-wrapper">
+                    <div class="stat-item">
+                        <h3>1000+</h3>
+                        <p>Станков с нашим ЧПУ</p>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <h3>>1000</h3>
-                    <p>Компаний-партнеров</p>
+                <div class="stat-wrapper">
+                    <div class="stat-item">
+                        <h3>>1000</h3>
+                        <p>Компаний-партнеров</p>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <h3>100%</h3>
-                    <p>Сертификация</p>
+                <div class="stat-wrapper">
+                    <div class="stat-item">
+                        <h3>100%</h3>
+                        <p>Сертификация</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1084,7 +1154,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления заголовка и 3D (МНОГОРАЗОВО)
+            // 1. Анимация появления для главного экрана и 3D секции (МНОГОРАЗОВО)
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1095,6 +1165,9 @@
                 });
             }, { threshold: 0.1 }); 
 
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) mainObserver.observe(heroSection);
+            
             const modelSection = document.querySelector('.model-section');
             if (modelSection) mainObserver.observe(modelSection);
 
@@ -1135,50 +1208,37 @@
                 'model.glb'  
             ];
 
-            // Функция для правильного расположения контейнера 3D на телефонах и ПК
             function updateContainerPosition(index) {
                 if (window.innerWidth <= 992) {
-                    // Если мобильный телефон/планшет - помещаем всю модель внутрь выбранного пункта
                     wrappers[index].appendChild(mainModelContainer);
                 } else {
-                    // Если ПК - возвращаем модель обратно в основную сетку справа
                     modelGrid.appendChild(mainModelContainer);
                 }
             }
 
-            // Вызываем при загрузке страницы, чтобы сразу поставить модель куда надо
             updateContainerPosition(currentIndex);
 
-            // И при изменении размера окна браузера тоже проверяем позицию
             window.addEventListener('resize', () => {
                 updateContainerPosition(currentIndex);
             });
 
-
-            // Функция переключения модели
             function activateModel(index) {
                 if (index === currentIndex) return;
 
-                // Переключение активного класса в левом меню
                 wrappers[currentIndex].classList.remove('active');
                 wrappers[index].classList.add('active');
                 
-                // Переключение активного описания с анимацией
                 descriptions[currentIndex].classList.remove('active');
                 descriptions[index].classList.add('active');
 
                 currentIndex = index;
 
-                // СРАЗУ перекидываем контейнер в новый пункт (для мобильных телефонов), 
-                // чтобы аккордеон раскрылся и модель плавно появилась уже в новом месте
                 if (window.innerWidth <= 992) {
                     wrappers[index].appendChild(mainModelContainer);
                 }
 
-                // 1. Отправляем модель вниз
                 modelViewer.classList.add('slide-down');
 
-                // 2. Ждем 400мс, телепортируем наверх и меняем источник
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
                     modelViewer.classList.add('snap-top');
@@ -1193,7 +1253,6 @@
             }
 
             wrappers.forEach((wrapper) => {
-                // Изменено на click, чтобы на телефонах тоже отлично работало
                 wrapper.addEventListener('click', () => {
                     const idx = parseInt(wrapper.getAttribute('data-index'));
                     activateModel(idx);
@@ -1201,7 +1260,7 @@
             });
 
             btnPrev.addEventListener('click', (e) => {
-                e.stopPropagation(); // Защита от лишних срабатываний при клике на стрелку внутри списка на мобильных
+                e.stopPropagation(); 
                 let newIndex = currentIndex - 1;
                 if (newIndex < 0) newIndex = wrappers.length - 1;
                 activateModel(newIndex);
