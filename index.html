@@ -167,12 +167,12 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* --- ГЛАВНЫЙ ЭКРАН (С АНИМАЦИЯМИ) --- */
+        /* --- ГЛАВНЫЙ ЭКРАН (С ОПТИМИЗИРОВАННЫМИ АНИМАЦИЯМИ) --- */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
             border-bottom: 1px solid var(--border-color);
-            overflow: hidden; /* Скрываем вылет элементов за рамки секции */
+            overflow: hidden; 
         }
 
         .hero-grid {
@@ -182,17 +182,17 @@
             align-items: center;
         }
 
-        /* Группа заголовка (вылетает из левого верхнего угла) */
+        /* Заголовок: GPU-ускорение (translate3d), замедленная плавная анимация */
         .hero-title-group {
             opacity: 0;
-            transform: translate(-40px, -40px);
-            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease-out;
+            transform: translate3d(-40px, -40px, 0);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease-out;
             will-change: transform, opacity;
         }
 
         .hero-section.visible .hero-title-group {
             opacity: 1;
-            transform: translate(0, 0);
+            transform: translate3d(0, 0, 0);
         }
 
         .hero-title-group h1 {
@@ -202,17 +202,17 @@
             text-transform: uppercase;
         }
 
-        /* Группа описания (выплывает снизу) */
+        /* Описание: выплывает с задержкой 0.6s */
         .hero-desc-group {
             opacity: 0;
-            transform: translateY(50px);
-            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease-out 0.3s;
+            transform: translate3d(0, 50px, 0);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s;
             will-change: transform, opacity;
         }
 
         .hero-section.visible .hero-desc-group {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
         }
 
         .hero-desc-group p {
@@ -228,41 +228,35 @@
             gap: 20px;
         }
 
-        /* Обёртка карточек для стартовой позиции (из углов) */
         .stat-wrapper {
             display: flex;
             opacity: 0;
             will-change: transform, opacity;
         }
 
-        /* Карточка 1: Летит из левого верхнего угла */
+        /* Квадраты: задержка старта увеличена до 1.5s, убран рывок, добавлено 3D-ускорение */
         .stat-wrapper:nth-child(1) { 
-            transform: translate(-30%, -30%) scale(0.4); 
-            transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1.1) 0.6s, opacity 0.6s ease-out 0.6s; 
+            transform: translate3d(-30%, -30%, 0) scale(0.4); 
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.5s, opacity 1.2s ease-out 1.5s; 
         }
-        /* Карточка 2: Летит из правого верхнего угла */
         .stat-wrapper:nth-child(2) { 
-            transform: translate(30%, -30%) scale(0.4); 
-            transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1.1) 0.75s, opacity 0.6s ease-out 0.75s; 
+            transform: translate3d(30%, -30%, 0) scale(0.4); 
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.7s, opacity 1.2s ease-out 1.7s; 
         }
-        /* Карточка 3: Летит из левого нижнего угла */
         .stat-wrapper:nth-child(3) { 
-            transform: translate(-30%, 30%) scale(0.4); 
-            transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1.1) 0.9s, opacity 0.6s ease-out 0.9s; 
+            transform: translate3d(-30%, 30%, 0) scale(0.4); 
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.9s, opacity 1.2s ease-out 1.9s; 
         }
-        /* Карточка 4: Летит из правого нижнего угла */
         .stat-wrapper:nth-child(4) { 
-            transform: translate(30%, 30%) scale(0.4); 
-            transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1.1) 1.05s, opacity 0.6s ease-out 1.05s; 
+            transform: translate3d(30%, 30%, 0) scale(0.4); 
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 2.1s, opacity 1.2s ease-out 2.1s; 
         }
 
-        /* Состояние после завершения анимации */
         .hero-section.visible .stat-wrapper {
             opacity: 1;
-            transform: translate(0, 0) scale(1);
+            transform: translate3d(0, 0, 0) scale(1);
         }
 
-        /* Сама карточка и ховер-эффект */
         .stat-item {
             width: 100%;
             background-color: var(--bg-card);
@@ -276,7 +270,7 @@
         }
         
         .stat-item:hover {
-            transform: translateY(-5px);
+            transform: translate3d(0, -5px, 0);
             background-color: var(--bg-card-hover);
             border-color: var(--border-highlight);
         }
@@ -316,20 +310,21 @@
             margin-top: 50px;
         }
 
+        /* ОПТИМИЗАЦИЯ 3D-заголовка */
         .model-title {
             font-size: 3.5rem;
             line-height: 1.1;
             margin-bottom: 25px;
             color: var(--text-light);
             
-            transform: translateY(120px); 
+            transform: translate3d(0, 120px, 0); 
             opacity: 0;
             transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease-out;
             will-change: transform, opacity; 
         }
 
         .model-section.visible .model-title {
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
             opacity: 1;
         }
 
@@ -349,23 +344,23 @@
             width: 100%;
             max-width: 440px;
             
-            transform: translateX(-100px);
+            transform: translate3d(-100px, 0, 0);
             opacity: 0;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease-out;
             will-change: transform, opacity;
         }
 
         .model-features.visible .feature-item-wrapper {
-            transform: translateX(0);
+            transform: translate3d(0, 0, 0);
             opacity: 1;
         }
 
         .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
-        .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.1s; }
-        .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.2s; }
-        .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.3s; }
-        .model-features.visible .feature-item-wrapper:nth-child(5) { transition-delay: 0.4s; }
-        .model-features.visible .feature-item-wrapper:nth-child(6) { transition-delay: 0.5s; }
+        .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.15s; }
+        .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.3s; }
+        .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.45s; }
+        .model-features.visible .feature-item-wrapper:nth-child(5) { transition-delay: 0.6s; }
+        .model-features.visible .feature-item-wrapper:nth-child(6) { transition-delay: 0.75s; }
 
         .feature-tag {
             display: block;
@@ -379,18 +374,18 @@
             border-radius: 4px;
             width: 100%;
             cursor: pointer;
-            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .model-features .feature-item-wrapper:hover:not(.active) .feature-tag {
-            transform: translateX(6px);
+            transform: translate3d(6px, 0, 0);
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-light);
         }
 
         /* АКТИВНЫЙ ПУНКТ МЕНЮ */
         .feature-item-wrapper.active .feature-tag {
-            transform: translateX(12px) scale(1.02); 
+            transform: translate3d(12px, 0, 0) scale(1.02); 
             background: rgba(255, 107, 0, 0.12); 
             border-color: rgba(255, 107, 0, 0.4);
             color: var(--text-light);
@@ -409,7 +404,7 @@
             border-left: 2px dashed rgba(255, 107, 0, 0.3);
             margin-left: 12px;
             
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
                         opacity 0.4s ease-in-out, 
                         margin-top 0.4s ease-in-out;
         }
@@ -480,14 +475,14 @@
             line-height: 1.5;
             
             opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: translate3d(0, 15px, 0);
+            transition: opacity 0.5s ease-in-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
 
         .cnc-desc.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
             pointer-events: auto;
         }
         
@@ -528,14 +523,14 @@
         .model-box {
             width: 100%;
             height: 100%;
-            transform: translateX(80%); 
+            transform: translate3d(80%, 0, 0); 
             opacity: 0;
             transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
             will-change: transform, opacity;
         }
 
         .model-section.visible .model-box {
-            transform: translateX(0);
+            transform: translate3d(0, 0, 0);
             opacity: 1;
         }
 
@@ -545,8 +540,8 @@
             background-color: transparent;
             --poster-color: transparent;
             cursor: grab; 
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out;
-            transform: translateY(0);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-in-out;
+            transform: translate3d(0, 0, 0);
             opacity: 1;
         }
 
@@ -556,13 +551,13 @@
 
         /* Анимации барабана для 3D модели */
         model-viewer.slide-down {
-            transform: translateY(100%);
+            transform: translate3d(0, 100%, 0);
             opacity: 0;
         }
 
         model-viewer.snap-top {
             transition: none !important; 
-            transform: translateY(-100%);
+            transform: translate3d(0, -100%, 0);
             opacity: 0;
         }
 
@@ -604,7 +599,7 @@
         .service-item:hover {
             border-color: var(--primary-orange);
             background-color: var(--bg-card-hover);
-            transform: translateY(-3px);
+            transform: translate3d(0, -3px, 0);
             box-shadow: var(--shadow);
         }
 
@@ -762,7 +757,7 @@
 
         .social-card:hover {
             border-color: var(--primary-orange);
-            transform: translateX(-5px);
+            transform: translate3d(-5px, 0, 0);
             background-color: #24292e;
         }
 
@@ -819,8 +814,8 @@
             .left-arrow { left: 10px; }
             .right-arrow { right: 10px; }
             
-            .model-box { transform: translateY(80px); } 
-            .model-section.visible .model-box { transform: translateY(0); }
+            .model-box { transform: translate3d(0, 80px, 0); } 
+            .model-section.visible .model-box { transform: translate3d(0, 0, 0); }
             
             .service-grid { grid-template-columns: 1fr; }
             .cta-form { flex-direction: column; }
