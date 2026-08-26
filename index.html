@@ -552,7 +552,7 @@
         }
 
         /* =========================================
-           РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ И КОМПАКТНЫМ МОБИЛЬНЫМ ВИДОМ
+           РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ
            ========================================= */
 
         /* Общие классы анимаций для нижних секций */
@@ -1164,11 +1164,10 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ГАРАНТИЯ И МИНПРОМТОРГ (С КАСКАДНОЙ АНИМАЦИЕЙ) -->
+    <!-- СЕКЦИЯ: ГАРАНТИЯ И МИНПРОМТОРГ -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
             
-            <!-- Первый блок (Сертификат) -->
             <div class="warranty-box">
                 <div class="img-placeholder">Сертификат</div>
                 <div class="warranty-text">
@@ -1179,7 +1178,6 @@
                 </div>
             </div>
 
-            <!-- Второй блок (Выскальзывает из-под первого) -->
             <div class="warranty-box minprom">
                 <div class="img-placeholder">Реестр</div>
                 <div class="warranty-text">
@@ -1248,45 +1246,9 @@
         </div>
     </footer>
 
-    <!-- JS Скрипты -->
+    <!-- ОПТИМИЗИРОВАННЫЕ JS СКРИПТЫ -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // НАДЕЖНЫЙ ОБСЕРВЕР ДЛЯ ВСЕХ СЕКЦИЙ (работает и на ПК, и на высоких телефонах)
-            const mainObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    } else {
-                        // Класс удаляется, чтобы при возвращении анимация повторялась
-                        entry.target.classList.remove('visible');
-                    }
-                });
-            }, { 
-                threshold: 0, // Не ждем 10%, срабатываем сразу (критично для мобильных)
-                rootMargin: "0px 0px -15% 0px" // Срабатываем, когда верх секции войдет в нижние 15% экрана
-            }); 
-
-            // Добавляем слежение ко всем основным блокам сайта
-            const sectionsToAnimate = document.querySelectorAll('.hero-section, .model-section, .service-section, .warranty-section, .delivery-section, .cta-section');
-            sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
-
-            // Анимация списка меню (МНОГОРАЗОВО)
-            const featuresObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    } else {
-                        entry.target.classList.remove('visible');
-                    }
-                });
-            }, { rootMargin: "0px 0px -20% 0px" }); 
-
-            const modelFeatures = document.querySelector('.model-features');
-            if (modelFeatures) featuresObserver.observe(modelFeatures);
-
-
-            // ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
             const descriptions = document.querySelectorAll('.cnc-desc'); 
@@ -1308,6 +1270,7 @@
                 'model.glb'  
             ];
 
+            // 1. Позиционируем контейнер ДО запуска анимаций
             function updateContainerPosition(index) {
                 if (window.innerWidth <= 992) {
                     wrappers[index].appendChild(mainModelContainer);
@@ -1315,13 +1278,49 @@
                     modelGrid.appendChild(mainModelContainer);
                 }
             }
-
             updateContainerPosition(currentIndex);
 
             window.addEventListener('resize', () => {
                 updateContainerPosition(currentIndex);
             });
 
+            // 2. Инициализируем Observer с задержкой в 2 кадра (решает баг статики на смартфонах)
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    const mainObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            } else {
+                                entry.target.classList.remove('visible');
+                            }
+                        });
+                    }, { 
+                        threshold: 0.08,
+                        rootMargin: "0px 0px -40px 0px"
+                    }); 
+
+                    const sectionsToAnimate = document.querySelectorAll(
+                        '.hero-section, .model-section, .service-section, .warranty-section, .delivery-section, .cta-section'
+                    );
+                    sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
+
+                    const featuresObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            } else {
+                                entry.target.classList.remove('visible');
+                            }
+                        });
+                    }, { threshold: 0.05 }); 
+
+                    const modelFeatures = document.querySelector('.model-features');
+                    if (modelFeatures) featuresObserver.observe(modelFeatures);
+                }, 60);
+            });
+
+            // 3. Логика переключения ЧПУ
             function activateModel(index) {
                 if (index === currentIndex) return;
 
@@ -1345,11 +1344,10 @@
                     modelViewer.classList.remove('slide-down');
                     
                     modelViewer.src = modelsArray[index];
-
                     void modelViewer.offsetWidth;
 
                     modelViewer.classList.remove('snap-top');
-                }, 600); 
+                }, 500); 
             }
 
             wrappers.forEach((wrapper) => {
@@ -1382,27 +1380,26 @@
                 activateModel(newIndex);
             });
 
-            if (modelSection && modelViewer) {
+            if (modelViewer) {
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
 
-                modelSection.addEventListener('mousemove', (e) => {
-                    if (isDragging) return; 
-                    
-                    const rect = modelSection.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / rect.width - 0.5;
-                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+                const modelSec = document.querySelector('.model-section');
+                if (modelSec) {
+                    modelSec.addEventListener('mousemove', (e) => {
+                        if (isDragging) return; 
+                        const rect = modelSec.getBoundingClientRect();
+                        const x = (e.clientX - rect.left) / rect.width - 0.5;
+                        const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-                    const yaw = x * 70; 
-                    const pitch = 80 + (y * 20); 
+                        modelViewer.cameraOrbit = `${x * 70}deg ${80 + y * 20}deg auto`;
+                    });
 
-                    modelViewer.cameraOrbit = `${yaw}deg ${pitch}deg auto`;
-                });
-
-                modelSection.addEventListener('mouseleave', () => {
-                    if (isDragging) return;
-                    modelViewer.cameraOrbit = `0deg 80deg auto`;
-                });
+                    modelSec.addEventListener('mouseleave', () => {
+                        if (isDragging) return;
+                        modelViewer.cameraOrbit = `0deg 80deg auto`;
+                    });
+                }
             }
         });
     </script>
