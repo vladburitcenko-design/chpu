@@ -551,6 +551,18 @@
             opacity: 0;
         }
 
+        /* =========================================
+           РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ И КОМПАКТНЫМ МОБИЛЬНЫМ ВИДОМ
+           ========================================= */
+
+        /* Общие классы анимаций для нижних секций */
+        .anim-element {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            will-change: transform, opacity;
+        }
+
         /* Обслуживание и сервис */
         .service-section {
             padding: 90px 0;
@@ -583,7 +595,7 @@
             text-align: center;
             border-radius: 8px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-            transition: all 0.3s;
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
         }
         
         .service-item:hover {
@@ -604,14 +616,19 @@
             font-size: 0.95rem;
         }
 
-        /* --- ГАРАНТИЯ И МИНПРОМТОРГ (С КАСКАДНОЙ АНИМАЦИЕЙ) --- */
+        /* Анимация Service Section */
+        .service-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
+        .service-section.visible .service-item:nth-child(1) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.8s ease-out 0.1s; }
+        .service-section.visible .service-item:nth-child(2) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s, opacity 0.8s ease-out 0.25s; }
+        .service-section.visible .service-item:nth-child(3) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, opacity 0.8s ease-out 0.4s; }
+
+        /* Гарантия и Минпромторг */
         .warranty-section {
             padding: 80px 0;
             background: transparent;
             overflow: hidden; 
         }
 
-        /* Контейнер для двух выезжающих блоков */
         .warranty-wrapper {
             display: flex;
             flex-direction: column;
@@ -627,32 +644,25 @@
             border-radius: 8px;
             border-left: 6px solid var(--primary-orange);
             box-shadow: 0 15px 40px rgba(0,0,0,0.35);
-            
             position: relative;
-            z-index: 3; /* Верхний блок перекрывает нижний */
-            
-            /* Мгновенный сброс при уходе экрана */
+            z-index: 3; 
             opacity: 0;
             transform: translate3d(0, 40px, 0);
             transition: transform 0.4s ease, opacity 0.4s ease;
             will-change: transform, opacity;
         }
 
-        /* Специфичные настройки для второго блока (Минпромторг) */
         .warranty-box.minprom {
-            z-index: 2; /* Находится "под" первым блоком */
-            /* Изначально прячем его ровно за первым блоком (высота 100% + отступ 30px) */
+            z-index: 2; 
             transform: translate3d(0, calc(-100% - 30px), 0); 
         }
 
-        /* АНИМАЦИЯ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ */
         .warranty-section.visible .warranty-box {
             opacity: 1;
             transform: translate3d(0, 0, 0);
             transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s;
         }
 
-        /* Второй блок выезжает из-под первого с задержкой */
         .warranty-section.visible .warranty-box.minprom {
             transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, opacity 1.2s ease-out 0.8s;
         }
@@ -677,7 +687,7 @@
             height: 220px;
             margin: 0;
             background-color: var(--bg-placeholder);
-            flex-shrink: 0; /* Чтобы картинка не сжималась */
+            flex-shrink: 0; 
         }
 
         .warranty-text h2 {
@@ -715,6 +725,11 @@
             letter-spacing: 1px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
+
+        /* Анимация Delivery Section */
+        .delivery-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
+        .delivery-section.visible .delivery-content > div:nth-child(1) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 1s ease-out 0.1s; }
+        .delivery-section.visible .delivery-content > div:nth-child(2) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease-out 0.3s; }
 
         /* CTA Поддержка */
         .cta-section {
@@ -779,7 +794,7 @@
             text-decoration: none;
             color: var(--text-light);
             border: 1px solid var(--border-color);
-            transition: all 0.3s;
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .social-card:hover {
@@ -801,6 +816,13 @@
             font-size: 0.9rem;
             letter-spacing: 0.5px;
         }
+
+        /* Анимация CTA Section */
+        .cta-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
+        .cta-section.visible .cta-text { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.8s ease-out 0.1s; }
+        .cta-section.visible .social-card:nth-child(1) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 0.8s ease-out 0.2s; }
+        .cta-section.visible .social-card:nth-child(2) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, opacity 0.8s ease-out 0.35s; }
+        .cta-section.visible .social-card:nth-child(3) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s, opacity 0.8s ease-out 0.5s; }
 
         footer {
             background: #0d0e10;
@@ -851,7 +873,7 @@
             }
         }
 
-        /* --- Адаптивность Телефоны --- */
+        /* --- КОМПАКТНАЯ Адаптивность Телефоны --- */
         @media (max-width: 768px) {
             h2 { font-size: 1.6rem; }
             .header-content { padding: 12px 0; gap: 10px; }
@@ -877,15 +899,54 @@
             .model-viewer-wrapper { height: 280px; }
             .cnc-description-wrapper { min-height: 100px; }
             .cnc-desc { font-size: 0.85rem; }
+
+            /* Компактные услуги */
+            .service-section { padding: 50px 0; }
+            .service-grid { gap: 10px; }
+            .service-item { padding: 15px; }
+            .service-item h4 { font-size: 0.95rem; margin-bottom: 5px; }
+            .service-item p { font-size: 0.8rem; }
             
-            .warranty-box { flex-direction: column; padding: 30px 20px; text-align: center; }
-            .warranty-box .img-placeholder { width: 100%; height: 200px; margin-bottom: 20px; }
+            /* Компактная гарантия и Минпромторг */
+            .warranty-section { padding: 50px 0; }
+            .warranty-wrapper { gap: 15px; }
+            .warranty-box { 
+                flex-direction: row; 
+                padding: 15px; 
+                gap: 15px; 
+                text-align: left; 
+            }
+            .warranty-box .img-placeholder { 
+                width: 70px; 
+                height: 90px; 
+                margin-bottom: 0; 
+            }
+            .warranty-box.minprom { 
+                transform: translate3d(0, calc(-100% - 15px), 0); 
+            }
+            .warranty-text h2 { font-size: 1.1rem; margin-bottom: 8px; }
+            .warranty-text p { font-size: 0.75rem !important; margin-bottom: 12px !important; line-height: 1.3; }
+            .warranty-text .btn { padding: 8px 12px; font-size: 0.7rem; }
             
-            .delivery-content { gap: 30px; }
-            .logistics-logos { flex-direction: column; align-items: stretch; }
-            .logo-box { text-align: center; }
+            /* Компактная доставка */
+            .delivery-section { padding: 50px 0; }
+            .delivery-content { gap: 20px; }
+            .img-placeholder[style*="280px"] { height: 120px !important; }
+            .logistics-logos { margin-top: 15px; gap: 10px; flex-direction: row; flex-wrap: nowrap; }
+            .logo-box { padding: 8px 10px; font-size: 0.7rem; flex: 1; text-align: center; }
             
-            .cta-text h2 { font-size: 1.8rem; }
+            /* Компактная секция CTA и соцсетей */
+            .cta-section { padding: 50px 0; }
+            .cta-grid { gap: 20px; }
+            .cta-text h2 { font-size: 1.4rem; margin-bottom: 10px; }
+            .cta-text p { font-size: 0.85rem; margin-bottom: 15px; }
+            .cta-form { flex-direction: column; gap: 10px; }
+            .cta-form input, .cta-form .btn { width: 100%; padding: 10px; font-size: 0.8rem; }
+            
+            .social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+            .social-card { flex: 1 1 calc(50% - 10px); padding: 8px 10px; gap: 8px; justify-content: center; }
+            .social-card .icon-box { font-size: 0.9rem; width: 20px; }
+            .social-card span { font-size: 0.7rem; }
         }
 
         @media (max-width: 480px) {
@@ -1076,6 +1137,7 @@
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: УСЛУГИ И СЕРВИС -->
     <section class="service-section">
         <div class="container">
             <div class="service-header">
@@ -1086,15 +1148,15 @@
                 <a href="#" class="btn btn-outline">Связаться с отделом</a>
             </div>
             <div class="service-grid">
-                <div class="service-item">
+                <div class="service-item anim-element">
                     <h4>Проектирование</h4>
                     <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                 </div>
-                <div class="service-item">
+                <div class="service-item anim-element">
                     <h4>Ремонт и Модернизация</h4>
                     <p>Восстановление узлов и полная замена электроники для любых видов станкового оборудования.</p>
                 </div>
-                <div class="service-item">
+                <div class="service-item anim-element">
                     <h4>Пусконаладка</h4>
                     <p>Профессиональный ввод станков в эксплуатацию силами квалифицированных инженеров.</p>
                 </div>
@@ -1102,7 +1164,7 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕННЫЙ РАЗДЕЛ: ГАРАНТИЯ И МИНПРОМТОРГ (С КАСКАДНОЙ АНИМАЦИЕЙ) -->
+    <!-- СЕКЦИЯ: ГАРАНТИЯ И МИНПРОМТОРГ (С КАСКАДНОЙ АНИМАЦИЕЙ) -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
             
@@ -1131,9 +1193,10 @@
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: ДОСТАВКА -->
     <section class="delivery-section">
         <div class="container delivery-content">
-            <div>
+            <div class="anim-element">
                 <h2>Доставка по РФ и СНГ</h2>
                 <p style="margin-bottom: 35px; font-size: 1.1rem; color: var(--text-body);">Осуществляем поставку комплектующих и готовых систем ЧПУ проверенными логистическими партнерами.</p>
                 
@@ -1142,15 +1205,16 @@
                     <div class="logo-box">Деловые Линии</div>
                 </div>
             </div>
-            <div class="img-placeholder" style="height: 280px; background-color: rgba(255, 255, 255, 0.05); border: none;">
+            <div class="img-placeholder anim-element" style="height: 280px; background-color: rgba(255, 255, 255, 0.05); border: none;">
                 Склад / Логистика
             </div>
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: ПОДДЕРЖКА -->
     <section class="cta-section">
         <div class="container cta-grid">
-            <div class="cta-text">
+            <div class="cta-text anim-element">
                 <h2>Служба технической поддержки</h2>
                 <p>Наши инженеры проконсультируют по всем вопросам подбора УЧПУ, плат, приводов и комплектов модернизации.</p>
                 
@@ -1161,15 +1225,15 @@
             </div>
             
             <div class="social-links">
-                <a href="#" class="social-card">
+                <a href="#" class="social-card anim-element">
                     <div class="icon-box">▶</div>
                     <span>RuTube канал</span>
                 </a>
-                <a href="#" class="social-card">
+                <a href="#" class="social-card anim-element">
                     <div class="icon-box">VK</div>
                     <span>Сообщество VK</span>
                 </a>
-                <a href="#" class="social-card">
+                <a href="#" class="social-card anim-element">
                     <div class="icon-box">TG</div>
                     <span>Telegram чат</span>
                 </a>
@@ -1188,29 +1252,26 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Анимация появления для всех ключевых блоков (МНОГОРАЗОВО)
+            // НАДЕЖНЫЙ ОБСЕРВЕР ДЛЯ ВСЕХ СЕКЦИЙ (работает и на ПК, и на высоких телефонах)
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // Убираем класс только когда секция полностью покинула экран
+                        // Класс удаляется, чтобы при возвращении анимация повторялась
                         entry.target.classList.remove('visible');
                     }
                 });
-            }, { threshold: 0.1 }); 
+            }, { 
+                threshold: 0, // Не ждем 10%, срабатываем сразу (критично для мобильных)
+                rootMargin: "0px 0px -15% 0px" // Срабатываем, когда верх секции войдет в нижние 15% экрана
+            }); 
 
-            const heroSection = document.querySelector('.hero-section');
-            if (heroSection) mainObserver.observe(heroSection);
-            
-            const modelSection = document.querySelector('.model-section');
-            if (modelSection) mainObserver.observe(modelSection);
+            // Добавляем слежение ко всем основным блокам сайта
+            const sectionsToAnimate = document.querySelectorAll('.hero-section, .model-section, .service-section, .warranty-section, .delivery-section, .cta-section');
+            sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
 
-            // ДОБАВЛЕНА СЕКЦИЯ ГАРАНТИИ ДЛЯ ЗАПУСКА АНИМАЦИИ
-            const warrantySection = document.querySelector('.warranty-section');
-            if (warrantySection) mainObserver.observe(warrantySection);
-
-            // 2. Анимация списка меню (МНОГОРАЗОВО)
+            // Анимация списка меню (МНОГОРАЗОВО)
             const featuresObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1225,7 +1286,7 @@
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
 
-            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
+            // ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
             const descriptions = document.querySelectorAll('.cnc-desc'); 
