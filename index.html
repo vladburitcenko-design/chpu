@@ -167,9 +167,7 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* =========================================
-           РАЗДЕЛ 1: ГЛАВНЫЙ ЭКРАН (БЫСТРЫЙ И ОПТИМИЗИРОВАННЫЙ)
-           ========================================= */
+        /* --- ГЛАВНЫЙ ЭКРАН (С ОПТИМИЗИРОВАННЫМИ АНИМАЦИЯМИ) --- */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -284,9 +282,7 @@
             margin: 0;
         }
 
-        /* =========================================
-           РАЗДЕЛ 2: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ (ПЛАВНЫЙ И МЕДЛЕННЫЙ)
-           ========================================= */
+        /* --- РАЗДЕЛ: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ --- */
         .model-section {
             padding: 90px 0;
             background-color: #0a0b0d; 
@@ -306,7 +302,6 @@
             margin-top: 50px;
         }
 
-        /* Заголовок секции с 3D моделью */
         .model-title {
             font-size: 3.5rem;
             line-height: 1.1;
@@ -315,7 +310,6 @@
             
             transform: translate3d(0, 100px, 0); 
             opacity: 0;
-            /* Плавное затухание при уходе с экрана */
             transition: transform 0.8s ease, opacity 0.8s ease; 
             will-change: transform, opacity; 
         }
@@ -323,7 +317,6 @@
         .model-section.visible .model-title {
             transform: translate3d(0, 0, 0);
             opacity: 1;
-            /* Медленное кинематографичное появление */
             transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2.5s ease-out;
         }
 
@@ -331,7 +324,7 @@
             color: var(--primary-orange);
         }
 
-        /* ИНТЕРАКТИВНОЕ МЕНЮ (Лесенка) */
+        /* ИНТЕРАКТИВНОЕ МЕНЮ */
         .model-features {
             display: flex;
             flex-direction: column;
@@ -345,7 +338,6 @@
             
             transform: translate3d(-100px, 0, 0);
             opacity: 0;
-            /* Плавный сброс для премиальности */
             transition: transform 0.8s ease, opacity 0.8s ease;
             will-change: transform, opacity;
         }
@@ -353,11 +345,9 @@
         .model-features.visible .feature-item-wrapper {
             transform: translate3d(0, 0, 0);
             opacity: 1;
-            /* Удлиненная плавная анимация появления (1.8s) */
             transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.8s ease-out;
         }
 
-        /* Увеличенная задержка для красивого эффекта "волны" */
         .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
         .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.2s; }
         .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.4s; }
@@ -386,7 +376,6 @@
             color: var(--text-light);
         }
 
-        /* АКТИВНЫЙ ПУНКТ МЕНЮ */
         .feature-item-wrapper.active .feature-tag {
             transform: translate3d(12px, 0, 0) scale(1.02); 
             background: rgba(255, 107, 0, 0.12); 
@@ -395,7 +384,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
-        /* Список характеристик (Аккордеон) */
         .model-specs {
             max-height: 0;
             overflow: hidden;
@@ -407,7 +395,6 @@
             border-left: 2px dashed rgba(255, 107, 0, 0.3);
             margin-left: 12px;
             
-            /* Медленное плавное раскрытие */
             transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
                         opacity 0.6s ease-in-out, 
                         margin-top 0.6s ease-in-out;
@@ -458,7 +445,6 @@
             box-shadow: none; 
         }
 
-        /* Описание под 3D моделью */
         .cnc-description-wrapper {
             position: relative;
             min-height: 60px; 
@@ -480,7 +466,6 @@
             
             opacity: 0;
             transform: translate3d(0, 15px, 0);
-            /* Плавное, мягкое затухание текста */
             transition: opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
@@ -525,13 +510,11 @@
         .left-arrow { left: 40px; }
         .right-arrow { right: 40px; }
 
-        /* Внешний контейнер модели: Плавное появление при скролле */
         .model-box {
             width: 100%;
             height: 100%;
             transform: translate3d(80%, 0, 0); 
             opacity: 0;
-            /* Мягкий сброс */
             transition: transform 0.8s ease, opacity 0.8s ease;
             will-change: transform, opacity;
         }
@@ -539,18 +522,15 @@
         .model-section.visible .model-box {
             transform: translate3d(0, 0, 0);
             opacity: 1;
-            /* Очень медленный и плавный выезд из-за экрана (4 секунды) */
             transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
         }
 
-        /* САМ 3D ПЛЕЕР (АНИМАЦИЯ ПЕРЕКЛЮЧЕНИЯ МОДЕЛЕЙ) */
         model-viewer {
             width: 100%;
             height: 100%;
             background-color: transparent;
             --poster-color: transparent;
             cursor: grab; 
-            /* Более медленное и плавное переключение "барабана" */
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out;
             transform: translate3d(0, 0, 0);
             opacity: 1;
@@ -560,13 +540,11 @@
             cursor: grabbing;
         }
 
-        /* Модель медленно и плавно уезжает вниз */
         model-viewer.slide-down {
             transform: translate3d(0, 100%, 0);
             opacity: 0;
         }
 
-        /* Телепортация (без анимации) наверх перед выездом новой */
         model-viewer.snap-top {
             transition: none !important; 
             transform: translate3d(0, -100%, 0);
@@ -626,10 +604,18 @@
             font-size: 0.95rem;
         }
 
-        /* Гарантия */
+        /* --- ГАРАНТИЯ И МИНПРОМТОРГ (С КАСКАДНОЙ АНИМАЦИЕЙ) --- */
         .warranty-section {
             padding: 80px 0;
             background: transparent;
+            overflow: hidden; 
+        }
+
+        /* Контейнер для двух выезжающих блоков */
+        .warranty-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         .warranty-box {
@@ -641,6 +627,34 @@
             border-radius: 8px;
             border-left: 6px solid var(--primary-orange);
             box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+            
+            position: relative;
+            z-index: 3; /* Верхний блок перекрывает нижний */
+            
+            /* Мгновенный сброс при уходе экрана */
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            will-change: transform, opacity;
+        }
+
+        /* Специфичные настройки для второго блока (Минпромторг) */
+        .warranty-box.minprom {
+            z-index: 2; /* Находится "под" первым блоком */
+            /* Изначально прячем его ровно за первым блоком (высота 100% + отступ 30px) */
+            transform: translate3d(0, calc(-100% - 30px), 0); 
+        }
+
+        /* АНИМАЦИЯ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ */
+        .warranty-section.visible .warranty-box {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s;
+        }
+
+        /* Второй блок выезжает из-под первого с задержкой */
+        .warranty-section.visible .warranty-box.minprom {
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, opacity 1.2s ease-out 0.8s;
         }
 
         .img-placeholder {
@@ -663,6 +677,7 @@
             height: 220px;
             margin: 0;
             background-color: var(--bg-placeholder);
+            flex-shrink: 0; /* Чтобы картинка не сжималась */
         }
 
         .warranty-text h2 {
@@ -798,7 +813,7 @@
 
         /* --- Адаптивность Планшеты --- */
         @media (max-width: 992px) {
-            .hero-grid, .model-grid, .warranty-box, .delivery-content, .cta-grid {
+            .hero-grid, .model-grid, .delivery-content, .cta-grid {
                 grid-template-columns: 1fr;
             }
             .model-grid { 
@@ -817,10 +832,7 @@
                 min-height: auto;
             }
 
-            .model-viewer-wrapper {
-                height: 350px;
-            }
-            
+            .model-viewer-wrapper { height: 350px; }
             .cnc-description-wrapper { width: 100%; min-height: 80px;}
 
             .left-arrow { left: 10px; }
@@ -1090,8 +1102,11 @@
         </div>
     </section>
 
+    <!-- ИЗМЕНЕННЫЙ РАЗДЕЛ: ГАРАНТИЯ И МИНПРОМТОРГ (С КАСКАДНОЙ АНИМАЦИЕЙ) -->
     <section class="warranty-section">
-        <div class="container">
+        <div class="container warranty-wrapper">
+            
+            <!-- Первый блок (Сертификат) -->
             <div class="warranty-box">
                 <div class="img-placeholder">Сертификат</div>
                 <div class="warranty-text">
@@ -1101,6 +1116,18 @@
                     <a href="#" class="btn">Подробнее</a>
                 </div>
             </div>
+
+            <!-- Второй блок (Выскальзывает из-под первого) -->
+            <div class="warranty-box minprom">
+                <div class="img-placeholder">Реестр</div>
+                <div class="warranty-text">
+                    <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Импортозамещение</p>
+                    <h2>МЫ В РЕЕСТРЕ МИНПРОМТОРГА</h2>
+                    <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Производимое нами оборудование полностью соответствует требованиям 719 постановления о подтверждении производства промышленной продукции на территории РФ (о «российскости»).</p>
+                    <a href="#" class="btn btn-outline">Проверить в реестре</a>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -1161,13 +1188,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
+            // 1. Анимация появления для всех ключевых блоков (МНОГОРАЗОВО)
             const mainObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // Класс удаляется ТОЛЬКО при полном уходе с экрана, 
-                        // что предотвращает зависания при коротких скроллах
+                        // Убираем класс только когда секция полностью покинула экран
                         entry.target.classList.remove('visible');
                     }
                 });
@@ -1179,6 +1206,11 @@
             const modelSection = document.querySelector('.model-section');
             if (modelSection) mainObserver.observe(modelSection);
 
+            // ДОБАВЛЕНА СЕКЦИЯ ГАРАНТИИ ДЛЯ ЗАПУСКА АНИМАЦИИ
+            const warrantySection = document.querySelector('.warranty-section');
+            if (warrantySection) mainObserver.observe(warrantySection);
+
+            // 2. Анимация списка меню (МНОГОРАЗОВО)
             const featuresObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1193,7 +1225,7 @@
             if (modelFeatures) featuresObserver.observe(modelFeatures);
 
 
-            // ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
+            // 3. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ И ВРАЩЕНИЯ 3D МОДЕЛЕЙ
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
             const descriptions = document.querySelectorAll('.cnc-desc'); 
@@ -1246,7 +1278,6 @@
 
                 modelViewer.classList.add('slide-down');
 
-                // Увеличенный таймаут для более плавной и медленной смены ЧПУ
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
                     modelViewer.classList.add('snap-top');
