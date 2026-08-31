@@ -11,7 +11,7 @@
     <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелых 3D моделей, постера и главного шрифта -->
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="industrial control panel 3d model_2.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
@@ -170,7 +170,7 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* --- ГЛАВНЫЙ ЭКРАН (С ОПТИМИЗИРОВАННЫМИ АНИМАЦИЯМИ) --- */
+        /* --- ГЛАВНЫЙ ЭКРАН --- */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -327,7 +327,7 @@
             color: var(--primary-orange);
         }
 
-        /* ИНТЕРАКТИВНОЕ МЕНЮ (С ПОДПУНКТАМИ) */
+        /* ИНТЕРАКТИВНОЕ МЕНЮ */
         .model-features {
             display: flex;
             flex-direction: column;
@@ -351,13 +351,11 @@
             transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.8s ease-out;
         }
 
-        /* Каскадное появление материнских пунктов */
         .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
         .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.2s; }
         .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.4s; }
         .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.6s; }
 
-        /* ГЛАВНАЯ КНОПКА (МАТЕРИНСКАЯ КАТЕГОРИЯ) */
         .feature-tag {
             display: block;
             background: rgba(255,255,255,0.02);
@@ -367,14 +365,12 @@
             font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-muted);
-            border-radius: 4px; /* Стандартный радиус */
+            border-radius: 4px;
             width: 100%;
             cursor: pointer;
-            /* Плавная анимация изменения масштаба и скругления */
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Наведение на категорию */
         .feature-item-wrapper:hover .feature-tag {
             transform: scale(1.02);
             border-radius: 12px;
@@ -382,7 +378,6 @@
             color: var(--text-light);
         }
 
-        /* Активная (раскрытая) категория */
         .feature-item-wrapper.expanded .feature-tag {
             transform: scale(1.04); 
             border-radius: 12px;
@@ -392,24 +387,22 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        /* КОНТЕЙНЕР ПОДПУНКТОВ */
         .sub-features {
             max-height: 0;
             overflow: hidden;
             background: transparent;
-            margin-left: 15px; /* Эффект "лесенки" / "дерева" */
+            margin-left: 15px;
             opacity: 0;
             transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-in-out, margin 0.4s ease;
         }
 
         .feature-item-wrapper.expanded .sub-features {
-            max-height: 400px; /* Достаточно высоты для подпунктов */
+            max-height: 400px;
             opacity: 1;
             margin-top: 15px;
             margin-bottom: 10px;
         }
 
-        /* КНОПОЧКИ LIGHT / DIGITAL (Капсулы) */
         .sub-tabs {
             display: flex;
             gap: 12px;
@@ -423,7 +416,7 @@
             color: var(--text-muted);
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px; /* Капсульная форма */
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -433,16 +426,14 @@
             color: var(--text-light);
         }
 
-        /* АКТИВНАЯ КНОПКА ПОДПУНКТА */
         .sub-tab.active {
             background: var(--primary-orange);
             color: #fff;
             border-color: var(--primary-orange);
             box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-            transform: scale(1.05); /* Немного увеличивается */
+            transform: scale(1.05);
         }
 
-        /* СПИСОК ХАРАКТЕРИСТИК (Плавное появление) */
         .model-specs {
             display: none;
             flex-direction: column;
@@ -536,7 +527,6 @@
             color: var(--primary-orange);
         }
 
-        /* Стрелочки переключения */
         .model-arrow {
             position: absolute;
             top: 50%;
@@ -774,7 +764,6 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
-        /* Исправленная безопасная ссылка для Яндекс Карт с Координатами */
         .map-link-wrapper {
             display: block;
             position: relative;
@@ -1608,15 +1597,15 @@
                         targetY = currentY;
                     } else {
                         if (!isHovering) {
-                            // Автоматическое маятниковое вращение
-                            autoTime += 0.015; // Средняя скорость
+                            // АВТОМАТИЧЕСКОЕ ВРАЩЕНИЕ: замедлено для величественности
+                            autoTime += 0.007; // Уменьшенный шаг = более плавная скорость
                             targetX = Math.sin(autoTime); // От -1 до 1
                             targetY = 0; // По Y возвращаем в центр
                         }
                         
-                        // Плавное приближение к нужной точке (lerp)
-                        currentX += (targetX - currentX) * 0.05;
-                        currentY += (targetY - currentY) * 0.05;
+                        // ИНЕРЦИЯ (ПЛАВНОСТЬ): уменьшенный lerp factor (0.025) для маслянистости движения
+                        currentX += (targetX - currentX) * 0.025;
+                        currentY += (targetY - currentY) * 0.025;
                         
                         // Применяем вращение: ±70 градусов по X, 80±20 по Y
                         modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
