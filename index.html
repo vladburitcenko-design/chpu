@@ -764,7 +764,6 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
-        /* Исправленная безопасная ссылка для Яндекс Карт с Координатами */
         .map-link-wrapper {
             display: block;
             position: relative;
@@ -1519,7 +1518,7 @@
                 const firstTabIdx = parseInt(wrapper.querySelector('.sub-tab').getAttribute('data-index'));
 
                 wrapper.addEventListener('mouseenter', () => {
-                    // Срабатывает МОМЕНТАЛЬНО, но если "замок" не активирован
+                    // Срабатывает моментально, НО только если нет блокировки 2 сек.
                     if (window.innerWidth > 992 && !isHoverLocked) {
                         const activeInside = wrapper.querySelector('.sub-tab.active');
                         if (activeInside) {
@@ -1527,11 +1526,11 @@
                         } else {
                             activateModel(firstTabIdx);
                         }
-                        lockHover(); // Замораживаем наведение на 2 сек
+                        lockHover(); // Ставим блок на 2 секунды после переключения
                     }
                 });
                 
-                // При клике переключаем сразу (игнорируя замок)
+                // При клике переключаем сразу (игнорируя замок) и обновляем замок
                 wrapper.addEventListener('click', (e) => {
                     if (e.target.classList.contains('sub-tab')) return;
 
@@ -1541,25 +1540,25 @@
                     } else {
                         activateModel(firstTabIdx);
                     }
-                    if (window.innerWidth > 992) lockHover(); // Снова ставим замок после клика
+                    if (window.innerWidth > 992) lockHover();
                 });
             });
 
             // ЛОГИКА НАВЕДЕНИЯ И КЛИКОВ НА КНОПКИ LIGHT/DIGITAL
             subTabs.forEach((tab) => {
                 tab.addEventListener('mouseenter', () => {
-                    // Срабатывает МОМЕНТАЛЬНО, но если "замок" не активирован
+                    // Срабатывает моментально, НО только если нет блокировки 2 сек.
                     if (window.innerWidth > 992 && !isHoverLocked) {
                         activateModel(parseInt(tab.getAttribute('data-index')));
-                        lockHover(); // Замораживаем наведение на 2 сек
+                        lockHover(); // Ставим блок на 2 секунды
                     }
                 });
                 
-                // При клике переключаем сразу (игнорируя замок)
+                // При клике переключаем сразу (игнорируя замок) и обновляем замок
                 tab.addEventListener('click', (e) => {
                     e.stopPropagation();
                     activateModel(parseInt(tab.getAttribute('data-index')));
-                    if (window.innerWidth > 992) lockHover(); // Снова ставим замок после клика
+                    if (window.innerWidth > 992) lockHover();
                 });
             });
 
@@ -1621,19 +1620,18 @@
                         autoTime = Math.asin(clampedX) || 0;
                         targetX = currentX;
                         targetY = currentY;
+                    } else if (isHovering) {
+                        // Быстрое и плавное следование за курсором (как было раньше)
+                        currentX += (targetX - currentX) * 0.15;
+                        currentY += (targetY - currentY) * 0.15;
+                        modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
                     } else {
-                        if (!isHovering) {
-                            // АВТОМАТИЧЕСКОЕ ВРАЩЕНИЕ: очень медленно и плавно (эффект маятника)
-                            autoTime += 0.0035; // Очень медленный шаг
-                            targetX = Math.sin(autoTime); // Плавное движение от одного угла до противоположного (от -1 до 1)
-                            targetY = 0; // По Y возвращаем в центр
-                        }
-                        
-                        // ИНЕРЦИЯ (ПЛАВНОСТЬ): очень мягкая доводка для маслянистости движения (lerp 0.02)
+                        // Медленная авто-ротация (маятник)
+                        autoTime += 0.0035; 
+                        targetX = Math.sin(autoTime);
+                        targetY = 0; 
                         currentX += (targetX - currentX) * 0.02;
                         currentY += (targetY - currentY) * 0.02;
-                        
-                        // Применяем вращение: ±70 градусов по X, 80±20 по Y
                         modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
                     }
                     requestAnimationFrame(renderLoop);
