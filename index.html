@@ -11,7 +11,7 @@
     <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелых 3D моделей, постера и главного шрифта -->
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="industrial control panel 3d model_2.glb" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
@@ -170,7 +170,7 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* --- ГЛАВНЫЙ ЭКРАН --- */
+        /* --- ГЛАВНЫЙ ЭКРАН (С ОПТИМИЗИРОВАННЫМИ АНИМАЦИЯМИ) --- */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -1440,15 +1440,15 @@
                 }, 60);
             });
 
-            // --- АВТОПЕРЕКЛЮЧЕНИЕ КАЖДЫЕ 4 СЕКУНДЫ ---
+            // --- АВТОПЕРЕКЛЮЧЕНИЕ КАЖДЫЕ 8 СЕКУНД ---
             let autoSwitchTimer;
             function startAutoSwitch() {
                 clearInterval(autoSwitchTimer);
                 autoSwitchTimer = setInterval(() => {
                     let currentGroup = Math.floor(currentIndex / 2);
-                    let nextGroup = (currentGroup + 1) % 4;
+                    let nextGroup = (currentGroup + 1) % 4; // 4 - количество материнских пунктов
                     activateModel(nextGroup * 2); // Активируем пункт LIGHT (индексы 0, 2, 4, 6)
-                }, 4000);
+                }, 8000); // 8 секунд
             }
 
             // Останавливаем автопереключение при наведении мыши (или касании пальцем)
@@ -1597,15 +1597,15 @@
                         targetY = currentY;
                     } else {
                         if (!isHovering) {
-                            // АВТОМАТИЧЕСКОЕ ВРАЩЕНИЕ: замедлено для величественности
-                            autoTime += 0.007; // Уменьшенный шаг = более плавная скорость
-                            targetX = Math.sin(autoTime); // От -1 до 1
+                            // АВТОМАТИЧЕСКОЕ ВРАЩЕНИЕ: очень медленно и плавно (эффект маятника)
+                            autoTime += 0.0035; // Очень медленный шаг
+                            targetX = Math.sin(autoTime); // Плавное движение от одного угла до противоположного (от -1 до 1)
                             targetY = 0; // По Y возвращаем в центр
                         }
                         
-                        // ИНЕРЦИЯ (ПЛАВНОСТЬ): уменьшенный lerp factor (0.025) для маслянистости движения
-                        currentX += (targetX - currentX) * 0.025;
-                        currentY += (targetY - currentY) * 0.025;
+                        // ИНЕРЦИЯ (ПЛАВНОСТЬ): очень мягкая доводка для маслянистости движения (lerp 0.02)
+                        currentX += (targetX - currentX) * 0.02;
+                        currentY += (targetY - currentY) * 0.02;
                         
                         // Применяем вращение: ±70 градусов по X, 80±20 по Y
                         modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
