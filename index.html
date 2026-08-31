@@ -774,6 +774,7 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
+        /* Исправленная безопасная ссылка для Яндекс Карт с Координатами */
         .map-link-wrapper {
             display: block;
             position: relative;
@@ -1384,6 +1385,7 @@
             const btnNext = document.getElementById('nextModel');
             const mainModelContainer = document.getElementById('mainModelContainer');
             const modelGrid = document.querySelector('.model-grid');
+            const modelSection = document.querySelector('.model-section');
             
             let currentIndex = 0;
             let switchTimeout;
@@ -1448,6 +1450,27 @@
                     if (modelFeatures) featuresObserver.observe(modelFeatures);
                 }, 60);
             });
+
+            // --- АВТОПЕРЕКЛЮЧЕНИЕ КАЖДЫЕ 4 СЕКУНДЫ ---
+            let autoSwitchTimer;
+            function startAutoSwitch() {
+                clearInterval(autoSwitchTimer);
+                autoSwitchTimer = setInterval(() => {
+                    let currentGroup = Math.floor(currentIndex / 2);
+                    let nextGroup = (currentGroup + 1) % 4;
+                    activateModel(nextGroup * 2); // Активируем пункт LIGHT (индексы 0, 2, 4, 6)
+                }, 4000);
+            }
+
+            // Останавливаем автопереключение при наведении мыши (или касании пальцем)
+            if (modelSection) {
+                modelSection.addEventListener('mouseenter', () => clearInterval(autoSwitchTimer));
+                modelSection.addEventListener('mouseleave', startAutoSwitch);
+                modelSection.addEventListener('touchstart', () => clearInterval(autoSwitchTimer), {passive: true});
+            }
+
+            // Запускаем таймер при загрузке страницы
+            startAutoSwitch();
 
             function activateModel(index) {
                 if (index === currentIndex) return;
@@ -1542,26 +1565,65 @@
                 activateModel(newIndex);
             });
 
+            // --- УМНОЕ ВРАЩЕНИЕ 3D (АВТОМАТИЧЕСКОЕ + МЫШЬ) ---
             if (modelViewer) {
+                let currentX = 0;
+                let currentY = 0;
+                let targetX = 0;
+                let targetY = 0;
+                let autoTime = 0;
+                let isHovering = false;
+
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
 
-                const modelSec = document.querySelector('.model-section');
-                if (modelSec) {
-                    modelSec.addEventListener('mousemove', (e) => {
+                if (modelSection) {
+                    modelSection.addEventListener('mousemove', (e) => {
+                        isHovering = true;
                         if (isDragging) return; 
-                        const rect = modelSec.getBoundingClientRect();
-                        const x = (e.clientX - rect.left) / rect.width - 0.5;
-                        const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-                        modelViewer.cameraOrbit = `${x * 70}deg ${80 + y * 20}deg auto`;
+                        const rect = modelSection.getBoundingClientRect();
+                        // Расчитываем от -1 до 1
+                        targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+                        targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
                     });
 
-                    modelSec.addEventListener('mouseleave', () => {
+                    modelSection.addEventListener('mouseleave', () => {
+                        isHovering = false;
                         if (isDragging) return;
-                        modelViewer.cameraOrbit = `0deg 80deg auto`;
+                        // Синхронизируем синусоиду с текущей позицией, чтобы не было рывка
+                        let clampedX = Math.max(-1, Math.min(1, currentX));
+                        autoTime = Math.asin(clampedX) || 0;
                     });
                 }
+
+                function renderLoop() {
+                    if (isDragging) {
+                        // Если пользователь крутит сам, запоминаем позицию
+                        const orbit = modelViewer.getCameraOrbit();
+                        currentX = (orbit.theta * 180 / Math.PI) / 70;
+                        currentY = ((orbit.phi * 180 / Math.PI) - 80) / 20;
+                        let clampedX = Math.max(-1, Math.min(1, currentX));
+                        autoTime = Math.asin(clampedX) || 0;
+                        targetX = currentX;
+                        targetY = currentY;
+                    } else {
+                        if (!isHovering) {
+                            // Автоматическое маятниковое вращение
+                            autoTime += 0.015; // Средняя скорость
+                            targetX = Math.sin(autoTime); // От -1 до 1
+                            targetY = 0; // По Y возвращаем в центр
+                        }
+                        
+                        // Плавное приближение к нужной точке (lerp)
+                        currentX += (targetX - currentX) * 0.05;
+                        currentY += (targetY - currentY) * 0.05;
+                        
+                        // Применяем вращение: ±70 градусов по X, 80±20 по Y
+                        modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
+                    }
+                    requestAnimationFrame(renderLoop);
+                }
+                requestAnimationFrame(renderLoop);
             }
         });
     </script>
