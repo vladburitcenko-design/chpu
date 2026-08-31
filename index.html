@@ -8,7 +8,8 @@
     <!-- ОПТИМИЗАЦИЯ: Раннее подключение к серверам Google -->
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
     
-    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелой 3D модели, постера и главного шрифта -->
+    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелых 3D моделей, постера и главного шрифта -->
+    <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
@@ -167,7 +168,7 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* --- ГЛАВНЫЙ ЭКРАН --- */
+        /* --- ГЛАВНЫЙ ЭКРАН (С ОПТИМИЗИРОВАННЫМИ АНИМАЦИЯМИ) --- */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -307,6 +308,7 @@
             line-height: 1.1;
             margin-bottom: 25px;
             color: var(--text-light);
+            
             transform: translate3d(0, 100px, 0); 
             opacity: 0;
             transition: transform 0.8s ease, opacity 0.8s ease; 
@@ -323,17 +325,18 @@
             color: var(--primary-orange);
         }
 
-        /* ИНТЕРАКТИВНОЕ МЕНЮ */
+        /* ИНТЕРАКТИВНОЕ МЕНЮ (С ПОДПУНКТАМИ) */
         .model-features {
             display: flex;
             flex-direction: column;
-            gap: 16px; /* Чуть увеличил отступ между блоками */
+            gap: 16px; 
             margin-top: 20px;
         }
 
         .feature-item-wrapper {
             width: 100%;
             max-width: 440px;
+            
             transform: translate3d(-100px, 0, 0);
             opacity: 0;
             transition: transform 0.8s ease, opacity 0.8s ease;
@@ -346,6 +349,7 @@
             transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.8s ease-out;
         }
 
+        /* Каскадное появление материнских пунктов */
         .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
         .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.2s; }
         .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.4s; }
@@ -397,13 +401,13 @@
         }
 
         .feature-item-wrapper.expanded .sub-features {
-            max-height: 400px;
+            max-height: 400px; /* Достаточно высоты для подпунктов */
             opacity: 1;
             margin-top: 15px;
             margin-bottom: 10px;
         }
 
-        /* КНОПОЧКИ LIGHT / DIGITAL */
+        /* КНОПОЧКИ LIGHT / DIGITAL (Капсулы) */
         .sub-tabs {
             display: flex;
             gap: 12px;
@@ -1218,7 +1222,7 @@
                     <div class="model-box">
                         <model-viewer 
                             id="cncModel"
-                            src="model.glb" 
+                            src="чпу.glb" 
                             poster="image_c63bc3.png"
                             alt="3D модель ЧПУ панели" 
                             camera-controls
@@ -1384,9 +1388,10 @@
             let switchTimeout;
             let isDragging = false; 
 
-            // Массив увеличен до 8 моделей
+            // --- ОБНОВЛЕНИЕ ИСТОЧНИКОВ МОДЕЛЕЙ ---
+            // Первый элемент массива указывает на 'чпу.glb', остальные на 'model.glb'
             const modelsArray = [
-                'model.glb', 'model.glb', 'model.glb', 'model.glb', 
+                'чпу.glb', 'model.glb', 'model.glb', 'model.glb', 
                 'model.glb', 'model.glb', 'model.glb', 'model.glb'  
             ];
 
@@ -1543,6 +1548,7 @@
                 activateModel(newIndex);
             });
 
+            // Умное вращение 3D
             if (modelViewer) {
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
