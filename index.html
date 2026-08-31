@@ -11,7 +11,7 @@
     <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелых 3D моделей, постера и главного шрифта -->
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="industrial control panel 3d model_2.glb" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
@@ -764,6 +764,7 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
+        /* Исправленная безопасная ссылка для Яндекс Карт с Координатами */
         .map-link-wrapper {
             display: block;
             position: relative;
@@ -1378,7 +1379,11 @@
             
             let currentIndex = 0;
             let switchTimeout;
-            let hoverTimeout; // Переменная для таймера задержки наведения
+            
+            // ПЕРЕМЕННЫЕ ДЛЯ БЛОКИРОВКИ НАВЕДЕНИЯ НА 2 СЕКУНДЫ
+            let hoverLockTimeout;
+            let isHoverLocked = false;
+            
             let isDragging = false; 
 
             // ИСПОЛЬЗУЕМ:
@@ -1500,84 +1505,79 @@
                 }, 500); 
             }
 
+            // ФУНКЦИЯ ДЛЯ БЛОКИРОВКИ НАВЕДЕНИЯ НА 2 СЕКУНДЫ
+            function lockHover() {
+                isHoverLocked = true;
+                clearTimeout(hoverLockTimeout);
+                hoverLockTimeout = setTimeout(() => {
+                    isHoverLocked = false;
+                }, 2000);
+            }
+
             // ЛОГИКА НАВЕДЕНИЯ И КЛИКОВ НА КАТЕГОРИИ
             wrappers.forEach((wrapper) => {
                 const firstTabIdx = parseInt(wrapper.querySelector('.sub-tab').getAttribute('data-index'));
 
-                // При наведении ждем 2 секунды
                 wrapper.addEventListener('mouseenter', () => {
-                    if (window.innerWidth > 992) {
-                        clearTimeout(hoverTimeout); // Сбрасываем старый таймер
-                        hoverTimeout = setTimeout(() => { // Ждем 2 секунды
-                            const activeInside = wrapper.querySelector('.sub-tab.active');
-                            if (activeInside) {
-                                activateModel(parseInt(activeInside.getAttribute('data-index')));
-                            } else {
-                                activateModel(firstTabIdx);
-                            }
-                        }, 2000);
+                    // Срабатывает МОМЕНТАЛЬНО, но если "замок" не активирован
+                    if (window.innerWidth > 992 && !isHoverLocked) {
+                        const activeInside = wrapper.querySelector('.sub-tab.active');
+                        if (activeInside) {
+                            activateModel(parseInt(activeInside.getAttribute('data-index')));
+                        } else {
+                            activateModel(firstTabIdx);
+                        }
+                        lockHover(); // Замораживаем наведение на 2 сек
                     }
                 });
-
-                // Если курсор ушел раньше 2 секунд - отменяем переключение
-                wrapper.addEventListener('mouseleave', () => {
-                    clearTimeout(hoverTimeout);
-                });
                 
-                // При клике переключаем сразу (игнорируя задержку)
+                // При клике переключаем сразу (игнорируя замок)
                 wrapper.addEventListener('click', (e) => {
                     if (e.target.classList.contains('sub-tab')) return;
 
-                    clearTimeout(hoverTimeout); // Сбрасываем задержку при клике
                     const activeInside = wrapper.querySelector('.sub-tab.active');
                     if (activeInside) {
                         activateModel(parseInt(activeInside.getAttribute('data-index')));
                     } else {
                         activateModel(firstTabIdx);
                     }
+                    if (window.innerWidth > 992) lockHover(); // Снова ставим замок после клика
                 });
             });
 
             // ЛОГИКА НАВЕДЕНИЯ И КЛИКОВ НА КНОПКИ LIGHT/DIGITAL
             subTabs.forEach((tab) => {
-                // При наведении ждем 2 секунды
                 tab.addEventListener('mouseenter', () => {
-                    if (window.innerWidth > 992) {
-                        clearTimeout(hoverTimeout);
-                        hoverTimeout = setTimeout(() => {
-                            activateModel(parseInt(tab.getAttribute('data-index')));
-                        }, 2000);
+                    // Срабатывает МОМЕНТАЛЬНО, но если "замок" не активирован
+                    if (window.innerWidth > 992 && !isHoverLocked) {
+                        activateModel(parseInt(tab.getAttribute('data-index')));
+                        lockHover(); // Замораживаем наведение на 2 сек
                     }
                 });
-
-                // Если курсор ушел раньше 2 секунд - отменяем переключение
-                tab.addEventListener('mouseleave', () => {
-                    clearTimeout(hoverTimeout);
-                });
                 
-                // При клике переключаем сразу
+                // При клике переключаем сразу (игнорируя замок)
                 tab.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    clearTimeout(hoverTimeout); // Сбрасываем задержку при клике
                     activateModel(parseInt(tab.getAttribute('data-index')));
+                    if (window.innerWidth > 992) lockHover(); // Снова ставим замок после клика
                 });
             });
 
-            // Стрелочки переключения (работают моментально)
+            // Стрелочки переключения (клик работает моментально и ставит замок)
             btnPrev.addEventListener('click', (e) => {
                 e.stopPropagation(); 
-                clearTimeout(hoverTimeout);
                 let newIndex = currentIndex - 1;
                 if (newIndex < 0) newIndex = subTabs.length - 1;
                 activateModel(newIndex);
+                if (window.innerWidth > 992) lockHover();
             });
 
             btnNext.addEventListener('click', (e) => {
                 e.stopPropagation();
-                clearTimeout(hoverTimeout);
                 let newIndex = currentIndex + 1;
                 if (newIndex >= subTabs.length) newIndex = 0;
                 activateModel(newIndex);
+                if (window.innerWidth > 992) lockHover();
             });
 
             // --- УМНОЕ ВРАЩЕНИЕ 3D (АВТОМАТИЧЕСКОЕ + МЫШЬ) ---
