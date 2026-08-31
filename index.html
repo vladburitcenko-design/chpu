@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ТД НЭТ | Системы ЧПУ и Комплектующие</title>
     
+    <!-- ОПТИМИЗАЦИЯ: Раннее подключение к серверам Google -->
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
     
+    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелой 3D модели, постера и главного шрифта -->
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
+    <!-- Подключаем библиотеку Google для отображения 3D моделей -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
@@ -164,7 +167,7 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* --- ГЛАВНЫЙ ЭКРАН (С ОПТИМИЗИРОВАННЫМИ АНИМАЦИЯМИ) --- */
+        /* --- ГЛАВНЫЙ ЭКРАН --- */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -304,7 +307,6 @@
             line-height: 1.1;
             margin-bottom: 25px;
             color: var(--text-light);
-            
             transform: translate3d(0, 100px, 0); 
             opacity: 0;
             transition: transform 0.8s ease, opacity 0.8s ease; 
@@ -321,18 +323,17 @@
             color: var(--primary-orange);
         }
 
-        /* ИНТЕРАКТИВНОЕ МЕНЮ (С ПОДПУНКТАМИ) */
+        /* ИНТЕРАКТИВНОЕ МЕНЮ */
         .model-features {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px; /* Чуть увеличил отступ между блоками */
             margin-top: 20px;
         }
 
         .feature-item-wrapper {
             width: 100%;
             max-width: 440px;
-            
             transform: translate3d(-100px, 0, 0);
             opacity: 0;
             transition: transform 0.8s ease, opacity 0.8s ease;
@@ -345,12 +346,12 @@
             transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.8s ease-out;
         }
 
-        /* Каскадное появление материнских пунктов */
         .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
         .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.2s; }
         .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.4s; }
         .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.6s; }
 
+        /* ГЛАВНАЯ КНОПКА (МАТЕРИНСКАЯ КАТЕГОРИЯ) */
         .feature-tag {
             display: block;
             background: rgba(255,255,255,0.02);
@@ -360,93 +361,100 @@
             font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-muted);
-            border-radius: 4px;
+            border-radius: 4px; /* Стандартный радиус */
             width: 100%;
             cursor: pointer;
-            transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Плавная анимация изменения масштаба и скругления */
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .model-features .feature-item-wrapper:hover:not(.expanded) .feature-tag {
-            transform: translate3d(6px, 0, 0);
+        /* Наведение на категорию */
+        .feature-item-wrapper:hover .feature-tag {
+            transform: scale(1.02);
+            border-radius: 12px;
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-light);
         }
 
-        /* Когда материнский пункт раскрыт (expanded) */
+        /* Активная (раскрытая) категория */
         .feature-item-wrapper.expanded .feature-tag {
-            background: rgba(255, 107, 0, 0.12); 
-            border-color: rgba(255, 107, 0, 0.4);
+            transform: scale(1.04); 
+            border-radius: 12px;
+            background: rgba(255, 107, 0, 0.15); 
+            border-color: rgba(255, 107, 0, 0.5);
             color: var(--text-light);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        /* КОНТЕЙНЕР ПОДПУНКТОВ (Аккордеон) */
+        /* КОНТЕЙНЕР ПОДПУНКТОВ */
         .sub-features {
             max-height: 0;
             overflow: hidden;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-top: none;
-            border-left: 4px solid var(--dark-orange);
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
+            background: transparent;
+            margin-left: 15px; /* Эффект "лесенки" / "дерева" */
             opacity: 0;
-            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-in-out;
+            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-in-out, margin 0.4s ease;
         }
 
         .feature-item-wrapper.expanded .sub-features {
-            max-height: 400px; /* Достаточно высоты для подпунктов */
+            max-height: 400px;
             opacity: 1;
+            margin-top: 15px;
+            margin-bottom: 10px;
         }
 
-        /* СТИЛЬ ПОДПУНКТА (LIGHT / DIGITAL) */
-        .sub-feature-tag {
-            padding: 12px 20px;
-            font-size: 0.95rem;
-            font-weight: 600;
+        /* КНОПОЧКИ LIGHT / DIGITAL */
+        .sub-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .sub-tab {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
             color: var(--text-muted);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; /* Капсульная форма */
             cursor: pointer;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
             transition: all 0.3s ease;
         }
 
-        .sub-feature-tag:last-child {
-            border-bottom: none;
-        }
-
-        .sub-feature-tag:hover {
+        .sub-tab:hover {
+            background: rgba(255,255,255,0.08);
             color: var(--text-light);
-            background: rgba(255,255,255,0.05);
-            padding-left: 25px; /* Эффект смещения текста при наведении */
         }
 
-        /* АКТИВНЫЙ ПОДПУНКТ (ВЫБРАННАЯ МОДЕЛЬ) */
-        .sub-feature-tag.active {
-            color: var(--primary-orange);
-            background: rgba(255, 107, 0, 0.05);
-            padding-left: 25px;
+        /* АКТИВНАЯ КНОПКА ПОДПУНКТА */
+        .sub-tab.active {
+            background: var(--primary-orange);
+            color: #fff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+            transform: scale(1.05); /* Немного увеличивается */
         }
 
-        /* Список характеристик внутри подпункта */
+        /* СПИСОК ХАРАКТЕРИСТИК (Плавное появление) */
         .model-specs {
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            display: flex;
+            display: none;
             flex-direction: column;
             gap: 6px;
             padding-left: 12px;
             border-left: 2px dashed rgba(255, 107, 0, 0.3);
-            margin-left: 10px;
-            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-in-out, margin-top 0.4s ease-in-out;
+            margin-left: 5px;
+            opacity: 0;
         }
 
-        .sub-feature-tag.active .model-specs {
-            max-height: 120px;
-            opacity: 1;
-            margin-top: 8px;
-            margin-bottom: 4px;
+        .model-specs.active {
+            display: flex;
+            animation: fadeSpec 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeSpec {
+            from { opacity: 0; transform: translate3d(0, -10px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
         .spec-item {
@@ -594,8 +602,9 @@
         }
 
         /* =========================================
-           РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ
+           РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ И КОМПАКТНЫМ МОБИЛЬНЫМ ВИДОМ
            ========================================= */
+
         .anim-element {
             opacity: 0;
             transform: translate3d(0, 40px, 0);
@@ -972,7 +981,7 @@
             
             .model-section { padding: 50px 0; }
             .model-title { font-size: 2rem; }
-            .feature-tag { font-size: 0.8rem; padding: 12px; text-align: left; }
+            .feature-tag { font-size: 0.85rem; padding: 12px; text-align: left; }
             
             .model-arrow { width: 40px; height: 40px; font-size: 1rem; }
             .model-viewer-wrapper { height: 280px; }
@@ -1089,6 +1098,7 @@
         </div>
     </section>
 
+    <!-- РАЗДЕЛ С ИНТЕРАКТИВНОЙ 3D МОДЕЛЬЮ И ХАРАКТЕРИСТИКАМИ -->
     <section class="model-section">
         <div class="container model-grid">
             
@@ -1096,79 +1106,102 @@
                 <h2 class="model-title">АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
                 
                 <div class="model-features">
+                    <!-- МАТЕРИНСКИЙ ПУНКТ 1: CNC-11 TITANIUM -->
                     <div class="feature-item-wrapper expanded" data-group="1">
                         <div class="feature-tag">CNC-11 TITANIUM</div>
                         <div class="sub-features">
-                            
-                            <div class="sub-feature-tag active" data-index="0">
-                                LIGHT
-                                <div class="model-specs">
-                                    <div class="spec-item">Количество осей: до 4-х</div>
-                                    <div class="spec-item">Поддержка EtherCAT: Да</div>
-                                    <div class="spec-item">Экран: 10.4" LCD Touchscreen</div>
-                                    <div class="spec-item">Защита корпуса: IP65</div>
-                                </div>
+                            <div class="sub-tabs">
+                                <div class="sub-tab active" data-index="0">LIGHT</div>
+                                <div class="sub-tab" data-index="1">DIGITAL</div>
                             </div>
                             
-                            <div class="sub-feature-tag" data-index="1">
-                                DIGITAL
-                                <div class="model-specs">
-                                    <div class="spec-item">Количество осей: до 5-ти</div>
-                                    <div class="spec-item">Поддержка EtherCAT: Да (High-speed)</div>
-                                    <div class="spec-item">Экран: 15" Промышленный HD</div>
-                                    <div class="spec-item">Интерфейсы: CAN, USB, Ethernet</div>
-                                </div>
+                            <div class="model-specs active" data-index="0">
+                                <div class="spec-item">Количество осей: до 4-х</div>
+                                <div class="spec-item">Поддержка EtherCAT: Да</div>
+                                <div class="spec-item">Экран: 10.4" LCD Touchscreen</div>
+                                <div class="spec-item">Защита корпуса: IP65</div>
+                            </div>
+                            <div class="model-specs" data-index="1">
+                                <div class="spec-item">Количество осей: до 5-ти</div>
+                                <div class="spec-item">Поддержка EtherCAT: Да (High-speed)</div>
+                                <div class="spec-item">Экран: 15" Промышленный HD</div>
+                                <div class="spec-item">Интерфейсы: CAN, USB, Ethernet</div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- МАТЕРИНСКИЙ ПУНКТ 2: CNC-11 TITANIUM MINI -->
                     <div class="feature-item-wrapper" data-group="2">
                         <div class="feature-tag">CNC-11 TITANIUM MINI</div>
                         <div class="sub-features">
-                            <div class="sub-feature-tag" data-index="2">
-                                LIGHT
-                                <div class="model-specs">
-                                    <div class="spec-item">Количество осей: до 3-х</div>
-                                    <div class="spec-item">Поддержка EtherCAT: Опционально</div>
-                                    <div class="spec-item">Исполнение: Компактный моноблок</div>
-                                    <div class="spec-item">Энергопотребление: Ультранизкое</div>
-                                </div>
+                            <div class="sub-tabs">
+                                <div class="sub-tab" data-index="2">LIGHT</div>
+                                <div class="sub-tab" data-index="3">DIGITAL</div>
                             </div>
-                            <div class="sub-feature-tag" data-index="3">
-                                DIGITAL
-                                <div class="model-specs">
-                                    <div class="spec-item">Количество осей: до 4-х</div>
-                                    <div class="spec-item">Поддержка EtherCAT: Да</div>
-                                    <div class="spec-item">Дисплей: 8.4" Сенсорный мультитач</div>
-                                    <div class="spec-item">Маховик ручного управления: В комплекте</div>
-                                </div>
+                            
+                            <div class="model-specs" data-index="2">
+                                <div class="spec-item">Количество осей: до 3-х</div>
+                                <div class="spec-item">Поддержка EtherCAT: Опционально</div>
+                                <div class="spec-item">Исполнение: Компактный моноблок</div>
+                                <div class="spec-item">Энергопотребление: Ультранизкое</div>
+                            </div>
+                            <div class="model-specs" data-index="3">
+                                <div class="spec-item">Количество осей: до 4-х</div>
+                                <div class="spec-item">Поддержка EtherCAT: Да</div>
+                                <div class="spec-item">Дисплей: 8.4" Сенсорный мультитач</div>
+                                <div class="spec-item">Маховик ручного управления: В комплекте</div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- МАТЕРИНСКИЙ ПУНКТ 3: CNC-11 TITANIUM BASIC -->
                     <div class="feature-item-wrapper" data-group="3">
                         <div class="feature-tag">CNC-11 TITANIUM BASIC</div>
                         <div class="sub-features">
-                            <div class="sub-feature-tag" data-index="4">
-                                LIGHT
-                                <div class="model-specs">
-                                    <div class="spec-item">Количество осей: 2-3 оси</div>
-                                    <div class="spec-item">Поддержка EtherCAT: Базовая</div>
-                                    <div class="spec-item">Назначение: Для малых станков</div>
-                                    <div class="spec-item">Гарантия: 2 года</div>
-                                </div>
+                            <div class="sub-tabs">
+                                <div class="sub-tab" data-index="4">LIGHT</div>
+                                <div class="sub-tab" data-index="5">DIGITAL</div>
                             </div>
-                            <div class="sub-feature-tag" data-index="5">
-                                DIGITAL
-                                <div class="model-specs">
-                                    <div class="spec-item">Количество осей: до 4-х</div>
-                                    <div class="spec-item">Поддержка EtherCAT: Полная</div>
-                                    <div class="spec-item">Процессор: Высокопроизводительный ARM</div>
-                                    <div class="spec-item">Охлаждение: Пассивное (без кулеров)</div>
-                                </div>
+                            
+                            <div class="model-specs" data-index="4">
+                                <div class="spec-item">Количество осей: 2-3 оси</div>
+                                <div class="spec-item">Поддержка EtherCAT: Базовая</div>
+                                <div class="spec-item">Назначение: Для малых станков</div>
+                                <div class="spec-item">Гарантия: 2 года</div>
+                            </div>
+                            <div class="model-specs" data-index="5">
+                                <div class="spec-item">Количество осей: до 4-х</div>
+                                <div class="spec-item">Поддержка EtherCAT: Полная</div>
+                                <div class="spec-item">Процессор: Высокопроизводительный ARM</div>
+                                <div class="spec-item">Охлаждение: Пассивное (без кулеров)</div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- МАТЕРИНСКИЙ ПУНКТ 4: CNC-18 TITANIUM -->
+                    <div class="feature-item-wrapper" data-group="4">
+                        <div class="feature-tag">CNC-18 TITANIUM</div>
+                        <div class="sub-features">
+                            <div class="sub-tabs">
+                                <div class="sub-tab" data-index="6">LIGHT</div>
+                                <div class="sub-tab" data-index="7">DIGITAL</div>
+                            </div>
+                            
+                            <div class="model-specs" data-index="6">
+                                <div class="spec-item">Количество осей: до 8-ми</div>
+                                <div class="spec-item">Поддержка EtherCAT: Да (Pro)</div>
+                                <div class="spec-item">Экран: 15" Multi-touch</div>
+                                <div class="spec-item">Интеграция: Индустрия 4.0</div>
+                            </div>
+                            <div class="model-specs" data-index="7">
+                                <div class="spec-item">Количество осей: до 12-ти</div>
+                                <div class="spec-item">Поддержка EtherCAT: Ультра-скорость</div>
+                                <div class="spec-item">Экран: 19" HD + Доп. панель</div>
+                                <div class="spec-item">Аналитика: Встроенный ИИ</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             
@@ -1201,6 +1234,7 @@
                     </div>
                 </div>
 
+                <!-- Блок с описаниями под 3D-моделью -->
                 <div class="cnc-description-wrapper">
                     <p class="cnc-desc active" data-desc-index="0"><strong>TITANIUM LIGHT:</strong> Оптимальное решение для базовых задач. Высокая надежность и интуитивно понятный интерфейс обеспечивают стабильную работу оборудования.</p>
                     <p class="cnc-desc" data-desc-index="1"><strong>TITANIUM DIGITAL:</strong> Продвинутая цифровая система для сложных производств. Обеспечивает максимальную точность и поддерживает интеграцию с современными промышленными сетями.</p>
@@ -1208,11 +1242,14 @@
                     <p class="cnc-desc" data-desc-index="3"><strong>TITANIUM MINI DIGITAL:</strong> Мощь цифровых технологий в миниатюрном корпусе. Быстрый отклик и поддержка EtherCAT делают её лидером в своем классе.</p>
                     <p class="cnc-desc" data-desc-index="4"><strong>TITANIUM BASIC LIGHT:</strong> Экономичное и надежное решение. Проверенная временем архитектура гарантирует бесперебойную работу годами.</p>
                     <p class="cnc-desc" data-desc-index="5"><strong>TITANIUM BASIC DIGITAL:</strong> Сочетание базовой надежности и современных цифровых возможностей. Полный контроль и гибкость настроек для любых задач.</p>
+                    <p class="cnc-desc" data-desc-index="6"><strong>CNC-18 TITANIUM LIGHT:</strong> Новое поколение производительности. Расширенная поддержка многоосевых систем для крупного машиностроения.</p>
+                    <p class="cnc-desc" data-desc-index="7"><strong>CNC-18 TITANIUM DIGITAL:</strong> Абсолютный флагман линейки. Встроенная аналитика и максимальная вычислительная мощность для Индустрии 4.0.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: УСЛУГИ И СЕРВИС -->
     <section class="service-section">
         <div class="container">
             <div class="service-header">
@@ -1239,6 +1276,7 @@
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: ГАРАНТИЯ И МИНПРОМТОРГ -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
             
@@ -1269,6 +1307,7 @@
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: ДОСТАВКА И КАРТА -->
     <section class="delivery-section">
         <div class="container delivery-content">
             <div class="anim-element">
@@ -1291,6 +1330,7 @@
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: ПОДДЕРЖКА -->
     <section class="cta-section">
         <div class="container cta-grid">
             <div class="cta-text anim-element">
@@ -1327,25 +1367,47 @@
         </div>
     </footer>
 
+    <!-- JS Скрипты -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
-            const subFeatures = document.querySelectorAll('.sub-feature-tag');
+            const subTabs = document.querySelectorAll('.sub-tab');
+            const allSpecs = document.querySelectorAll('.model-specs');
             const descriptions = document.querySelectorAll('.cnc-desc'); 
             const btnPrev = document.getElementById('prevModel');
             const btnNext = document.getElementById('nextModel');
+            const mainModelContainer = document.getElementById('mainModelContainer');
+            const modelGrid = document.querySelector('.model-grid');
             
             let currentIndex = 0;
             let switchTimeout;
             let isDragging = false; 
 
+            // Массив увеличен до 8 моделей
             const modelsArray = [
-                'model.glb', 'model.glb', 'model.glb', 
-                'model.glb', 'model.glb', 'model.glb'  
+                'model.glb', 'model.glb', 'model.glb', 'model.glb', 
+                'model.glb', 'model.glb', 'model.glb', 'model.glb'  
             ];
 
-            // 1. Инициализируем Observer с задержкой в 2 кадра для мобильных
+            function updateContainerPosition(index) {
+                if (window.innerWidth <= 992) {
+                    // На мобильных находим нужную материнскую категорию и кладем 3D внутрь
+                    const activeTab = document.querySelector(`.sub-tab[data-index="${index}"]`);
+                    if(activeTab) {
+                        activeTab.closest('.feature-item-wrapper').appendChild(mainModelContainer);
+                    }
+                } else {
+                    modelGrid.appendChild(mainModelContainer);
+                }
+            }
+            updateContainerPosition(currentIndex);
+
+            window.addEventListener('resize', () => {
+                updateContainerPosition(currentIndex);
+            });
+
+            // Инициализация Observer с задержкой (решает баг статики на смартфонах)
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     const mainObserver = new IntersectionObserver((entries) => {
@@ -1356,10 +1418,7 @@
                                 entry.target.classList.remove('visible');
                             }
                         });
-                    }, { 
-                        threshold: 0.08,
-                        rootMargin: "0px 0px -40px 0px"
-                    }); 
+                    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
                     const sectionsToAnimate = document.querySelectorAll(
                         '.hero-section, .model-section, .service-section, .warranty-section, .delivery-section, .cta-section'
@@ -1381,24 +1440,33 @@
                 }, 60);
             });
 
-            // 2. Логика переключения ЧПУ
+            // Логика переключения ЧПУ
             function activateModel(index) {
                 if (index === currentIndex) return;
 
-                // Убираем активность у всех
-                subFeatures.forEach(tag => tag.classList.remove('active'));
+                // Сбрасываем активность со всех кнопочек и списков
+                subTabs.forEach(tab => tab.classList.remove('active'));
+                allSpecs.forEach(spec => spec.classList.remove('active'));
                 descriptions.forEach(desc => desc.classList.remove('active'));
 
-                // Добавляем активность нужным
-                subFeatures[index].classList.add('active');
+                // Добавляем активность нужным элементам
+                const activeTab = document.querySelector(`.sub-tab[data-index="${index}"]`);
+                const activeSpec = document.querySelector(`.model-specs[data-index="${index}"]`);
+                
+                if (activeTab) activeTab.classList.add('active');
+                if (activeSpec) activeSpec.classList.add('active');
                 descriptions[index].classList.add('active');
 
-                // Раскрываем нужную материнскую категорию
-                const parentWrapper = subFeatures[index].closest('.feature-item-wrapper');
+                // Управляем раскрытием материнской категории
+                const parentWrapper = activeTab ? activeTab.closest('.feature-item-wrapper') : null;
                 wrappers.forEach(w => w.classList.remove('expanded'));
-                parentWrapper.classList.add('expanded');
+                if (parentWrapper) parentWrapper.classList.add('expanded');
 
                 currentIndex = index;
+
+                if (window.innerWidth <= 992 && parentWrapper) {
+                    parentWrapper.appendChild(mainModelContainer);
+                }
 
                 modelViewer.classList.add('slide-down');
 
@@ -1414,53 +1482,67 @@
                 }, 500); 
             }
 
-            // Обработка клика по материнской категории (раскрыть/закрыть)
-            wrappers.forEach(wrapper => {
-                const tag = wrapper.querySelector('.feature-tag');
-                tag.addEventListener('click', () => {
-                    if (wrapper.classList.contains('expanded')) {
-                        wrapper.classList.remove('expanded');
-                    } else {
-                        wrappers.forEach(w => w.classList.remove('expanded'));
-                        wrapper.classList.add('expanded');
-                    }
-                });
-            });
+            // Наведение и клик на главные категории
+            wrappers.forEach((wrapper) => {
+                // Ищем индекс первого подпункта в этой категории, чтобы активировать его по умолчанию
+                const firstTabIdx = parseInt(wrapper.querySelector('.sub-tab').getAttribute('data-index'));
 
-            // Обработка клика/наведения на подпункт (переключение модели)
-            subFeatures.forEach((subFeature) => {
-                subFeature.addEventListener('mouseenter', () => {
+                wrapper.addEventListener('mouseenter', () => {
                     if (window.innerWidth > 992) {
-                        const idx = parseInt(subFeature.getAttribute('data-index'));
-                        activateModel(idx);
+                        // Проверяем, есть ли уже активный пункт в этой категории, чтобы не сбрасывать его
+                        const activeInside = wrapper.querySelector('.sub-tab.active');
+                        if (activeInside) {
+                            activateModel(parseInt(activeInside.getAttribute('data-index')));
+                        } else {
+                            activateModel(firstTabIdx);
+                        }
                     }
                 });
                 
-                subFeature.addEventListener('click', (e) => {
-                    e.stopPropagation(); // чтобы не кликалась материнская категория
+                wrapper.addEventListener('click', (e) => {
+                    // Если кликнули на саму кнопку подпункта, не перехватываем клик
+                    if (e.target.classList.contains('sub-tab')) return;
+
                     if (window.innerWidth <= 992) {
-                        const idx = parseInt(subFeature.getAttribute('data-index'));
-                        activateModel(idx);
+                        const activeInside = wrapper.querySelector('.sub-tab.active');
+                        if (activeInside) {
+                            activateModel(parseInt(activeInside.getAttribute('data-index')));
+                        } else {
+                            activateModel(firstTabIdx);
+                        }
                     }
                 });
             });
 
-            // Кнопки влево/вправо
+            // Наведение и клик на сами кнопочки LIGHT / DIGITAL
+            subTabs.forEach((tab) => {
+                tab.addEventListener('mouseenter', () => {
+                    if (window.innerWidth > 992) {
+                        activateModel(parseInt(tab.getAttribute('data-index')));
+                    }
+                });
+                
+                tab.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    activateModel(parseInt(tab.getAttribute('data-index')));
+                });
+            });
+
+            // Стрелочки влево-вправо
             btnPrev.addEventListener('click', (e) => {
                 e.stopPropagation(); 
                 let newIndex = currentIndex - 1;
-                if (newIndex < 0) newIndex = subFeatures.length - 1;
+                if (newIndex < 0) newIndex = subTabs.length - 1;
                 activateModel(newIndex);
             });
 
             btnNext.addEventListener('click', (e) => {
                 e.stopPropagation();
                 let newIndex = currentIndex + 1;
-                if (newIndex >= subFeatures.length) newIndex = 0;
+                if (newIndex >= subTabs.length) newIndex = 0;
                 activateModel(newIndex);
             });
 
-            // Умное вращение 3D
             if (modelViewer) {
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
