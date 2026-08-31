@@ -11,7 +11,7 @@
     <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелых 3D моделей, постера и главного шрифта -->
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="industrial control panel 3d model_2.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
@@ -170,7 +170,7 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* --- ГЛАВНЫЙ ЭКРАН (С ОПТИМИЗИРОВАННЫМИ АНИМАЦИЯМИ) --- */
+        /* --- ГЛАВНЫЙ ЭКРАН --- */
         .hero-section {
             background: var(--bg-grad-alt);
             padding: 90px 0;
@@ -1378,6 +1378,7 @@
             
             let currentIndex = 0;
             let switchTimeout;
+            let hoverTimeout; // Переменная для таймера задержки наведения
             let isDragging = false; 
 
             // ИСПОЛЬЗУЕМ:
@@ -1499,49 +1500,73 @@
                 }, 500); 
             }
 
+            // ЛОГИКА НАВЕДЕНИЯ И КЛИКОВ НА КАТЕГОРИИ
             wrappers.forEach((wrapper) => {
                 const firstTabIdx = parseInt(wrapper.querySelector('.sub-tab').getAttribute('data-index'));
 
+                // При наведении ждем 2 секунды
                 wrapper.addEventListener('mouseenter', () => {
                     if (window.innerWidth > 992) {
-                        const activeInside = wrapper.querySelector('.sub-tab.active');
-                        if (activeInside) {
-                            activateModel(parseInt(activeInside.getAttribute('data-index')));
-                        } else {
-                            activateModel(firstTabIdx);
-                        }
+                        clearTimeout(hoverTimeout); // Сбрасываем старый таймер
+                        hoverTimeout = setTimeout(() => { // Ждем 2 секунды
+                            const activeInside = wrapper.querySelector('.sub-tab.active');
+                            if (activeInside) {
+                                activateModel(parseInt(activeInside.getAttribute('data-index')));
+                            } else {
+                                activateModel(firstTabIdx);
+                            }
+                        }, 2000);
                     }
                 });
+
+                // Если курсор ушел раньше 2 секунд - отменяем переключение
+                wrapper.addEventListener('mouseleave', () => {
+                    clearTimeout(hoverTimeout);
+                });
                 
+                // При клике переключаем сразу (игнорируя задержку)
                 wrapper.addEventListener('click', (e) => {
                     if (e.target.classList.contains('sub-tab')) return;
 
-                    if (window.innerWidth <= 992) {
-                        const activeInside = wrapper.querySelector('.sub-tab.active');
-                        if (activeInside) {
-                            activateModel(parseInt(activeInside.getAttribute('data-index')));
-                        } else {
-                            activateModel(firstTabIdx);
-                        }
+                    clearTimeout(hoverTimeout); // Сбрасываем задержку при клике
+                    const activeInside = wrapper.querySelector('.sub-tab.active');
+                    if (activeInside) {
+                        activateModel(parseInt(activeInside.getAttribute('data-index')));
+                    } else {
+                        activateModel(firstTabIdx);
                     }
                 });
             });
 
+            // ЛОГИКА НАВЕДЕНИЯ И КЛИКОВ НА КНОПКИ LIGHT/DIGITAL
             subTabs.forEach((tab) => {
+                // При наведении ждем 2 секунды
                 tab.addEventListener('mouseenter', () => {
                     if (window.innerWidth > 992) {
-                        activateModel(parseInt(tab.getAttribute('data-index')));
+                        clearTimeout(hoverTimeout);
+                        hoverTimeout = setTimeout(() => {
+                            activateModel(parseInt(tab.getAttribute('data-index')));
+                        }, 2000);
                     }
                 });
+
+                // Если курсор ушел раньше 2 секунд - отменяем переключение
+                tab.addEventListener('mouseleave', () => {
+                    clearTimeout(hoverTimeout);
+                });
                 
+                // При клике переключаем сразу
                 tab.addEventListener('click', (e) => {
                     e.stopPropagation();
+                    clearTimeout(hoverTimeout); // Сбрасываем задержку при клике
                     activateModel(parseInt(tab.getAttribute('data-index')));
                 });
             });
 
+            // Стрелочки переключения (работают моментально)
             btnPrev.addEventListener('click', (e) => {
                 e.stopPropagation(); 
+                clearTimeout(hoverTimeout);
                 let newIndex = currentIndex - 1;
                 if (newIndex < 0) newIndex = subTabs.length - 1;
                 activateModel(newIndex);
@@ -1549,6 +1574,7 @@
 
             btnNext.addEventListener('click', (e) => {
                 e.stopPropagation();
+                clearTimeout(hoverTimeout);
                 let newIndex = currentIndex + 1;
                 if (newIndex >= subTabs.length) newIndex = 0;
                 activateModel(newIndex);
