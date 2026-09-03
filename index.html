@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ТД НЭТ | Системы ЧПУ и Комплектующие</title>
     
-    <!-- ОПТИМИЗАЦИЯ: Раннее подключение к серверам Google -->
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
     
-    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелых 3D моделей, постера и главного шрифта -->
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
@@ -16,11 +14,9 @@
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- Подключаем библиотеку Google для отображения 3D моделей -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
-        /* Подключение вашего фирменного шрифта Benzin */
         @font-face {
             font-family: 'Benzin';
             src: url('Benzin-Bold.woff2') format('woff2'),
@@ -41,145 +37,49 @@
             font-display: swap;
         }
 
-        /* Палитра */
         :root {
             --bg-card: #15171a;          
             --bg-card-hover: #0a0b0d;    
             --bg-placeholder: #22262a;   
-            
             --bg-grad-main: linear-gradient(135deg, #2b3036 0%, #1e2126 100%); 
             --bg-grad-alt: linear-gradient(135deg, #32383e 0%, #262a30 100%); 
-            
             --primary-orange: #ff6b00;   
             --dark-orange: #d95a00;      
             --text-light: #ffffff;       
             --text-muted: #adb5bd;       
             --text-body: #e9ecef;        
-            
             --border-color: rgba(255, 255, 255, 0.06);     
             --border-highlight: rgba(255, 255, 255, 0.15);      
             --shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        html, body {
-            overflow-x: hidden; 
-            scroll-behavior: smooth; /* Плавная прокрутка к якорям */
-        }
-
-        body {
-            color: var(--text-light);
-            background: var(--bg-grad-main);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Benzin', 'Segoe UI', sans-serif;
-            font-weight: 800;
-            color: var(--text-light);
-        }
-
-        h2 {
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        html, body { overflow-x: hidden; scroll-behavior: smooth; }
+        body { color: var(--text-light); background: var(--bg-grad-main); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        h1, h2, h3, h4 { font-family: 'Benzin', 'Segoe UI', sans-serif; font-weight: 800; color: var(--text-light); }
+        h2 { font-size: 2.2rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
 
         .btn {
-            display: inline-block;
-            background-color: var(--primary-orange);
-            color: #ffffff;
-            padding: 14px 32px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2);
-            text-align: center;
+            display: inline-block; background-color: var(--primary-orange); color: #ffffff;
+            padding: 14px 32px; text-decoration: none; border-radius: 4px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;
+            transition: all 0.3s ease; border: 1px solid transparent; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2); text-align: center;
         }
+        .btn:hover:not(:disabled) { background-color: var(--dark-orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4); }
+        .btn:disabled { background-color: #555; color: #aaa; cursor: not-allowed; box-shadow: none; border-color: #555; }
+        .btn-outline { background: transparent; color: var(--text-light); border: 2px solid rgba(255, 255, 255, 0.3); box-shadow: none; }
+        .btn-outline:hover { background: var(--primary-orange); border-color: var(--primary-orange); color: #ffffff; }
 
-        .btn:hover:not(:disabled) {
-            background-color: var(--dark-orange);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
-        }
+        .header-buttons { display: flex; align-items: center; gap: 10px; }
 
-        .btn:disabled {
-            background-color: #555;
-            color: #aaa;
-            cursor: not-allowed;
-            box-shadow: none;
-            border-color: #555;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text-light);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: none;
-        }
-
-        .btn-outline:hover {
-            background: var(--primary-orange);
-            border-color: var(--primary-orange);
-            color: #ffffff;
-        }
-
-        /* Шапка */
-        header {
-            background-color: #1a1d21;
-            color: var(--text-light);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 3px solid var(--primary-orange);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            gap: 15px;
-        }
-
-        .logo {
-            font-family: 'Benzin', 'Segoe UI', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: var(--text-light);
-            text-transform: uppercase;
-            text-decoration: none;
-            white-space: nowrap; 
-        }
-
+        header { background-color: #1a1d21; color: var(--text-light); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--primary-orange); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; gap: 15px; }
+        .logo { font-family: 'Benzin', 'Segoe UI', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: 1.5px; display: flex; align-items: center; gap: 15px; color: var(--text-light); text-transform: uppercase; text-decoration: none; white-space: nowrap; }
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* --- ГЛАВНЫЙ ЭКРАН --- */
         .hero-section { background: var(--bg-grad-alt); padding: 90px 0; border-bottom: 1px solid var(--border-color); overflow: hidden; }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
         .hero-title-group { opacity: 0; transform: translate3d(-40px, -40px, 0); transition: transform 0.4s ease, opacity 0.4s ease; will-change: transform, opacity; }
@@ -204,7 +104,6 @@
         .stat-item h3 { font-family: 'Benzin', sans-serif; font-size: 2.5rem; color: var(--primary-orange); margin-bottom: 5px; }
         .stat-item p { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-body); margin: 0; }
 
-        /* --- РАЗДЕЛ: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ --- */
         .model-section { padding: 80px 0 50px 0; background-color: #0a0b0d; border-bottom: 1px solid var(--border-color); overflow: hidden; }
         .model-grid { display: grid; grid-template-columns: 3.8fr 6.2fr; gap: 20px; align-items: start; }
         .model-text { margin-top: 50px; }
@@ -272,7 +171,6 @@
         footer.visible .social-card:nth-child(2) { transition-delay: 0.15s; }
         footer.visible .social-card:nth-child(3) { transition-delay: 0.3s; }
 
-        /* Обслуживание и сервис */
         .service-section { padding: 90px 0; background: var(--bg-grad-alt); border-bottom: 1px solid var(--border-color); }
         .service-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px; }
         .service-header p { max-width: 600px; color: var(--text-body); }
@@ -285,38 +183,14 @@
         .service-item.special-partner h4 { color: var(--primary-orange); }
         .service-item p { color: var(--text-body); font-size: 0.95rem; }
 
-        /* Гарантия и Минпромторг (Текстовые блоки с плавной выезжающей анимацией) */
         .warranty-section { padding: 80px 0; background: transparent; overflow: hidden; }
         .warranty-wrapper { display: flex; flex-direction: column; gap: 0; }
         
-        .warranty-box { 
-            background-color: var(--bg-card); 
-            padding: 50px 60px; 
-            border-radius: 8px; 
-            border-left: 6px solid var(--primary-orange); 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.35); 
-            position: relative; 
-            z-index: 3; 
-            opacity: 0; 
-            transform: translate3d(0, 40px, 0); 
-            transition: transform 0.4s ease, opacity 0.4s ease; 
-            will-change: transform, opacity; 
-        }
+        .warranty-box { background-color: var(--bg-card); padding: 50px 60px; border-radius: 8px; border-left: 6px solid var(--primary-orange); box-shadow: 0 15px 40px rgba(0,0,0,0.35); position: relative; z-index: 3; opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.4s ease, opacity 0.4s ease; will-change: transform, opacity; }
+        .warranty-box.minprom { z-index: 2; margin-top: -20px; transform: translate3d(0, -100%, 0); }
         
-        .warranty-box.minprom { 
-            z-index: 2; 
-            margin-top: -20px; /* Прячем край под верхний блок */
-            transform: translate3d(0, -100%, 0); /* Уводим блок под первый */
-        }
-        
-        .warranty-section.visible .warranty-box { 
-            opacity: 1; 
-            transform: translate3d(0, 0, 0); 
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s; 
-        }
-        .warranty-section.visible .warranty-box.minprom { 
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.2s ease-out 0.6s; 
-        }
+        .warranty-section.visible .warranty-box { opacity: 1; transform: translate3d(0, 0, 0); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s; }
+        .warranty-section.visible .warranty-box.minprom { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.2s ease-out 0.6s; }
 
         .warranty-text h2 { margin-bottom: 20px; }
 
@@ -377,7 +251,11 @@
             .header-content { padding: 12px 0; gap: 10px; }
             .logo { font-size: 1.1rem; gap: 8px; }
             .logo-img { height: 26px; }
-            .btn { padding: 10px 14px; font-size: 0.7rem; letter-spacing: 0.5px; }
+            
+            /* ИЗМЕНЕНИЕ 2: Компактные кнопки в шапке для мобильных */
+            .header-buttons { display: flex; gap: 5px; align-items: center; }
+            .header-buttons .btn { padding: 6px 10px; font-size: 0.65rem; letter-spacing: 0; }
+            
             .hero-section { padding: 50px 0; }
             .hero-text h1 { font-size: 1.6rem; margin-bottom: 15px; }
             .hero-text p { font-size: 0.95rem; }
@@ -430,7 +308,8 @@
         @media (max-width: 480px) {
             .logo { font-size: 0.95rem; }
             .logo-img { height: 22px; }
-            .btn { padding: 8px 10px; font-size: 0.65rem; }
+            /* ИЗМЕНЕНИЕ 2: Еще меньше для микро-экранов */
+            .header-buttons .btn { padding: 5px 6px; font-size: 0.55rem; }
             .hero-text h1 { font-size: 1.4rem; }
         }
     </style>
@@ -443,7 +322,8 @@
                 <div>ТД <span>НЭТ</span></div>
                 <img src="logo.png" alt="ТД НЭТ" class="logo-img">
             </a>
-            <div>
+            <!-- Обертка для кнопок в шапке -->
+            <div class="header-buttons">
                 <a href="tel:+79185582299" class="btn">Связаться с нами</a>
             </div>
         </div>
@@ -505,7 +385,6 @@
                                 <div class="sub-tab active" data-index="0">LIGHT</div>
                                 <div class="sub-tab" data-index="1">DIGITAL</div>
                             </div>
-                            
                             <div class="model-specs active" data-index="0">
                                 <div class="spec-item">Количество осей: до 4-х</div>
                                 <div class="spec-item">Поддержка EtherCAT: Да</div>
@@ -528,7 +407,6 @@
                                 <div class="sub-tab" data-index="2">LIGHT</div>
                                 <div class="sub-tab" data-index="3">DIGITAL</div>
                             </div>
-                            
                             <div class="model-specs" data-index="2">
                                 <div class="spec-item">Количество осей: до 3-х</div>
                                 <div class="spec-item">Поддержка EtherCAT: Опционально</div>
@@ -551,7 +429,6 @@
                                 <div class="sub-tab" data-index="4">LIGHT</div>
                                 <div class="sub-tab" data-index="5">DIGITAL</div>
                             </div>
-                            
                             <div class="model-specs" data-index="4">
                                 <div class="spec-item">Количество осей: 2-3 оси</div>
                                 <div class="spec-item">Поддержка EtherCAT: Базовая</div>
@@ -574,7 +451,6 @@
                                 <div class="sub-tab" data-index="6">LIGHT</div>
                                 <div class="sub-tab" data-index="7">DIGITAL</div>
                             </div>
-                            
                             <div class="model-specs" data-index="6">
                                 <div class="spec-item">Количество осей: до 8-ми</div>
                                 <div class="spec-item">Поддержка EtherCAT: Да (Pro)</div>
@@ -653,7 +529,8 @@
                     <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                 </div>
                 
-                <a href="partner.html" class="service-item special-partner anim-element">
+                <!-- ИЗМЕНЕНИЕ 1: Плавный якорь на блок B2B -->
+                <a href="#partner-block" class="service-item special-partner anim-element">
                     <h4>Партнерская программа<br>для модернизаторщиков</h4>
                     <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе, бесплатное обучение ваших инженеров и приоритетная поддержка 24/7.</p>
                 </a>
@@ -666,10 +543,8 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ГАРАНТИЯ И МИНПРОМТОРГ (БЕЗ ФОТО С ВЫЕЗЖАЮЩЕЙ АНИМАЦИЕЙ) -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
-            
             <div class="warranty-box">
                 <div class="warranty-text">
                     <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Стандарты качества</p>
@@ -687,7 +562,6 @@
                     <a href="#" class="btn btn-outline">Проверить в реестре</a>
                 </div>
             </div>
-
         </div>
     </section>
 
