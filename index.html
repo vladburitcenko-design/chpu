@@ -74,7 +74,8 @@
         .stat-item h3 { font-family: 'Benzin', sans-serif; font-size: 2.5rem; color: var(--primary-orange); margin-bottom: 5px; }
         .stat-item p { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-body); margin: 0; }
 
-        .model-section { padding: 80px 0 50px 0; background-color: #0a0b0d; border-bottom: 1px solid var(--border-color); overflow: hidden; }
+        /* ИЗМЕНЕНИЕ: Увеличен нижний отступ padding с 50px до 120px для расширения черной области */
+        .model-section { padding: 80px 0 120px 0; background-color: #0a0b0d; border-bottom: 1px solid var(--border-color); overflow: hidden; }
         .model-grid { display: grid; grid-template-columns: 3.8fr 6.2fr; gap: 20px; align-items: start; }
         .model-text { margin-top: 50px; }
         .model-title { font-size: 3.5rem; line-height: 1.1; margin-bottom: 25px; color: var(--text-light); transform: translate3d(0, 100px, 0); opacity: 0; transition: transform 0.8s ease, opacity 0.8s ease; will-change: transform, opacity; }
@@ -154,41 +155,12 @@
         .service-item.special-partner h4 { color: var(--primary-orange); }
         .service-item p { color: var(--text-body); font-size: 0.95rem; }
 
-        /* ИСПРАВЛЕННЫЙ БЛОК ГАРАНТИИ: Текст на всю ширину, без картинок, с плавной анимацией */
         .warranty-section { padding: 80px 0; background: transparent; overflow: hidden; }
         .warranty-wrapper { display: flex; flex-direction: column; gap: 0; }
-        
-        .warranty-box { 
-            background-color: var(--bg-card); 
-            padding: 50px 60px; 
-            border-radius: 8px; 
-            border-left: 6px solid var(--primary-orange); 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.35); 
-            position: relative; 
-            z-index: 3; 
-            opacity: 0; 
-            transform: translate3d(0, 40px, 0); 
-            transition: transform 0.4s ease, opacity 0.4s ease; 
-            will-change: transform, opacity; 
-            display: block; /* Убрали flex, чтобы текст занимал все место */
-        }
-        
-        .warranty-box.minprom { 
-            z-index: 2; 
-            margin-top: -20px; 
-            transform: translate3d(0, -100%, 0); 
-        }
-        
-        .warranty-section.visible .warranty-box { 
-            opacity: 1; 
-            transform: translate3d(0, 0, 0); 
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s; 
-        }
-        
-        .warranty-section.visible .warranty-box.minprom { 
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.2s ease-out 0.6s; 
-        }
-
+        .warranty-box { background-color: var(--bg-card); padding: 50px 60px; border-radius: 8px; border-left: 6px solid var(--primary-orange); box-shadow: 0 15px 40px rgba(0,0,0,0.35); position: relative; z-index: 3; opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.4s ease, opacity 0.4s ease; will-change: transform, opacity; display: block; }
+        .warranty-box.minprom { z-index: 2; margin-top: -20px; transform: translate3d(0, -100%, 0); }
+        .warranty-section.visible .warranty-box { opacity: 1; transform: translate3d(0, 0, 0); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s; }
+        .warranty-section.visible .warranty-box.minprom { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.2s ease-out 0.6s; }
         .warranty-text h2 { margin-bottom: 20px; }
 
         .partner-cta-section { padding: 70px 0; background: linear-gradient(90deg, rgba(255,107,0,0.1) 0%, rgba(0,0,0,0) 100%), var(--bg-card); border-top: 1px solid var(--border-color); text-align: center; }
@@ -267,7 +239,8 @@
             .stat-item { padding: 15px 10px; }
             .stat-item h3 { font-size: 1.8rem; }
             .stat-item p { font-size: 0.75rem; }
-            .model-section { padding: 50px 0; }
+            /* ИЗМЕНЕНИЕ: увеличен нижний отступ padding на мобильных для ЧПУ */
+            .model-section { padding: 50px 0 80px 0; }
             .model-title { font-size: 2rem; }
             .feature-tag { font-size: 0.85rem; padding: 12px; text-align: left; }
             .model-arrow { width: 40px; height: 40px; font-size: 1rem; }
@@ -336,7 +309,6 @@
                     <a href="partner.html" class="nav-link">Партнерская программа</a>
                 </div>
                 <div class="header-buttons">
-                    <a href="index.html" class="btn btn-outline" style="border: none;">Главная</a>
                     <a href="tel:+79185582299" class="btn">Связаться с нами</a>
                 </div>
             </div>
@@ -659,7 +631,6 @@
                 </div>
 
                 <div class="footer-social-links">
-                    <!-- ОБНОВЛЕННАЯ ССЫЛКА НА RUTUBE -->
                     <a href="https://rutube.ru/channel/42544297/" target="_blank" class="social-card anim-element">
                         <div class="icon-box">▶</div>
                         <span>RuTube канал</span>
@@ -775,6 +746,7 @@
                         });
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
+                    // Правильное отслеживание подвала
                     const sectionsToAnimate = document.querySelectorAll(
                         '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, footer'
                     );
