@@ -33,79 +33,71 @@
         .btn-outline { background: transparent; color: var(--text-light); border: 2px solid rgba(255, 255, 255, 0.3); box-shadow: none; padding: 12px 24px; font-size: 0.85rem;}
         .btn-outline:hover { background: var(--primary-orange); border-color: var(--primary-orange); color: #ffffff; }
 
+        .header-nav { display: flex; gap: 25px; align-items: center; margin-right: 20px; }
+        .nav-link { color: var(--text-light); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--primary-orange); }
+
         .header-buttons { display: flex; align-items: center; gap: 10px; }
 
-        header { background-color: #1a1d21; border-bottom: 3px solid var(--primary-orange); position: sticky; top: 0; z-index: 100; }
+        header { background-color: #1a1d21; border-bottom: 3px solid var(--primary-orange); position: sticky; top: 0; z-index: 100; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .header-content { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
         .logo { font-family: 'Benzin', sans-serif; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 15px; color: var(--text-light); text-decoration: none; text-transform: uppercase; }
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        /* HERO СЕКЦИЯ ДОКУМЕНТОВ */
         .docs-hero { padding: 120px 0 80px 0; background: radial-gradient(circle at 80% 50%, rgba(255, 107, 0, 0.08) 0%, transparent 50%), #0a0b0d; display: flex; align-items: center; }
         .docs-hero-content { max-width: 800px; }
         .docs-hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 25px; text-transform: none; }
         .docs-hero p { font-size: 1.1rem; color: var(--text-body); line-height: 1.8; }
 
-        /* СПИСОК ДОКУМЕНТОВ */
         .docs-list-section { padding: 60px 0 100px 0; background: var(--bg-card); border-top: 1px solid var(--border-color); }
         .docs-list-section h2 { font-size: 2.2rem; margin-bottom: 40px; }
         .docs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
         
-        .doc-card { 
-            background: #1e2226; 
-            padding: 35px 30px; 
-            border-radius: 8px; 
-            border: 1px solid var(--border-color); 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .doc-card:hover {
-            transform: translate3d(0, -5px, 0);
-            border-color: var(--primary-orange);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
+        .doc-card { background: #1e2226; padding: 35px 30px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        .doc-card:hover { transform: translate3d(0, -5px, 0); border-color: var(--primary-orange); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
         .doc-card h4 { font-size: 1.25rem; color: var(--primary-orange); line-height: 1.4; text-transform: uppercase; letter-spacing: 0.5px;}
         .doc-card p { color: var(--text-body); font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;}
         .doc-card .btn-outline { margin-top: auto; width: max-content; }
 
-        /* ФУТЕР И КАРТА */
-        .map-footer-section { background-color: #0a0b0d; padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.05); }
-        .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-        .contacts-left h2 { font-size: 3rem; margin-bottom: 40px; text-transform: none; }
-        .contact-big { font-family: 'Benzin', sans-serif; font-size: 1.5rem; color: var(--primary-orange); margin-bottom: 5px; display: block; text-decoration: none; }
-        .contact-big.mail { color: #fff; margin-bottom: 10px; }
-        .contacts-left p { margin-top: 30px; color: var(--text-body); font-size: 1.1rem; }
-        .map-container { width: 100%; height: 450px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
-        .map-container iframe { width: 100%; height: 100%; border: none; filter: invert(90%) hue-rotate(180deg) grayscale(30%) contrast(100%); }
-
-        footer { background: #0d0e10; color: var(--text-muted); padding: 50px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
-        .footer-social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
+        /* ИЗМЕНЕНИЕ 9: Обновленный подвал с контактами и соцсетями (карта убрана) */
+        footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: flex; justify-content: center; align-items: center; gap: 50px; margin-bottom: 40px; flex-wrap: wrap; }
+        .footer-contacts { text-align: left; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 50px; }
+        .footer-mail { display: block; font-family: 'Benzin', sans-serif; color: var(--primary-orange); font-size: 1.2rem; text-decoration: none; margin-bottom: 15px; transition: color 0.3s;}
+        .footer-mail:hover { color: #fff; }
+        .footer-phones { display: flex; flex-direction: column; gap: 12px; }
+        .footer-phones div { display: flex; flex-direction: column; }
+        .footer-phones a { color: #fff; text-decoration: none; font-size: 1.15rem; font-weight: 700; font-family: 'Benzin', sans-serif; transition: color 0.3s;}
+        .footer-phones a:hover { color: var(--primary-orange); }
+        .footer-phones span { color: var(--text-muted); font-size: 0.85rem; }
+        
+        .footer-social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 0; }
         .social-card { background-color: #15171a; padding: 14px 28px; border-radius: 6px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-light); border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
         .social-card:hover { border-color: var(--primary-orange); transform: translate3d(0, -3px, 0); background-color: #1e2226; }
         .social-card .icon-box { color: var(--primary-orange); font-weight: bold; font-size: 1.2rem; width: 30px; text-align: center; }
         .social-card .icon-box.max-icon { font-size: 1rem; letter-spacing: 0; }
         .social-card span { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; }
 
+        .anim-element { opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out; will-change: transform, opacity; }
+        .visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
+
         @media (max-width: 992px) {
+            .header-nav { display: none; }
             .docs-hero h1 { font-size: 2.8rem; }
-            .map-grid { grid-template-columns: 1fr; gap: 40px; }
-            .contacts-left h2 { font-size: 2.5rem; }
-            .map-container { height: 350px; }
         }
         @media (max-width: 768px) {
             .header-buttons { display: flex; gap: 5px; align-items: center; }
             .header-buttons .btn { padding: 6px 10px; font-size: 0.65rem; letter-spacing: 0; }
-            
             .docs-hero { padding: 80px 0 50px 0; }
             .docs-hero h1 { font-size: 2rem; }
             .docs-list-section { padding: 50px 0; }
             .docs-list-section h2 { font-size: 1.8rem; margin-bottom: 30px;}
-            .contact-big { font-size: 1.2rem; }
             
-            .footer-social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; margin-bottom: 25px;}
+            .footer-grid { flex-direction: column; gap: 30px; }
+            .footer-contacts { border-right: none; padding-right: 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; width: 100%; }
+            .footer-phones { align-items: center; }
+            .footer-social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; }
             .social-card { flex: 1 1 calc(50% - 10px); padding: 8px 10px; gap: 8px; justify-content: center; }
             .social-card .icon-box { font-size: 0.9rem; width: 20px; }
             .social-card .icon-box.max-icon { font-size: 0.75rem; }
@@ -126,9 +118,15 @@
                 <div>ТД <span>НЭТ</span></div>
                 <img src="logo.png" alt="ТД НЭТ" class="logo-img">
             </a>
-            <div class="header-buttons">
-                <a href="index.html" class="btn btn-outline" style="border: none;">Главная</a>
-                <a href="tel:+79185582299" class="btn">Связаться с нами</a>
+            <div style="display: flex; align-items: center;">
+                <div class="header-nav">
+                    <a href="docs.html" class="nav-link">Документация</a>
+                    <a href="partner.html" class="nav-link">Партнерская программа</a>
+                </div>
+                <div class="header-buttons">
+                    <a href="index.html" class="btn btn-outline" style="border: none;">Главная</a>
+                    <a href="tel:+79185582299" class="btn">Связаться с нами</a>
+                </div>
             </div>
         </div>
     </header>
@@ -147,80 +145,85 @@
             <h2>Доступные файлы</h2>
             
             <div class="docs-grid">
-                <!-- Карточка документа 1 -->
                 <div class="doc-card">
                     <h4>Сертификат Минпромторга</h4>
                     <p>Официальный документ, подтверждающий присутствие в реестре отечественных производителей промышленной продукции.</p>
                     <a href="#" class="btn btn-outline">Скачать PDF</a>
                 </div>
                 
-                <!-- Карточка документа 2 -->
                 <div class="doc-card">
                     <h4>Паспорт качества ЧПУ TITANIUM</h4>
                     <p>Технический паспорт изделия с полным описанием эксплуатационных характеристик и гарантийных обязательств.</p>
                     <a href="#" class="btn btn-outline">Скачать PDF</a>
                 </div>
                 
-                <!-- Карточка документа 3 -->
                 <div class="doc-card">
                     <h4>Руководство пользователя</h4>
                     <p>Подробная инструкция для интеграторов по установке, настройке и повседневной эксплуатации системы.</p>
                     <a href="#" class="btn btn-outline">Скачать PDF</a>
                 </div>
-                
-                <!-- Место для добавления новых карточек -->
             </div>
         </div>
     </section>
 
-    <!-- Подвал с картой (как на странице партнерства) -->
-    <section class="map-footer-section">
-        <div class="container map-grid">
-            <div class="contacts-left">
-                <h2>Где мы находимся</h2>
-                <a href="mailto:elektronika-net@mail.ru" class="contact-big mail">elektronika-net@mail.ru</a>
-                
-                <div style="margin-bottom: 15px;">
-                    <a href="tel:+79185582299" class="contact-big" style="font-size: 1.25rem;">+7 918 558 22 99</a>
-                    <span style="color: var(--text-muted); font-size: 0.95rem;">Дмитрий (Менеджер Отдела продаж)</span>
-                </div>
-                
-                <div style="margin-bottom: 25px;">
-                    <a href="tel:+79185802194" class="contact-big" style="font-size: 1.25rem;">+7 918 580 21 94</a>
-                    <span style="color: var(--text-muted); font-size: 0.95rem;">Татьяна (Менеджер Отдела продаж)</span>
-                </div>
-                
-                <p>Россия, Ростовская область, г. Азов,<br>Промышленная улица, 2<br>Принимаем звонки с 08:30 до 17:30</p>
-            </div>
-            
-            <div class="map-container">
-                <iframe src="https://yandex.ru/map-widget/v1/?ll=39.432650,47.094595&z=16&pt=39.432650,47.094595~pm2rdm"></iframe>
-            </div>
-        </div>
-    </section>
-
-    <!-- Социальные сети и копирайт -->
+    <!-- ИЗМЕНЕНИЕ 9: Подвал с контактами и соцсетями (карта убрана) -->
     <footer>
         <div class="container">
-            <div class="footer-social-links">
-                <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card">
-                    <div class="icon-box">▶</div>
-                    <span>RuTube канал</span>
-                </a>
-                <a href="https://vk.com/chpu_net" target="_blank" class="social-card">
-                    <div class="icon-box">VK</div>
-                    <span>Сообщество VK</span>
-                </a>
-                <a href="https://web.max.ru/33269346" target="_blank" class="social-card">
-                    <div class="icon-box max-icon">MAX</div>
-                    <span>Сообщество MAX</span>
-                </a>
+            <div class="footer-grid">
+                
+                <div class="footer-contacts anim-element">
+                    <a href="mailto:elektronika-net@mail.ru" class="footer-mail">elektronika-net@mail.ru</a>
+                    <div class="footer-phones">
+                        <div>
+                            <a href="tel:+79185582299">+7 918 558 22 99</a>
+                            <span>Дмитрий (Менеджер Отдела продаж)</span>
+                        </div>
+                        <div>
+                            <a href="tel:+79185802194">+7 918 580 21 94</a>
+                            <span>Татьяна (Менеджер Отдела продаж)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-social-links">
+                    <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card anim-element">
+                        <div class="icon-box">▶</div>
+                        <span>RuTube канал</span>
+                    </a>
+                    <a href="https://vk.com/chpu_net" target="_blank" class="social-card anim-element">
+                        <div class="icon-box">VK</div>
+                        <span>Сообщество VK</span>
+                    </a>
+                    <a href="https://web.max.ru/33269346" target="_blank" class="social-card anim-element">
+                        <div class="icon-box max-icon">MAX</div>
+                        <span>Сообщество MAX</span>
+                    </a>
+                </div>
+
             </div>
 
-            <p>ООО «Торговый Дом Новые Электронные Технологии»</p>
-            <p style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
+            <p class="anim-element">ООО «Торговый Дом Новые Электронные Технологии»</p>
+            <p class="anim-element" style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
         </div>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Анимации подвала для этой страницы
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    const mainObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) { entry.target.classList.add('visible'); } 
+                            else { entry.target.classList.remove('visible'); }
+                        });
+                    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
+
+                    const sectionsToAnimate = document.querySelectorAll('.footer-contacts, .social-card, footer p');
+                    sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
+                }, 60);
+            });
+        });
+    </script>
 </body>
 </html>
