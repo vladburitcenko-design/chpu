@@ -70,6 +70,7 @@
 
         html, body {
             overflow-x: hidden; 
+            scroll-behavior: smooth; /* Плавная прокрутка к якорям */
         }
 
         body {
@@ -598,7 +599,7 @@
         }
 
         /* =========================================
-           РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ
+           РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ И НОВЫЕ БЛОКИ
            ========================================= */
         .anim-element {
             opacity: 0;
@@ -649,10 +650,31 @@
             box-shadow: var(--shadow);
         }
 
+        /* Выделенная карточка партнера */
+        .service-item.special-partner {
+            border-color: var(--primary-orange); 
+            box-shadow: 0 0 15px rgba(255, 107, 0, 0.15); 
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .service-item.special-partner:hover {
+            transform: translate3d(0, -5px, 0) scale(1.03); 
+            background-color: #1a0b00; 
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.4); 
+            border-color: var(--primary-orange);
+        }
+
         .service-item h4 {
             font-size: 1.15rem;
             margin-bottom: 15px;
             text-transform: uppercase;
+        }
+
+        .service-item.special-partner h4 {
+            color: var(--primary-orange);
         }
 
         .service-item p {
@@ -731,6 +753,26 @@
         .warranty-text h2 {
             margin-bottom: 20px;
         }
+
+        /* Блок-прослойка для перехода на партнерку */
+        .partner-cta-section {
+            padding: 70px 0;
+            background: linear-gradient(90deg, rgba(255,107,0,0.1) 0%, rgba(0,0,0,0) 100%), var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .partner-cta-content h2 {
+            margin-bottom: 20px;
+        }
+        
+        .partner-cta-content p {
+            color: var(--text-body);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+        }
+        .partner-cta-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
 
         /* Доставка */
         .delivery-section {
@@ -1017,6 +1059,10 @@
             .logistics-logos { margin-top: 15px; gap: 10px; flex-direction: row; flex-wrap: nowrap; }
             .logo-box { padding: 8px 10px; font-size: 0.7rem; flex: 1; text-align: center; }
             
+            .partner-cta-section { padding: 50px 0; }
+            .partner-cta-content h2 { font-size: 1.4rem; }
+            .partner-cta-content p { font-size: 0.85rem; }
+
             .cta-section { padding: 50px 0; }
             .cta-grid { gap: 20px; }
             .cta-text h2 { font-size: 1.4rem; margin-bottom: 10px; }
@@ -1259,10 +1305,13 @@
                     <h4>Проектирование</h4>
                     <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                 </div>
-                <div class="service-item anim-element">
-                    <h4>Ремонт и Модернизация</h4>
-                    <p>Восстановление узлов и полная замена электроники для любых видов станкового оборудования.</p>
-                </div>
+                
+                <!-- ВЫДЕЛЕННАЯ КАРТОЧКА ПАРТНЕРА -->
+                <a href="#partner-block" class="service-item special-partner anim-element">
+                    <h4>Партнерская программа<br>для модернизаторщиков</h4>
+                    <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе, бесплатное обучение ваших инженеров и приоритетная поддержка 24/7.</p>
+                </a>
+                
                 <div class="service-item anim-element">
                     <h4>Пусконаладка</h4>
                     <p>Профессиональный ввод станков в эксплуатацию силами квалифицированных инженеров.</p>
@@ -1299,6 +1348,16 @@
                 </div>
             </div>
 
+        </div>
+    </section>
+
+    <!-- БЛОК-ПРОСЛОЙКА ПАРТНЕРСКОЙ ПРОГРАММЫ -->
+    <section id="partner-block" class="partner-cta-section">
+        <div class="container partner-cta-content anim-element">
+            <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">B2B Сотрудничество</p>
+            <h2>ПРИГЛАШАЕМ К СОТРУДНИЧЕСТВУ<br>КОМПАНИИ ПО МОДЕРНИЗАЦИИ СТАНКОВ</h2>
+            <p>Мы ищем надежных партнеров для совместной реализации проектов по всей России. Получите статус официального интегратора систем ЧПУ TITANIUM, специальные коммерческие условия и стабильный поток горячих заявок от наших клиентов.</p>
+            <a href="partner.html" class="btn">Узнать условия программы</a>
         </div>
     </section>
 
@@ -1426,7 +1485,7 @@
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
                     const sectionsToAnimate = document.querySelectorAll(
-                        '.hero-section, .model-section, .service-section, .warranty-section, .delivery-section, .cta-section'
+                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section'
                     );
                     sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
 
