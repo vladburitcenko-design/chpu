@@ -116,10 +116,18 @@
             text-align: center;
         }
 
-        .btn:hover {
+        .btn:hover:not(:disabled) {
             background-color: var(--dark-orange);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn:disabled {
+            background-color: #555;
+            color: #aaa;
+            cursor: not-allowed;
+            box-shadow: none;
+            border-color: #555;
         }
 
         .btn-outline {
@@ -820,7 +828,6 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
-        /* Исправленная безопасная ссылка для Яндекс Карт с Координатами */
         .map-link-wrapper {
             display: block;
             position: relative;
@@ -899,13 +906,12 @@
             font-size: 1.1rem;
         }
 
-        /* Обновленные стили формы (в столбик) */
         .cta-form {
             display: flex;
             flex-direction: column;
             gap: 15px;
             width: 100%;
-            max-width: 400px; /* Ограничиваем ширину */
+            max-width: 400px;
         }
 
         .cta-form input {
@@ -924,7 +930,6 @@
             border-color: var(--primary-orange);
         }
 
-        /* Ошибка антиспама */
         .form-error {
             color: #ff4d4d;
             font-size: 0.85rem;
@@ -1415,19 +1420,25 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ПОДДЕРЖКА (ОБНОВЛЕНА) -->
+    <!-- СЕКЦИЯ: ПОДДЕРЖКА (ОБНОВЛЕНА ДЛЯ ПРЯМОЙ ОТПРАВКИ) -->
     <section class="cta-section" id="support-section">
         <div class="container cta-grid">
             <div class="cta-text anim-element">
                 <h2>Служба технической поддержки</h2>
                 <p>Наши инженеры проконсультируют по всем вопросам подбора УЧПУ, плат, приводов и комплектов модернизации.</p>
                 
-                <!-- Новая расширенная форма с антиспамом -->
+                <!-- Новая расширенная форма с фоновой отправкой (AJAX) -->
+                <!-- Важно: при первом использовании на почту elektronika-net@mail.ru придет письмо для активации -->
                 <form class="cta-form" id="consultationForm">
-                    <input type="text" id="consultName" placeholder="Ваше имя" required>
-                    <input type="tel" id="consultPhone" placeholder="+7 (000) 000-00-00" required>
-                    <input type="email" id="consultEmail" placeholder="Ваш Email" required>
-                    <input type="text" id="consultSystem" placeholder="Какую систему хотите заказать?" required>
+                    
+                    <!-- Скрытые настройки для FormSubmit -->
+                    <input type="hidden" name="_subject" value="Новая заявка с сайта ТД НЭТ">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <input type="text" name="Имя" id="consultName" placeholder="Ваше имя" required>
+                    <input type="tel" name="Телефон" id="consultPhone" placeholder="+7 (000) 000-00-00" required>
+                    <input type="email" name="Email" id="consultEmail" placeholder="Ваш Email" required>
+                    <input type="text" name="Система" id="consultSystem" placeholder="Какую систему хотите заказать?" required>
                     <input type="text" id="consultSpam" placeholder="Антиспам: количество букв в слове chpu?" required>
                     
                     <div class="form-error" id="consultError">Ошибка: Неверное количество букв!</div>
@@ -1464,20 +1475,18 @@
     <!-- JS Скрипты -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            
             // ==========================================
-            // ЛОГИКА АНТИСПАМ-ФОРМЫ И ОТПРАВКИ MAILTO
+            // ЛОГИКА АНТИСПАМ-ФОРМЫ И ФОНОВОЙ ОТПРАВКИ (AJAX)
             // ==========================================
             const consultForm = document.getElementById('consultationForm');
-            const consultName = document.getElementById('consultName');
-            const consultPhone = document.getElementById('consultPhone');
-            const consultEmail = document.getElementById('consultEmail');
-            const consultSystem = document.getElementById('consultSystem');
             const consultSpam = document.getElementById('consultSpam');
             const consultError = document.getElementById('consultError');
+            const submitBtn = consultForm ? consultForm.querySelector('button[type="submit"]') : null;
 
             if (consultForm) {
                 consultForm.addEventListener('submit', function(e) {
-                    e.preventDefault(); // Останавливаем стандартную отправку
+                    e.preventDefault(); // Останавливаем стандартную перезагрузку страницы
 
                     const spamAnswer = consultSpam.value.trim().toLowerCase();
                     
@@ -1485,25 +1494,40 @@
                     if (spamAnswer !== '4' && spamAnswer !== 'четыре') {
                         consultError.style.display = 'block';
                         consultSpam.style.borderColor = '#ff4d4d';
-                        return; // Прерываем функцию, если ответ неверный
+                        return; // Прерываем отправку, если ответ неверный
                     }
 
                     // Если все верно, убираем ошибки
                     consultError.style.display = 'none';
                     consultSpam.style.borderColor = 'rgba(255,255,255,0.1)';
 
-                    // Формируем текст письма
-                    const emailAddress = "elektronika-net@mail.ru";
-                    const subject = encodeURIComponent("Новая заявка с сайта ТД НЭТ");
-                    const bodyText = `Имя: ${consultName.value}\nТелефон: ${consultPhone.value}\nEmail: ${consultEmail.value}\nИнтересующая система: ${consultSystem.value}\n\nЗдравствуйте! Прошу связаться со мной для подбора оборудования и оформления заказа.`;
-                    const body = encodeURIComponent(bodyText);
+                    // Меняем текст кнопки, чтобы показать процесс загрузки
+                    const originalBtnText = submitBtn.innerText;
+                    submitBtn.innerText = 'Отправка...';
+                    submitBtn.disabled = true;
 
-                    // Открываем почтовый клиент
-                    window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+                    // Собираем все данные из формы
+                    const formData = new FormData(consultForm);
 
-                    // Очищаем форму и благодарим
-                    consultForm.reset();
-                    alert("Отлично! Сейчас откроется ваш почтовый клиент. Пожалуйста, отправьте сформированное письмо.");
+                    // Фоновая отправка через бесплатный шлюз FormSubmit
+                    fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // При успешной отправке
+                        alert("Спасибо! Ваша заявка успешно отправлена.");
+                        consultForm.reset();
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.disabled = false;
+                    })
+                    .catch(error => {
+                        // Если произошла ошибка (например, нет интернета)
+                        alert("Произошла ошибка при отправке. Пожалуйста, проверьте подключение к сети.");
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.disabled = false;
+                    });
                 });
             }
 
