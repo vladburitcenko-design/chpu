@@ -146,9 +146,6 @@
         .service-section.visible .service-item:nth-child(1) { transition-delay: 0.0s; }
         .service-section.visible .service-item:nth-child(2) { transition-delay: 0.15s; }
         .service-section.visible .service-item:nth-child(3) { transition-delay: 0.3s; }
-        footer.visible .social-card:nth-child(1) { transition-delay: 0.0s; }
-        footer.visible .social-card:nth-child(2) { transition-delay: 0.15s; }
-        footer.visible .social-card:nth-child(3) { transition-delay: 0.3s; }
 
         .service-section { padding: 90px 0; background: var(--bg-grad-alt); border-bottom: 1px solid var(--border-color); }
         .service-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px; }
@@ -367,7 +364,6 @@
         <div class="container model-grid">
             
             <div class="model-text">
-                <!-- ИЗМЕНЕНИЕ: Заголовок изменен на "КАТАЛОГ ТОВАРОВ" -->
                 <h2 class="model-title">КАТАЛОГ<br><span>ТОВАРОВ</span></h2>
                 
                 <div class="model-features">
@@ -718,9 +714,11 @@
             let isHoverLocked = false;
             let hoverLockTimeout;
             let isDragging = false; 
+            let isSectionInView = false; 
 
             function startAutoSwitch() {
                 clearInterval(autoSwitchTimer);
+                if (!isSectionInView) return; 
                 autoSwitchTimer = setInterval(() => {
                     let currentGroup = Math.floor(currentIndex / 2);
                     let nextGroup = (currentGroup + 1) % 4; 
@@ -731,7 +729,9 @@
             function resetInteractionTimer() {
                 clearInterval(autoSwitchTimer);
                 clearTimeout(interactionTimeout);
+                if (!isSectionInView) return; 
                 interactionTimeout = setTimeout(() => {
+                    if (!isSectionInView) return; 
                     let currentGroup = Math.floor(currentIndex / 2);
                     let nextGroup = (currentGroup + 1) % 4; 
                     activateModel(nextGroup * 2); 
@@ -744,9 +744,21 @@
                 modelSection.addEventListener('touchstart', resetInteractionTimer, {passive: true});
                 modelSection.addEventListener('click', resetInteractionTimer);
                 modelSection.addEventListener('mouseleave', resetInteractionTimer);
-            }
 
-            startAutoSwitch();
+                const visibilityObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isSectionInView = entry.isIntersecting;
+                        if (isSectionInView) {
+                            startAutoSwitch();
+                        } else {
+                            clearInterval(autoSwitchTimer);
+                            clearTimeout(interactionTimeout);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                visibilityObserver.observe(modelSection);
+            }
 
             const modelsArray = [
                 'чпу.glb', 'чпу.glb', 
