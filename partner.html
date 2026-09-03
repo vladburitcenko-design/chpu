@@ -41,7 +41,7 @@
         .nav-link:hover { color: var(--primary-orange); }
 
         .header-buttons { display: flex; align-items: center; gap: 10px; }
-        header { background-color: #1a1d21; border-bottom: 3px solid var(--primary-orange); position: sticky; top: 0; z-index: 100; }
+        header { background-color: #1a1d21; border-bottom: 3px solid var(--primary-orange); position: sticky; top: 0; z-index: 100; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .header-content { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
         .logo { font-family: 'Benzin', sans-serif; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 15px; color: var(--text-light); text-decoration: none; text-transform: uppercase; }
         .logo-img { height: 42px; width: auto; object-fit: contain; }
@@ -99,7 +99,10 @@
         .social-card span { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; }
 
         .anim-element { opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out; will-change: transform, opacity; }
-        .visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
+        .visible .anim-element, .anim-element.visible { opacity: 1; transform: translate3d(0, 0, 0); }
+        footer.visible .social-card:nth-child(1) { transition-delay: 0.0s; }
+        footer.visible .social-card:nth-child(2) { transition-delay: 0.15s; }
+        footer.visible .social-card:nth-child(3) { transition-delay: 0.3s; }
 
         @media (max-width: 992px) {
             .header-nav { display: none; }
@@ -161,7 +164,6 @@
             <div class="partner-hero-content">
                 <h1>Приглашаем интеграторов и модернизаторов ЧПУ</h1>
                 <p>Ищем надежных и квалифицированных специалистов по модернизации станкового оборудования. Если это ВЫ, то пишите нам на почту: <a href="mailto:elektronika-net@mail.ru">elektronika-net@mail.ru</a>.<br><br>У нас Вы получите лучшие цены на комплектующие, обучитесь работе с нашими системами и получите статус сертифицированного партнера ТД НЭТ.</p>
-                <!-- ИЗМЕНЕНИЕ 7: Новая кнопка на скачивание PDF -->
                 <a href="условия_акции.pdf" download class="btn">ПОЛУЧИТЬ ПОЛНЫЕ УСЛОВИЯ</a>
             </div>
         </div>
@@ -384,7 +386,7 @@
                         });
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
-                    const sectionsToAnimate = document.querySelectorAll('.footer-contacts, .social-card, footer p');
+                    const sectionsToAnimate = document.querySelectorAll('footer');
                     sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
                 }, 60);
             });
