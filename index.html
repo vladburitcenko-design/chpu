@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ТД НЭТ | Системы ЧПУ и Комплектующие</title>
     
+    <!-- ОПТИМИЗАЦИЯ: Раннее подключение к серверам Google -->
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
     
+    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелых 3D моделей, постера и главного шрифта -->
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
@@ -14,9 +16,11 @@
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
+    <!-- Подключаем библиотеку Google для отображения 3D моделей -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
+        /* Подключение вашего фирменного шрифта Benzin */
         @font-face {
             font-family: 'Benzin';
             src: url('Benzin-Bold.woff2') format('woff2'),
@@ -37,17 +41,21 @@
             font-display: swap;
         }
 
+        /* Палитра */
         :root {
             --bg-card: #15171a;          
             --bg-card-hover: #0a0b0d;    
             --bg-placeholder: #22262a;   
+            
             --bg-grad-main: linear-gradient(135deg, #2b3036 0%, #1e2126 100%); 
             --bg-grad-alt: linear-gradient(135deg, #32383e 0%, #262a30 100%); 
+            
             --primary-orange: #ff6b00;   
             --dark-orange: #d95a00;      
             --text-light: #ffffff;       
             --text-muted: #adb5bd;       
             --text-body: #e9ecef;        
+            
             --border-color: rgba(255, 255, 255, 0.06);     
             --border-highlight: rgba(255, 255, 255, 0.15);      
             --shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
@@ -252,7 +260,6 @@
             .logo { font-size: 1.1rem; gap: 8px; }
             .logo-img { height: 26px; }
             
-            /* ИЗМЕНЕНИЕ 2: Компактные кнопки в шапке для мобильных */
             .header-buttons { display: flex; gap: 5px; align-items: center; }
             .header-buttons .btn { padding: 6px 10px; font-size: 0.65rem; letter-spacing: 0; }
             
@@ -308,7 +315,6 @@
         @media (max-width: 480px) {
             .logo { font-size: 0.95rem; }
             .logo-img { height: 22px; }
-            /* ИЗМЕНЕНИЕ 2: Еще меньше для микро-экранов */
             .header-buttons .btn { padding: 5px 6px; font-size: 0.55rem; }
             .hero-text h1 { font-size: 1.4rem; }
         }
@@ -322,7 +328,6 @@
                 <div>ТД <span>НЭТ</span></div>
                 <img src="logo.png" alt="ТД НЭТ" class="logo-img">
             </a>
-            <!-- Обертка для кнопок в шапке -->
             <div class="header-buttons">
                 <a href="tel:+79185582299" class="btn">Связаться с нами</a>
             </div>
@@ -529,7 +534,6 @@
                     <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                 </div>
                 
-                <!-- ИЗМЕНЕНИЕ 1: Плавный якорь на блок B2B -->
                 <a href="#partner-block" class="service-item special-partner anim-element">
                     <h4>Партнерская программа<br>для модернизаторщиков</h4>
                     <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе, бесплатное обучение ваших инженеров и приоритетная поддержка 24/7.</p>
@@ -543,14 +547,16 @@
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: ГАРАНТИЯ И МИНПРОМТОРГ -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
+            
             <div class="warranty-box">
                 <div class="warranty-text">
                     <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Стандарты качества</p>
                     <h2>Сертификация и Гарантия до 2х лет</h2>
                     <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Вся изготавливаемая продукция сопровождается сертификатами соответствия. Паспорта качества имеют защитную голограмму и содержат полную информацию по эксплуатации.</p>
-                    <a href="#support-section" class="btn">Подробнее</a>
+                    <a href="docs.html" class="btn">ПОДРОБНЕЕ</a>
                 </div>
             </div>
 
@@ -559,12 +565,13 @@
                     <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Импортозамещение</p>
                     <h2>МЫ В РЕЕСТРЕ МИНПРОМТОРГА</h2>
                     <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Производимое нами оборудование полностью соответствует требованиям 719 постановления о подтверждении производства промышленной продукции на территории РФ (о «российскости»).</p>
-                    <a href="#" class="btn btn-outline">Проверить в реестре</a>
                 </div>
             </div>
+
         </div>
     </section>
 
+    <!-- БЛОК-ПРОСЛОЙКА ПАРТНЕРСКОЙ ПРОГРАММЫ -->
     <section id="partner-block" class="partner-cta-section">
         <div class="container partner-cta-content anim-element">
             <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">B2B Сотрудничество</p>
