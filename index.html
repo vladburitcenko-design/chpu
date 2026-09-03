@@ -515,7 +515,7 @@
                     <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                 </div>
                 
-                <a href="#partner-block" class="service-item special-partner anim-element">
+                <a href="partner.html" class="service-item special-partner anim-element">
                     <h4>Партнерская программа<br>для модернизаторщиков</h4>
                     <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе, бесплатное обучение ваших инженеров и приоритетная поддержка 24/7.</p>
                 </a>
@@ -532,8 +532,8 @@
         <div class="container warranty-wrapper">
             <div class="warranty-box">
                 <div class="img-placeholder">
-                    <!-- ИЗМЕНЕНИЕ 1: Замена первого фото -->
-                    <img src="hands.jpg" alt="Гарантия и надежность">
+                    <!-- Заменено фото на hands.jpeg -->
+                    <img src="hands.jpeg" alt="Гарантия и надежность">
                 </div>
                 <div class="warranty-text">
                     <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Стандарты качества</p>
@@ -545,7 +545,6 @@
 
             <div class="warranty-box minprom">
                 <div class="img-placeholder">
-                    <!-- ИЗМЕНЕНИЕ 1: Замена второго фото -->
                     <img src="719.jpg" alt="Импортозамещение Минпромторг">
                 </div>
                 <div class="warranty-text">
@@ -563,7 +562,6 @@
             <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">B2B Сотрудничество</p>
             <h2>ПРИГЛАШАЕМ К СОТРУДНИЧЕСТВУ<br>КОМПАНИИ ПО МОДЕРНИЗАЦИИ СТАНКОВ</h2>
             <p>Мы ищем надежных партнеров для совместной реализации проектов по всей России. Получите статус официального интегратора систем ЧПУ TITANIUM, специальные коммерческие условия и стабильный поток горячих заявок от наших клиентов.</p>
-            <!-- ИЗМЕНЕНИЕ 3: Переход на страницу partner.html -->
             <a href="partner.html" class="btn">Узнать условия программы</a>
         </div>
     </section>
@@ -607,7 +605,6 @@
                     
                     <div class="form-group">
                         <label>Антиспам-проверка</label>
-                        <!-- ИЗМЕНЕНИЕ 2: Тот же самый антиспам с ответом 7 -->
                         <input type="text" id="consultSpam" placeholder="Количество букв в адресе chpu.net?" required style="margin-bottom: 0;">
                         <div class="form-error" id="consultError">Ошибка: Неверное количество букв! Подсказка: их 7.</div>
                     </div>
@@ -653,7 +650,6 @@
 
                     const spamAnswer = consultSpam.value.trim().toLowerCase();
                     
-                    // ИЗМЕНЕНИЕ 2: Проверка ответа 7
                     if (spamAnswer !== '7' && spamAnswer !== 'семь') {
                         consultError.style.display = 'block';
                         consultSpam.style.borderColor = '#ff4d4d';
@@ -669,7 +665,6 @@
 
                     const formData = new FormData(consultForm);
 
-                    // ИЗМЕНЕНИЕ 4: Правильный email
                     fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
                         method: "POST",
                         body: formData
