@@ -111,7 +111,6 @@
 
         .model-viewer-container { display: flex; flex-direction: column; align-items: center; position: relative; width: 125%; margin-right: -25%; margin-top: -30px; transition: all 0.6s ease; }
         
-        /* ИСПРАВЛЕНИЕ: Добавлен overflow: hidden для гарантии отсуствия скачков + убрана анимация смещения */
         .model-viewer-wrapper { position: relative; width: 100%; height: 500px; border: none; background: transparent; box-shadow: none; overflow: hidden; }
         
         .cnc-description-wrapper { position: relative; min-height: 120px; width: 80%; margin-top: 10px; text-align: center; }
@@ -127,14 +126,15 @@
         .model-box { width: 100%; height: 100%; transform: translate3d(80%, 0, 0); opacity: 0; transition: transform 0.8s ease, opacity 0.8s ease; will-change: transform, opacity; }
         .model-section.visible .model-box { transform: translate3d(0, 0, 0); opacity: 1; transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out; }
 
-        /* ИСПРАВЛЕНИЕ АНИМАЦИИ: Теперь плавно растворяется, а не скачет вниз */
+        /* ИСПРАВЛЕНА АНИМАЦИЯ: Эффект выезжания возвращен (slide-down / snap-top), но без скачков страницы из-за overflow:hidden */
         model-viewer { 
             width: 100%; height: 100%; background-color: transparent; --poster-color: transparent; cursor: grab; 
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; 
-            transform: scale(1); opacity: 1; 
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out; 
+            transform: translate3d(0, 0, 0); opacity: 1; 
         }
         model-viewer:active { cursor: grabbing; }
-        model-viewer.model-hidden { opacity: 0; transform: scale(0.96); }
+        model-viewer.slide-down { transform: translate3d(0, 100%, 0); opacity: 0; }
+        model-viewer.snap-top { transition: none !important; transform: translate3d(0, -100%, 0); opacity: 0; }
 
         .btn-glow-center { display: inline-block; margin-top: 30px; padding: 16px 40px; font-size: 1rem; box-shadow: 0 0 15px rgba(255, 107, 0, 0.4); border: 1px solid var(--primary-orange); }
         .btn-glow-center:hover { box-shadow: 0 0 30px rgba(255, 107, 0, 0.8); transform: translateY(-2px) scale(1.02); }
@@ -364,7 +364,7 @@
         </div>
     </section>
 
-    <section class="model-section">
+    <section class="model-section" id="model-section-wrapper">
         <div class="container model-grid">
             
             <div class="model-text">
@@ -710,13 +710,47 @@
             const btnNext = document.getElementById('nextModel');
             const mainModelContainer = document.getElementById('mainModelContainer');
             const modelGrid = document.querySelector('.model-grid');
-            const modelSection = document.querySelector('.model-section');
+            const modelSection = document.getElementById('model-section-wrapper');
             
             let currentIndex = 0;
-            let switchTimeout;
-            let hoverLockTimeout;
+            let autoSwitchTimer;
+            let interactionTimeout;
             let isHoverLocked = false;
+            let hoverLockTimeout;
             let isDragging = false; 
+
+            // ИСПРАВЛЕНО: Таймер авто-переключения моделей каждые 8 секунд
+            function startAutoSwitch() {
+                clearInterval(autoSwitchTimer);
+                autoSwitchTimer = setInterval(() => {
+                    let currentGroup = Math.floor(currentIndex / 2);
+                    let nextGroup = (currentGroup + 1) % 4; 
+                    activateModel(nextGroup * 2); 
+                }, 8000); 
+            }
+
+            // ИСПРАВЛЕНО: При любом взаимодействии очищаем интервал, ждем 4 сек, сразу переключаем и возобновляем цикл
+            function resetInteractionTimer() {
+                clearInterval(autoSwitchTimer);
+                clearTimeout(interactionTimeout);
+                interactionTimeout = setTimeout(() => {
+                    let currentGroup = Math.floor(currentIndex / 2);
+                    let nextGroup = (currentGroup + 1) % 4; 
+                    activateModel(nextGroup * 2); 
+                    startAutoSwitch();
+                }, 4000);
+            }
+
+            // Отслеживаем активность внутри всего черного блока ЧПУ
+            if (modelSection) {
+                modelSection.addEventListener('mousemove', resetInteractionTimer);
+                modelSection.addEventListener('touchstart', resetInteractionTimer, {passive: true});
+                modelSection.addEventListener('click', resetInteractionTimer);
+                modelSection.addEventListener('mouseleave', resetInteractionTimer);
+            }
+
+            // Запускаем таймер при загрузке страницы
+            startAutoSwitch();
 
             const modelsArray = [
                 'чпу.glb', 'чпу.glb', 
@@ -765,23 +799,7 @@
                 }, 60);
             });
 
-            let autoSwitchTimer;
-            function startAutoSwitch() {
-                clearInterval(autoSwitchTimer);
-                autoSwitchTimer = setInterval(() => {
-                    let currentGroup = Math.floor(currentIndex / 2);
-                    let nextGroup = (currentGroup + 1) % 4; 
-                    activateModel(nextGroup * 2); 
-                }, 8000); 
-            }
-
-            if (modelSection) {
-                modelSection.addEventListener('mouseenter', () => clearInterval(autoSwitchTimer));
-                modelSection.addEventListener('mouseleave', startAutoSwitch);
-                modelSection.addEventListener('touchstart', () => clearInterval(autoSwitchTimer), {passive: true});
-            }
-
-            startAutoSwitch();
+            let switchTimeout;
 
             function activateModel(index) {
                 if (index === currentIndex) return;
@@ -807,15 +825,18 @@
                     parentWrapper.appendChild(mainModelContainer);
                 }
 
-                // ИСПРАВЛЕНИЕ АНИМАЦИИ В JS: Плавное затухание
-                modelViewer.classList.add('model-hidden');
+                modelViewer.classList.add('slide-down');
 
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
+                    modelViewer.classList.add('snap-top');
+                    modelViewer.classList.remove('slide-down');
+                    
                     modelViewer.src = modelsArray[index];
                     void modelViewer.offsetWidth;
-                    modelViewer.classList.remove('model-hidden');
-                }, 400); 
+
+                    modelViewer.classList.remove('snap-top');
+                }, 500); 
             }
 
             function lockHover() {
@@ -875,9 +896,12 @@
                 if (window.innerWidth > 992) lockHover();
             });
 
+            // ИСПРАВЛЕНО: Умная ротация 3D модели (беспрерывная, активируется если курсор замер на 2 сек)
             if (modelViewer) {
                 let currentX = 0; let currentY = 0; let targetX = 0; let targetY = 0;
-                let autoTime = 0; let isHovering = false;
+                let autoDir = 1; let isHovering = false;
+                let cursorIdleTimer;
+                let isCursorIdle = false;
 
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
@@ -885,6 +909,12 @@
                 if (modelSection) {
                     modelSection.addEventListener('mousemove', (e) => {
                         isHovering = true;
+                        
+                        // Сброс таймера простоя курсора
+                        isCursorIdle = false;
+                        clearTimeout(cursorIdleTimer);
+                        cursorIdleTimer = setTimeout(() => { isCursorIdle = true; }, 2000);
+
                         if (isDragging) return; 
                         const rect = modelSection.getBoundingClientRect();
                         targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
@@ -893,9 +923,9 @@
 
                     modelSection.addEventListener('mouseleave', () => {
                         isHovering = false;
+                        isCursorIdle = true; // Сразу запускаем авто-вращение, если курсор ушел с блока
+                        clearTimeout(cursorIdleTimer);
                         if (isDragging) return;
-                        let clampedX = Math.max(-1, Math.min(1, currentX));
-                        autoTime = Math.asin(clampedX) || 0;
                     });
                 }
 
@@ -905,19 +935,31 @@
                         currentX = (orbit.theta * 180 / Math.PI) / 70;
                         currentY = ((orbit.phi * 180 / Math.PI) - 80) / 20;
                         let clampedX = Math.max(-1, Math.min(1, currentX));
-                        autoTime = Math.asin(clampedX) || 0;
                         targetX = currentX; targetY = currentY;
-                    } else if (isHovering) {
+                        autoDir = currentX > 0 ? -1 : 1; 
+                    } else if (isHovering && !isCursorIdle) {
+                        // Модель следит за курсором
                         currentX += (targetX - currentX) * 0.15;
                         currentY += (targetY - currentY) * 0.15;
                         modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
                     } else {
-                        autoTime += 0.0035; 
-                        targetX = Math.sin(autoTime);
-                        targetY = 0; 
-                        currentX += (targetX - currentX) * 0.02;
-                        currentY += (targetY - currentY) * 0.02;
+                        // Непрерывное линейное авто-вращение без замедления на углах
+                        currentX += 0.004 * autoDir; 
+                        
+                        // Мгновенный отскок от краев
+                        if (currentX >= 1) { 
+                            currentX = 1; 
+                            autoDir = -1; 
+                        } else if (currentX <= -1) { 
+                            currentX = -1; 
+                            autoDir = 1; 
+                        }
+                        
+                        targetY = 0;
+                        currentY += (targetY - currentY) * 0.05;
+
                         modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
+                        targetX = currentX; // Синхронизируем таргет, чтобы не было резких прыжков при движении мышью
                     }
                     requestAnimationFrame(renderLoop);
                 }
