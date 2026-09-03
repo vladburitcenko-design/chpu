@@ -39,7 +39,6 @@
         .btn:hover:not(:disabled) { background-color: var(--dark-orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4); }
         .btn:disabled { background-color: #555; color: #aaa; cursor: not-allowed; box-shadow: none; border-color: #555; }
         
-        /* НОВЫЕ ССЫЛКИ В ШАПКЕ */
         .header-nav { display: flex; gap: 25px; align-items: center; margin-right: 20px; }
         .nav-link { color: var(--text-light); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s ease; }
         .nav-link:hover { color: var(--primary-orange); }
@@ -131,8 +130,10 @@
         .btn-glow-center { display: inline-block; margin-top: 30px; padding: 16px 40px; font-size: 1rem; box-shadow: 0 0 15px rgba(255, 107, 0, 0.4); border: 1px solid var(--primary-orange); }
         .btn-glow-center:hover { box-shadow: 0 0 30px rgba(255, 107, 0, 0.8); transform: translateY(-2px) scale(1.02); }
 
+        /* ИСПРАВЛЕННЫЙ БЛОК АНИМАЦИЙ: Теперь элементы внутри подвала и сами элементы работают корректно */
         .anim-element { opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out; will-change: transform, opacity; }
-        .visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
+        .visible .anim-element, .anim-element.visible { opacity: 1; transform: translate3d(0, 0, 0); }
+        
         .hero-section.visible .stat-wrapper:nth-child(1) .anim-element { transition-delay: 0.1s; }
         .hero-section.visible .stat-wrapper:nth-child(2) .anim-element { transition-delay: 0.2s; }
         .service-section.visible .service-item:nth-child(1) { transition-delay: 0.0s; }
@@ -187,7 +188,6 @@
         .form-group label { font-weight: 700; font-size: 0.95rem; color: #fff; }
         .form-error { color: #ff4d4d; font-size: 0.85rem; font-weight: 600; margin-top: -5px; display: none; }
 
-        /* НОВЫЙ ПОДВАЛ С КОНТАКТАМИ И СОЦСЕТЯМИ */
         footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-grid { display: flex; justify-content: center; align-items: center; gap: 50px; margin-bottom: 40px; flex-wrap: wrap; }
         .footer-contacts { text-align: left; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 50px; }
@@ -207,7 +207,7 @@
         .social-card span { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; }
 
         @media (max-width: 992px) {
-            .header-nav { display: none; } /* Прячем текст. ссылки на планшетах для экономии места */
+            .header-nav { display: none; }
             .hero-grid, .model-grid, .delivery-content, .cta-grid { grid-template-columns: 1fr; }
             .model-grid { text-align: center; }
             .model-title { font-size: 2.5rem; }
@@ -251,6 +251,7 @@
             .service-item { padding: 15px; }
             .service-item h4 { font-size: 0.95rem; margin-bottom: 5px; }
             .service-item p { font-size: 0.8rem; }
+            
             .warranty-section { padding: 50px 0; }
             .warranty-wrapper { gap: 0; }
             .warranty-box { padding: 25px 20px; text-align: left; }
@@ -258,6 +259,7 @@
             .warranty-text h2 { font-size: 1.1rem; margin-bottom: 8px; }
             .warranty-text p { font-size: 0.75rem !important; margin-bottom: 12px !important; line-height: 1.3; }
             .warranty-text .btn { padding: 8px 12px; font-size: 0.7rem; }
+            
             .delivery-section { padding: 50px 0; }
             .delivery-content { gap: 20px; }
             .map-link-wrapper { height: 200px !important; }
@@ -273,7 +275,6 @@
             .cta-form { max-width: 100%; }
             .cta-form input, .cta-form .btn { width: 100%; padding: 10px; font-size: 0.8rem; }
             
-            /* Адаптивный подвал */
             .footer-grid { flex-direction: column; gap: 30px; }
             .footer-contacts { border-right: none; padding-right: 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; width: 100%; }
             .footer-phones { align-items: center; }
@@ -300,8 +301,6 @@
                 <div>ТД <span>НЭТ</span></div>
                 <img src="logo.png" alt="ТД НЭТ" class="logo-img">
             </a>
-            
-            <!-- ИЗМЕНЕНИЕ 3: Новые ссылки в шапке -->
             <div style="display: flex; align-items: center;">
                 <div class="header-nav">
                     <a href="docs.html" class="nav-link">Документация</a>
@@ -311,7 +310,6 @@
                     <a href="tel:+79185582299" class="btn">Связаться с нами</a>
                 </div>
             </div>
-            
         </div>
     </header>
 
@@ -356,7 +354,6 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ 4: Обновленные характеристики ЧПУ -->
     <section class="model-section">
         <div class="container model-grid">
             
@@ -499,7 +496,6 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: УСЛУГИ И СЕРВИС -->
     <section class="service-section">
         <div class="container">
             <div class="service-header">
@@ -507,7 +503,6 @@
                     <h2>Услуги и сервис</h2>
                     <p>Процесс изготовления любой продукции выгодно отличается благодаря аттестованным специалистам и современному оборудованию.</p>
                 </div>
-                <!-- ИЗМЕНЕНИЕ 8: Кнопка убрана -->
             </div>
             <div class="service-grid">
                 <div class="service-item anim-element">
@@ -517,7 +512,6 @@
                 
                 <a href="#partner-block" class="service-item special-partner anim-element">
                     <h4>Партнерская программа<br>для модернизаторщиков</h4>
-                    <!-- ИЗМЕНЕНИЕ 5: Убрано про обучение и 24/7 -->
                     <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе.</p>
                 </a>
                 
@@ -529,10 +523,8 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ГАРАНТИЯ И МИНПРОМТОРГ -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
-            
             <div class="warranty-box">
                 <div class="warranty-text">
                     <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Стандарты качества</p>
@@ -549,7 +541,6 @@
                     <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Производимое нами оборудование полностью соответствует требованиям 719 постановления о подтверждении производства промышленной продукции на территории РФ (о «российскости»).</p>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -611,7 +602,6 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ 9: Обновленный подвал с контактами -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -747,7 +737,7 @@
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
                     const sectionsToAnimate = document.querySelectorAll(
-                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, .btn-glow-center, .footer-contacts, .social-card, footer p'
+                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, footer'
                     );
                     sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
 
