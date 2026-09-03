@@ -60,7 +60,7 @@
         .doc-card p { color: var(--text-body); font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;}
         .doc-card .btn-outline { margin-top: auto; width: max-content; }
 
-        /* ИЗМЕНЕНИЕ 9: Обновленный подвал с контактами и соцсетями (карта убрана) */
+        /* ИЗМЕНЕНИЕ 9: Обновленный подвал с новой ссылкой на RuTube */
         footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-grid { display: flex; justify-content: center; align-items: center; gap: 50px; margin-bottom: 40px; flex-wrap: wrap; }
         .footer-contacts { text-align: left; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 50px; }
@@ -81,10 +81,7 @@
 
         .anim-element { opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out; will-change: transform, opacity; }
         .visible .anim-element, .anim-element.visible { opacity: 1; transform: translate3d(0, 0, 0); }
-        footer.visible .social-card:nth-child(1) { transition-delay: 0.0s; }
-        footer.visible .social-card:nth-child(2) { transition-delay: 0.15s; }
-        footer.visible .social-card:nth-child(3) { transition-delay: 0.3s; }
-
+        
         @media (max-width: 992px) {
             .header-nav { display: none; }
             .docs-hero h1 { font-size: 2.8rem; }
@@ -169,7 +166,7 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ 9: Подвал с контактами и соцсетями (карта убрана) -->
+    <!-- ИЗМЕНЕНИЕ 9: Подвал с новой ссылкой на RuTube -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -189,7 +186,8 @@
                 </div>
 
                 <div class="footer-social-links">
-                    <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card anim-element">
+                    <!-- ОБНОВЛЕННАЯ ССЫЛКА НА RUTUBE -->
+                    <a href="https://rutube.ru/channel/42544297/" target="_blank" class="social-card anim-element">
                         <div class="icon-box">▶</div>
                         <span>RuTube канал</span>
                     </a>
@@ -212,7 +210,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Анимации подвала для этой страницы
+            // Правильное отслеживание подвала
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     const mainObserver = new IntersectionObserver((entries) => {
