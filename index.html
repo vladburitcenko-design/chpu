@@ -288,7 +288,7 @@
 
         /* --- РАЗДЕЛ: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ --- */
         .model-section {
-            padding: 90px 0;
+            padding: 90px 0 60px 0;
             background-color: #0a0b0d; 
             border-bottom: 1px solid var(--border-color);
             overflow: hidden; 
@@ -598,6 +598,20 @@
             opacity: 0;
         }
 
+        /* Кнопка внизу 3D секции */
+        .btn-glow-center {
+            display: inline-block;
+            margin-top: 50px;
+            padding: 16px 40px;
+            font-size: 1rem;
+            box-shadow: 0 0 15px rgba(255, 107, 0, 0.4);
+            border: 1px solid var(--primary-orange);
+        }
+        .btn-glow-center:hover {
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.8);
+            transform: translateY(-2px) scale(1.02);
+        }
+
         /* =========================================
            РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ И НОВЫЕ БЛОКИ
            ========================================= */
@@ -806,6 +820,7 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
+        /* Исправленная безопасная ссылка для Яндекс Карт с Координатами */
         .map-link-wrapper {
             display: block;
             position: relative;
@@ -858,7 +873,7 @@
         .delivery-section.visible .delivery-content > div:nth-child(1) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 1s ease-out 0.1s; }
         .delivery-section.visible .delivery-content > a:nth-child(2) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease-out 0.3s; }
 
-        /* CTA Поддержка */
+        /* CTA Поддержка (Обновленная форма) */
         .cta-section {
             background-color: #15171a;
             padding: 80px 0;
@@ -884,9 +899,13 @@
             font-size: 1.1rem;
         }
 
+        /* Обновленные стили формы (в столбик) */
         .cta-form {
             display: flex;
+            flex-direction: column;
             gap: 15px;
+            width: 100%;
+            max-width: 400px; /* Ограничиваем ширину */
         }
 
         .cta-form input {
@@ -894,7 +913,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             background: #1e2226;
             border-radius: 4px;
-            width: 320px;
+            width: 100%;
             color: #ffffff;
             font-size: 1rem;
             transition: border-color 0.3s;
@@ -903,6 +922,15 @@
         .cta-form input:focus {
             outline: none;
             border-color: var(--primary-orange);
+        }
+
+        /* Ошибка антиспама */
+        .form-error {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: -5px;
+            display: none;
         }
 
         .social-links {
@@ -990,8 +1018,6 @@
             .model-section.visible .model-box { transform: translate3d(0, 0, 0); }
             
             .service-grid { grid-template-columns: 1fr; }
-            .cta-form { flex-direction: column; }
-            .cta-form input { width: 100%; }
             .service-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -1067,7 +1093,7 @@
             .cta-grid { gap: 20px; }
             .cta-text h2 { font-size: 1.4rem; margin-bottom: 10px; }
             .cta-text p { font-size: 0.85rem; margin-bottom: 15px; }
-            .cta-form { flex-direction: column; gap: 10px; }
+            .cta-form { max-width: 100%; }
             .cta-form input, .cta-form .btn { width: 100%; padding: 10px; font-size: 0.8rem; }
             
             .social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; }
@@ -1288,6 +1314,11 @@
                 </div>
             </div>
         </div>
+
+        <!-- ЯРКАЯ КНОПКА ВНИЗУ 3D БЛОКА -->
+        <div class="container" style="text-align: center; margin-top: 60px; position: relative; z-index: 10;">
+            <a href="#support-section" class="btn btn-glow-center anim-element">Оставить заявку на подбор</a>
+        </div>
     </section>
 
     <!-- СЕКЦИЯ: УСЛУГИ И СЕРВИС -->
@@ -1298,7 +1329,7 @@
                     <h2>Услуги и сервис</h2>
                     <p>Процесс изготовления любой продукции выгодно отличается благодаря аттестованным специалистам и современному оборудованию.</p>
                 </div>
-                <a href="#" class="btn btn-outline">Связаться с отделом</a>
+                <a href="#support-section" class="btn btn-outline">Связаться с отделом</a>
             </div>
             <div class="service-grid">
                 <div class="service-item anim-element">
@@ -1307,7 +1338,7 @@
                 </div>
                 
                 <!-- ВЫДЕЛЕННАЯ КАРТОЧКА ПАРТНЕРА -->
-                <a href="#partner-block" class="service-item special-partner anim-element">
+                <a href="partner.html" class="service-item special-partner anim-element">
                     <h4>Партнерская программа<br>для модернизаторщиков</h4>
                     <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе, бесплатное обучение ваших инженеров и приоритетная поддержка 24/7.</p>
                 </a>
@@ -1332,7 +1363,7 @@
                     <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Стандарты качества</p>
                     <h2>Сертификация и Гарантия до 2х лет</h2>
                     <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Вся изготавливаемая продукция сопровождается сертификатами соответствия. Паспорта качества имеют защитную голограмму и содержат полную информацию по эксплуатации.</p>
-                    <a href="#" class="btn">Подробнее</a>
+                    <a href="#support-section" class="btn">Подробнее</a>
                 </div>
             </div>
 
@@ -1384,17 +1415,26 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ПОДДЕРЖКА -->
-    <section class="cta-section">
+    <!-- СЕКЦИЯ: ПОДДЕРЖКА (ОБНОВЛЕНА) -->
+    <section class="cta-section" id="support-section">
         <div class="container cta-grid">
             <div class="cta-text anim-element">
                 <h2>Служба технической поддержки</h2>
                 <p>Наши инженеры проконсультируют по всем вопросам подбора УЧПУ, плат, приводов и комплектов модернизации.</p>
                 
-                <form class="cta-form">
-                    <input type="tel" placeholder="+7 (000) 000-00-00">
-                    <button type="button" class="btn">Оставить заявку</button>
+                <!-- Новая расширенная форма с антиспамом -->
+                <form class="cta-form" id="consultationForm">
+                    <input type="text" id="consultName" placeholder="Ваше имя" required>
+                    <input type="tel" id="consultPhone" placeholder="+7 (000) 000-00-00" required>
+                    <input type="email" id="consultEmail" placeholder="Ваш Email" required>
+                    <input type="text" id="consultSystem" placeholder="Какую систему хотите заказать?" required>
+                    <input type="text" id="consultSpam" placeholder="Антиспам: количество букв в слове chpu?" required>
+                    
+                    <div class="form-error" id="consultError">Ошибка: Неверное количество букв!</div>
+                    
+                    <button type="submit" class="btn">Оставить заявку</button>
                 </form>
+
             </div>
             
             <div class="social-links">
@@ -1424,6 +1464,53 @@
     <!-- JS Скрипты -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // ==========================================
+            // ЛОГИКА АНТИСПАМ-ФОРМЫ И ОТПРАВКИ MAILTO
+            // ==========================================
+            const consultForm = document.getElementById('consultationForm');
+            const consultName = document.getElementById('consultName');
+            const consultPhone = document.getElementById('consultPhone');
+            const consultEmail = document.getElementById('consultEmail');
+            const consultSystem = document.getElementById('consultSystem');
+            const consultSpam = document.getElementById('consultSpam');
+            const consultError = document.getElementById('consultError');
+
+            if (consultForm) {
+                consultForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Останавливаем стандартную отправку
+
+                    const spamAnswer = consultSpam.value.trim().toLowerCase();
+                    
+                    // Проверяем ответ (4 или "четыре")
+                    if (spamAnswer !== '4' && spamAnswer !== 'четыре') {
+                        consultError.style.display = 'block';
+                        consultSpam.style.borderColor = '#ff4d4d';
+                        return; // Прерываем функцию, если ответ неверный
+                    }
+
+                    // Если все верно, убираем ошибки
+                    consultError.style.display = 'none';
+                    consultSpam.style.borderColor = 'rgba(255,255,255,0.1)';
+
+                    // Формируем текст письма
+                    const emailAddress = "elektronika-net@mail.ru";
+                    const subject = encodeURIComponent("Новая заявка с сайта ТД НЭТ");
+                    const bodyText = `Имя: ${consultName.value}\nТелефон: ${consultPhone.value}\nEmail: ${consultEmail.value}\nИнтересующая система: ${consultSystem.value}\n\nЗдравствуйте! Прошу связаться со мной для подбора оборудования и оформления заказа.`;
+                    const body = encodeURIComponent(bodyText);
+
+                    // Открываем почтовый клиент
+                    window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+
+                    // Очищаем форму и благодарим
+                    consultForm.reset();
+                    alert("Отлично! Сейчас откроется ваш почтовый клиент. Пожалуйста, отправьте сформированное письмо.");
+                });
+            }
+
+
+            // ==========================================
+            // ЛОГИКА 3D МОДЕЛЕЙ И ПЕРЕКЛЮЧЕНИЙ
+            // ==========================================
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
             const subTabs = document.querySelectorAll('.sub-tab');
@@ -1437,18 +1524,10 @@
             
             let currentIndex = 0;
             let switchTimeout;
-            
-            // ПЕРЕМЕННЫЕ ДЛЯ БЛОКИРОВКИ НАВЕДЕНИЯ НА 2 СЕКУНДЫ
             let hoverLockTimeout;
             let isHoverLocked = false;
-            
             let isDragging = false; 
 
-            // ИСПОЛЬЗУЕМ:
-            // 0, 1: 'чпу.glb' (TITANIUM)
-            // 2, 3: 'model.glb' (TITANIUM MINI)
-            // 4, 5: 'industrial control panel 3d model.glb' (TITANIUM BASIC)
-            // 6, 7: 'titanium monitor 3d model.glb' (CNC-18 TITANIUM)
             const modelsArray = [
                 'чпу.glb', 'чпу.glb', 
                 'model.glb', 'model.glb', 
@@ -1485,7 +1564,7 @@
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
                     const sectionsToAnimate = document.querySelectorAll(
-                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section'
+                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, .btn-glow-center'
                     );
                     sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
 
@@ -1504,25 +1583,22 @@
                 }, 60);
             });
 
-            // --- АВТОПЕРЕКЛЮЧЕНИЕ КАЖДЫЕ 8 СЕКУНД ---
             let autoSwitchTimer;
             function startAutoSwitch() {
                 clearInterval(autoSwitchTimer);
                 autoSwitchTimer = setInterval(() => {
                     let currentGroup = Math.floor(currentIndex / 2);
-                    let nextGroup = (currentGroup + 1) % 4; // 4 - количество материнских пунктов
-                    activateModel(nextGroup * 2); // Активируем пункт LIGHT (индексы 0, 2, 4, 6)
-                }, 8000); // 8 секунд
+                    let nextGroup = (currentGroup + 1) % 4; 
+                    activateModel(nextGroup * 2); 
+                }, 8000); 
             }
 
-            // Останавливаем автопереключение при наведении мыши (или касании пальцем)
             if (modelSection) {
                 modelSection.addEventListener('mouseenter', () => clearInterval(autoSwitchTimer));
                 modelSection.addEventListener('mouseleave', startAutoSwitch);
                 modelSection.addEventListener('touchstart', () => clearInterval(autoSwitchTimer), {passive: true});
             }
 
-            // Запускаем таймер при загрузке страницы
             startAutoSwitch();
 
             function activateModel(index) {
@@ -1563,7 +1639,6 @@
                 }, 500); 
             }
 
-            // ФУНКЦИЯ ДЛЯ БЛОКИРОВКИ НАВЕДЕНИЯ НА 2 СЕКУНДЫ
             function lockHover() {
                 isHoverLocked = true;
                 clearTimeout(hoverLockTimeout);
@@ -1572,12 +1647,10 @@
                 }, 2000);
             }
 
-            // ЛОГИКА НАВЕДЕНИЯ И КЛИКОВ НА КАТЕГОРИИ
             wrappers.forEach((wrapper) => {
                 const firstTabIdx = parseInt(wrapper.querySelector('.sub-tab').getAttribute('data-index'));
 
                 wrapper.addEventListener('mouseenter', () => {
-                    // Срабатывает моментально, НО только если нет блокировки 2 сек.
                     if (window.innerWidth > 992 && !isHoverLocked) {
                         const activeInside = wrapper.querySelector('.sub-tab.active');
                         if (activeInside) {
@@ -1585,11 +1658,10 @@
                         } else {
                             activateModel(firstTabIdx);
                         }
-                        lockHover(); // Ставим блок на 2 секунды после переключения
+                        lockHover(); 
                     }
                 });
                 
-                // При клике переключаем сразу (игнорируя замок) и обновляем замок
                 wrapper.addEventListener('click', (e) => {
                     if (e.target.classList.contains('sub-tab')) return;
 
@@ -1603,17 +1675,14 @@
                 });
             });
 
-            // ЛОГИКА НАВЕДЕНИЯ И КЛИКОВ НА КНОПКИ LIGHT/DIGITAL
             subTabs.forEach((tab) => {
                 tab.addEventListener('mouseenter', () => {
-                    // Срабатывает моментально, НО только если нет блокировки 2 сек.
                     if (window.innerWidth > 992 && !isHoverLocked) {
                         activateModel(parseInt(tab.getAttribute('data-index')));
-                        lockHover(); // Ставим блок на 2 секунды
+                        lockHover(); 
                     }
                 });
                 
-                // При клике переключаем сразу (игнорируя замок) и обновляем замок
                 tab.addEventListener('click', (e) => {
                     e.stopPropagation();
                     activateModel(parseInt(tab.getAttribute('data-index')));
@@ -1621,7 +1690,6 @@
                 });
             });
 
-            // Стрелочки переключения (клик работает моментально и ставит замок)
             btnPrev.addEventListener('click', (e) => {
                 e.stopPropagation(); 
                 let newIndex = currentIndex - 1;
@@ -1638,7 +1706,6 @@
                 if (window.innerWidth > 992) lockHover();
             });
 
-            // --- УМНОЕ ВРАЩЕНИЕ 3D (АВТОМАТИЧЕСКОЕ + МЫШЬ) ---
             if (modelViewer) {
                 let currentX = 0;
                 let currentY = 0;
@@ -1655,7 +1722,6 @@
                         isHovering = true;
                         if (isDragging) return; 
                         const rect = modelSection.getBoundingClientRect();
-                        // Расчитываем от -1 до 1
                         targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
                         targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
                     });
@@ -1663,7 +1729,6 @@
                     modelSection.addEventListener('mouseleave', () => {
                         isHovering = false;
                         if (isDragging) return;
-                        // Синхронизируем синусоиду с текущей позицией, чтобы не было рывка
                         let clampedX = Math.max(-1, Math.min(1, currentX));
                         autoTime = Math.asin(clampedX) || 0;
                     });
@@ -1671,7 +1736,6 @@
 
                 function renderLoop() {
                     if (isDragging) {
-                        // Если пользователь крутит сам, запоминаем позицию
                         const orbit = modelViewer.getCameraOrbit();
                         currentX = (orbit.theta * 180 / Math.PI) / 70;
                         currentY = ((orbit.phi * 180 / Math.PI) - 80) / 20;
@@ -1680,12 +1744,10 @@
                         targetX = currentX;
                         targetY = currentY;
                     } else if (isHovering) {
-                        // Быстрое и плавное следование за курсором (как было раньше)
                         currentX += (targetX - currentX) * 0.15;
                         currentY += (targetY - currentY) * 0.15;
                         modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
                     } else {
-                        // Медленная авто-ротация (маятник)
                         autoTime += 0.0035; 
                         targetX = Math.sin(autoTime);
                         targetY = 0; 
