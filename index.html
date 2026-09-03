@@ -154,14 +154,41 @@
         .service-item.special-partner h4 { color: var(--primary-orange); }
         .service-item p { color: var(--text-body); font-size: 0.95rem; }
 
+        /* ИСПРАВЛЕННЫЙ БЛОК ГАРАНТИИ: Текст на всю ширину, без картинок, с плавной анимацией */
         .warranty-section { padding: 80px 0; background: transparent; overflow: hidden; }
         .warranty-wrapper { display: flex; flex-direction: column; gap: 0; }
-        .warranty-box { background-color: var(--bg-card); padding: 50px 60px; border-radius: 8px; border-left: 6px solid var(--primary-orange); box-shadow: 0 15px 40px rgba(0,0,0,0.35); position: relative; z-index: 3; opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.4s ease, opacity 0.4s ease; will-change: transform, opacity; display: flex; align-items: center; gap: 50px; }
-        .warranty-box.minprom { z-index: 2; margin-top: -20px; transform: translate3d(0, -100%, 0); }
-        .warranty-section.visible .warranty-box { opacity: 1; transform: translate3d(0, 0, 0); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s; }
-        .warranty-section.visible .warranty-box.minprom { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.2s ease-out 0.6s; }
-        .img-placeholder { width: 280px; height: 220px; margin: 0; flex-shrink: 0; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-color); background-color: var(--bg-placeholder); }
-        .img-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        .warranty-box { 
+            background-color: var(--bg-card); 
+            padding: 50px 60px; 
+            border-radius: 8px; 
+            border-left: 6px solid var(--primary-orange); 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.35); 
+            position: relative; 
+            z-index: 3; 
+            opacity: 0; 
+            transform: translate3d(0, 40px, 0); 
+            transition: transform 0.4s ease, opacity 0.4s ease; 
+            will-change: transform, opacity; 
+            display: block; /* Убрали flex, чтобы текст занимал все место */
+        }
+        
+        .warranty-box.minprom { 
+            z-index: 2; 
+            margin-top: -20px; 
+            transform: translate3d(0, -100%, 0); 
+        }
+        
+        .warranty-section.visible .warranty-box { 
+            opacity: 1; 
+            transform: translate3d(0, 0, 0); 
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s; 
+        }
+        
+        .warranty-section.visible .warranty-box.minprom { 
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.2s ease-out 0.6s; 
+        }
+
         .warranty-text h2 { margin-bottom: 20px; }
 
         .partner-cta-section { padding: 70px 0; background: linear-gradient(90deg, rgba(255,107,0,0.1) 0%, rgba(0,0,0,0) 100%), var(--bg-card); border-top: 1px solid var(--border-color); text-align: center; }
@@ -257,10 +284,10 @@
             .warranty-wrapper { gap: 0; }
             .warranty-box { padding: 25px 20px; text-align: left; display: block;}
             .warranty-box.minprom { margin-top: -10px; transform: translate3d(0, -100%, 0); }
-            .img-placeholder { display: none; }
             .warranty-text h2 { font-size: 1.1rem; margin-bottom: 8px; }
             .warranty-text p { font-size: 0.75rem !important; margin-bottom: 12px !important; line-height: 1.3; }
             .warranty-text .btn { padding: 8px 12px; font-size: 0.7rem; }
+            
             .delivery-section { padding: 50px 0; }
             .delivery-content { gap: 20px; }
             .map-link-wrapper { height: 200px !important; }
@@ -275,6 +302,7 @@
             .cta-text p { font-size: 0.85rem; margin-bottom: 15px; }
             .cta-form { max-width: 100%; }
             .cta-form input, .cta-form .btn { width: 100%; padding: 10px; font-size: 0.8rem; }
+            
             .footer-grid { flex-direction: column; gap: 30px; }
             .footer-contacts { border-right: none; padding-right: 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; width: 100%; }
             .footer-phones { align-items: center; }
@@ -308,6 +336,7 @@
                     <a href="partner.html" class="nav-link">Партнерская программа</a>
                 </div>
                 <div class="header-buttons">
+                    <a href="index.html" class="btn btn-outline" style="border: none;">Главная</a>
                     <a href="tel:+79185582299" class="btn">Связаться с нами</a>
                 </div>
             </div>
@@ -528,14 +557,11 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ 1: Блоки гарантии (Анимация выезжания, кнопка ПОДРОБНЕЕ ведет на docs.html) -->
+    <!-- ИЗМЕНЕНИЕ: Блоки гарантии БЕЗ картинок, с плавной анимацией выезда нижнего блока -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
             
             <div class="warranty-box">
-                <div class="img-placeholder">
-                    <img src="hands.jpeg" alt="Гарантия и надежность">
-                </div>
                 <div class="warranty-text">
                     <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Стандарты качества</p>
                     <h2>Сертификация и Гарантия до 2х лет</h2>
@@ -545,9 +571,6 @@
             </div>
 
             <div class="warranty-box minprom">
-                <div class="img-placeholder">
-                    <img src="719.jpg" alt="Импортозамещение Минпромторг">
-                </div>
                 <div class="warranty-text">
                     <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Импортозамещение</p>
                     <h2>МЫ В РЕЕСТРЕ МИНПРОМТОРГА</h2>
@@ -752,7 +775,6 @@
                         });
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
-                    // Правильное отслеживание подвала
                     const sectionsToAnimate = document.querySelectorAll(
                         '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, footer'
                     );
