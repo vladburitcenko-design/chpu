@@ -38,7 +38,9 @@
         .btn { display: inline-block; background-color: var(--primary-orange); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: all 0.3s ease; border: 1px solid transparent; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2); text-align: center; }
         .btn:hover:not(:disabled) { background-color: var(--dark-orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4); }
         .btn:disabled { background-color: #555; color: #aaa; cursor: not-allowed; box-shadow: none; border-color: #555; }
-        
+        .btn-outline { background: transparent; color: var(--text-light); border: 2px solid rgba(255, 255, 255, 0.3); box-shadow: none; }
+        .btn-outline:hover { background: var(--primary-orange); border-color: var(--primary-orange); color: #ffffff; }
+
         .header-nav { display: flex; gap: 25px; align-items: center; margin-right: 20px; }
         .nav-link { color: var(--text-light); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s ease; }
         .nav-link:hover { color: var(--primary-orange); }
@@ -74,7 +76,6 @@
         .stat-item h3 { font-family: 'Benzin', sans-serif; font-size: 2.5rem; color: var(--primary-orange); margin-bottom: 5px; }
         .stat-item p { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-body); margin: 0; }
 
-        /* ИЗМЕНЕНИЕ: Увеличен нижний отступ padding с 50px до 120px для расширения черной области */
         .model-section { padding: 80px 0 120px 0; background-color: #0a0b0d; border-bottom: 1px solid var(--border-color); overflow: hidden; }
         .model-grid { display: grid; grid-template-columns: 3.8fr 6.2fr; gap: 20px; align-items: start; }
         .model-text { margin-top: 50px; }
@@ -109,7 +110,10 @@
         .spec-item::before { content: ''; width: 4px; height: 4px; background-color: var(--primary-orange); border-radius: 50%; }
 
         .model-viewer-container { display: flex; flex-direction: column; align-items: center; position: relative; width: 125%; margin-right: -25%; margin-top: -30px; transition: all 0.6s ease; }
-        .model-viewer-wrapper { position: relative; width: 100%; height: 500px; border: none; background: transparent; box-shadow: none; }
+        
+        /* ИСПРАВЛЕНИЕ: Добавлен overflow: hidden для гарантии отсуствия скачков + убрана анимация смещения */
+        .model-viewer-wrapper { position: relative; width: 100%; height: 500px; border: none; background: transparent; box-shadow: none; overflow: hidden; }
+        
         .cnc-description-wrapper { position: relative; min-height: 120px; width: 80%; margin-top: 10px; text-align: center; }
         .cnc-desc { position: absolute; width: 100%; left: 0; top: 0; margin: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 1rem; color: var(--text-body); line-height: 1.5; opacity: 0; transform: translate3d(0, 15px, 0); transition: opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
         .cnc-desc.active { opacity: 1; transform: translate3d(0, 0, 0); pointer-events: auto; }
@@ -123,10 +127,14 @@
         .model-box { width: 100%; height: 100%; transform: translate3d(80%, 0, 0); opacity: 0; transition: transform 0.8s ease, opacity 0.8s ease; will-change: transform, opacity; }
         .model-section.visible .model-box { transform: translate3d(0, 0, 0); opacity: 1; transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out; }
 
-        model-viewer { width: 100%; height: 100%; background-color: transparent; --poster-color: transparent; cursor: grab; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out; transform: translate3d(0, 0, 0); opacity: 1; }
+        /* ИСПРАВЛЕНИЕ АНИМАЦИИ: Теперь плавно растворяется, а не скачет вниз */
+        model-viewer { 
+            width: 100%; height: 100%; background-color: transparent; --poster-color: transparent; cursor: grab; 
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; 
+            transform: scale(1); opacity: 1; 
+        }
         model-viewer:active { cursor: grabbing; }
-        model-viewer.slide-down { transform: translate3d(0, 100%, 0); opacity: 0; }
-        model-viewer.snap-top { transition: none !important; transform: translate3d(0, -100%, 0); opacity: 0; }
+        model-viewer.model-hidden { opacity: 0; transform: scale(0.96); }
 
         .btn-glow-center { display: inline-block; margin-top: 30px; padding: 16px 40px; font-size: 1rem; box-shadow: 0 0 15px rgba(255, 107, 0, 0.4); border: 1px solid var(--primary-orange); }
         .btn-glow-center:hover { box-shadow: 0 0 30px rgba(255, 107, 0, 0.8); transform: translateY(-2px) scale(1.02); }
@@ -239,7 +247,6 @@
             .stat-item { padding: 15px 10px; }
             .stat-item h3 { font-size: 1.8rem; }
             .stat-item p { font-size: 0.75rem; }
-            /* ИЗМЕНЕНИЕ: увеличен нижний отступ padding на мобильных для ЧПУ */
             .model-section { padding: 50px 0 80px 0; }
             .model-title { font-size: 2rem; }
             .feature-tag { font-size: 0.85rem; padding: 12px; text-align: left; }
@@ -357,7 +364,6 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ 4: Обновленные характеристики ЧПУ -->
     <section class="model-section">
         <div class="container model-grid">
             
@@ -500,7 +506,6 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ 8: Убрана кнопка связи -->
     <section class="service-section">
         <div class="container">
             <div class="service-header">
@@ -515,7 +520,6 @@
                     <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                 </div>
                 
-                <!-- ИЗМЕНЕНИЕ 5: Текст сокращен -->
                 <a href="#partner-block" class="service-item special-partner anim-element">
                     <h4>Партнерская программа<br>для модернизаторщиков</h4>
                     <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе.</p>
@@ -529,7 +533,6 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ: Блоки гарантии БЕЗ картинок, с плавной анимацией выезда нижнего блока -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
             
@@ -611,7 +614,6 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ 9: Подвал с новой ссылкой на RuTube -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -746,7 +748,6 @@
                         });
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
-                    // Правильное отслеживание подвала
                     const sectionsToAnimate = document.querySelectorAll(
                         '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, footer'
                     );
@@ -806,18 +807,15 @@
                     parentWrapper.appendChild(mainModelContainer);
                 }
 
-                modelViewer.classList.add('slide-down');
+                // ИСПРАВЛЕНИЕ АНИМАЦИИ В JS: Плавное затухание
+                modelViewer.classList.add('model-hidden');
 
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
-                    modelViewer.classList.add('snap-top');
-                    modelViewer.classList.remove('slide-down');
-                    
                     modelViewer.src = modelsArray[index];
                     void modelViewer.offsetWidth;
-
-                    modelViewer.classList.remove('snap-top');
-                }, 500); 
+                    modelViewer.classList.remove('model-hidden');
+                }, 400); 
             }
 
             function lockHover() {
