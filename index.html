@@ -194,37 +194,11 @@
             align-items: center;
         }
 
-        .hero-title-group {
-            opacity: 0;
-            transform: translate3d(-40px, -40px, 0);
-            transition: transform 0.4s ease, opacity 0.4s ease; 
-            will-change: transform, opacity;
-        }
-
-        .hero-section.visible .hero-title-group {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease-out; 
-        }
-
         .hero-title-group h1 {
             font-size: 2.8rem;
             margin-bottom: 25px;
             line-height: 1.2;
             text-transform: uppercase;
-        }
-
-        .hero-desc-group {
-            opacity: 0;
-            transform: translate3d(0, 50px, 0);
-            transition: transform 0.4s ease, opacity 0.4s ease; 
-            will-change: transform, opacity;
-        }
-
-        .hero-section.visible .hero-desc-group {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s;
         }
 
         .hero-desc-group p {
@@ -238,28 +212,6 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
-
-        .stat-wrapper {
-            display: flex;
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease; 
-            will-change: transform, opacity;
-        }
-
-        .stat-wrapper:nth-child(1) { transform: translate3d(-30%, -30%, 0) scale(0.4); }
-        .stat-wrapper:nth-child(2) { transform: translate3d(30%, -30%, 0) scale(0.4); }
-        .stat-wrapper:nth-child(3) { transform: translate3d(-30%, 30%, 0) scale(0.4); }
-        .stat-wrapper:nth-child(4) { transform: translate3d(30%, 30%, 0) scale(0.4); }
-
-        .hero-section.visible .stat-wrapper {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scale(1);
-        }
-
-        .hero-section.visible .stat-wrapper:nth-child(1) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, opacity 1.2s ease-out 0.8s; }
-        .hero-section.visible .stat-wrapper:nth-child(2) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.95s, opacity 1.2s ease-out 0.95s; }
-        .hero-section.visible .stat-wrapper:nth-child(3) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.1s, opacity 1.2s ease-out 1.1s; }
-        .hero-section.visible .stat-wrapper:nth-child(4) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.25s, opacity 1.2s ease-out 1.25s; }
 
         .stat-item {
             width: 100%;
@@ -296,7 +248,7 @@
 
         /* --- РАЗДЕЛ: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ --- */
         .model-section {
-            padding: 80px 0 50px 0;
+            padding: 80px 0 60px 0;
             background-color: #0a0b0d; 
             border-bottom: 1px solid var(--border-color);
             overflow: hidden; 
@@ -318,17 +270,6 @@
             line-height: 1.1;
             margin-bottom: 25px;
             color: var(--text-light);
-            
-            transform: translate3d(0, 100px, 0); 
-            opacity: 0;
-            transition: transform 0.8s ease, opacity 0.8s ease; 
-            will-change: transform, opacity; 
-        }
-
-        .model-section.visible .model-title {
-            transform: translate3d(0, 0, 0);
-            opacity: 1;
-            transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 2.5s ease-out;
         }
 
         .model-title span {
@@ -346,23 +287,7 @@
         .feature-item-wrapper {
             width: 100%;
             max-width: 440px;
-            
-            transform: translate3d(-100px, 0, 0);
-            opacity: 0;
-            transition: transform 0.8s ease, opacity 0.8s ease;
-            will-change: transform, opacity;
         }
-
-        .model-features.visible .feature-item-wrapper {
-            transform: translate3d(0, 0, 0);
-            opacity: 1;
-            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.8s ease-out;
-        }
-
-        .model-features.visible .feature-item-wrapper:nth-child(1) { transition-delay: 0s; }
-        .model-features.visible .feature-item-wrapper:nth-child(2) { transition-delay: 0.2s; }
-        .model-features.visible .feature-item-wrapper:nth-child(3) { transition-delay: 0.4s; }
-        .model-features.visible .feature-item-wrapper:nth-child(4) { transition-delay: 0.6s; }
 
         .feature-tag {
             display: block;
@@ -493,7 +418,7 @@
         .model-viewer-wrapper {
             position: relative;
             width: 100%; 
-            height: 650px; 
+            height: 500px; /* УМЕНЬШЕНО ДЛЯ ИЗБАВЛЕНИЯ ОТ ЧЕРНОЙ ДЫРЫ */
             border: none; 
             background: transparent; 
             box-shadow: none; 
@@ -501,9 +426,9 @@
 
         .cnc-description-wrapper {
             position: relative;
-            min-height: 80px; 
+            min-height: 50px; 
             width: 80%; 
-            margin-top: 15px;
+            margin-top: 10px;
             text-align: center;
         }
 
@@ -517,7 +442,6 @@
             font-size: 1rem;
             color: var(--text-body);
             line-height: 1.5;
-            
             opacity: 0;
             transform: translate3d(0, 15px, 0);
             transition: opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -563,21 +487,6 @@
         .left-arrow { left: 40px; }
         .right-arrow { right: 40px; }
 
-        .model-box {
-            width: 100%;
-            height: 100%;
-            transform: translate3d(80%, 0, 0); 
-            opacity: 0;
-            transition: transform 0.8s ease, opacity 0.8s ease;
-            will-change: transform, opacity;
-        }
-
-        .model-section.visible .model-box {
-            transform: translate3d(0, 0, 0);
-            opacity: 1;
-            transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-in-out;
-        }
-
         model-viewer {
             width: 100%;
             height: 100%;
@@ -589,24 +498,14 @@
             opacity: 1;
         }
 
-        model-viewer:active {
-            cursor: grabbing;
-        }
+        model-viewer:active { cursor: grabbing; }
+        model-viewer.slide-down { transform: translate3d(0, 100%, 0); opacity: 0; }
+        model-viewer.snap-top { transition: none !important; transform: translate3d(0, -100%, 0); opacity: 0; }
 
-        model-viewer.slide-down {
-            transform: translate3d(0, 100%, 0);
-            opacity: 0;
-        }
-
-        model-viewer.snap-top {
-            transition: none !important; 
-            transform: translate3d(0, -100%, 0);
-            opacity: 0;
-        }
-
-        /* Кнопка внизу 3D секции */
+        /* ЦЕНТРАЛЬНАЯ КНОПКА ЗАКАЗА ПОД 3D */
         .btn-glow-center {
             display: inline-block;
+            margin-top: 30px; /* Придвинута ближе к описанию */
             padding: 16px 40px;
             font-size: 1rem;
             box-shadow: 0 0 15px rgba(255, 107, 0, 0.4);
@@ -618,14 +517,31 @@
         }
 
         /* =========================================
-           РАЗДЕЛЫ 3-6 С АНИМАЦИЕЙ И НОВЫЕ БЛОКИ
+           УНИВЕРСАЛЬНАЯ АНИМАЦИЯ ПОЯВЛЕНИЯ
            ========================================= */
         .anim-element {
             opacity: 0;
             transform: translate3d(0, 40px, 0);
-            transition: transform 0.4s ease, opacity 0.4s ease;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
             will-change: transform, opacity;
         }
+
+        .visible .anim-element {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* Задержки для красивого каскадного появления */
+        .hero-section.visible .stat-wrapper:nth-child(1) .anim-element { transition-delay: 0.1s; }
+        .hero-section.visible .stat-wrapper:nth-child(2) .anim-element { transition-delay: 0.2s; }
+        
+        .service-section.visible .service-item:nth-child(1) { transition-delay: 0.0s; }
+        .service-section.visible .service-item:nth-child(2) { transition-delay: 0.15s; }
+        .service-section.visible .service-item:nth-child(3) { transition-delay: 0.3s; }
+        
+        footer.visible .social-card:nth-child(1) { transition-delay: 0.0s; }
+        footer.visible .social-card:nth-child(2) { transition-delay: 0.15s; }
+        footer.visible .social-card:nth-child(3) { transition-delay: 0.3s; }
 
         /* Обслуживание и сервис */
         .service-section {
@@ -692,32 +608,12 @@
             text-transform: uppercase;
         }
 
-        .service-item.special-partner h4 {
-            color: var(--primary-orange);
-        }
-
-        .service-item p {
-            color: var(--text-body);
-            font-size: 0.95rem;
-        }
-
-        .service-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
-        .service-section.visible .service-item:nth-child(1) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.8s ease-out 0.1s; }
-        .service-section.visible .service-item:nth-child(2) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s, opacity 0.8s ease-out 0.25s; }
-        .service-section.visible .service-item:nth-child(3) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, opacity 0.8s ease-out 0.4s; }
+        .service-item.special-partner h4 { color: var(--primary-orange); }
+        .service-item p { color: var(--text-body); font-size: 0.95rem; }
 
         /* Гарантия и Минпромторг */
-        .warranty-section {
-            padding: 80px 0;
-            background: transparent;
-            overflow: hidden; 
-        }
-
-        .warranty-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
+        .warranty-section { padding: 80px 0; background: transparent; overflow: hidden; }
+        .warranty-wrapper { display: flex; flex-direction: column; gap: 30px; }
 
         .warranty-box {
             display: flex;
@@ -730,48 +626,21 @@
             box-shadow: 0 15px 40px rgba(0,0,0,0.35);
             position: relative;
             z-index: 3; 
-            opacity: 0;
-            transform: translate3d(0, 40px, 0);
-            transition: transform 0.4s ease, opacity 0.4s ease;
-            will-change: transform, opacity;
         }
 
         .warranty-box.minprom {
             z-index: 2; 
-            transform: translate3d(0, calc(-100% - 30px), 0); 
-        }
-
-        .warranty-section.visible .warranty-box {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s;
-        }
-
-        .warranty-section.visible .warranty-box.minprom {
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, opacity 1.2s ease-out 0.8s;
+            margin-top: -30px; 
         }
 
         .img-placeholder {
-            width: 280px;
-            height: 220px;
-            margin: 0;
-            flex-shrink: 0;
-            border-radius: 4px;
-            overflow: hidden; 
-            border: 1px solid var(--border-color);
+            width: 280px; height: 220px; margin: 0; flex-shrink: 0;
+            border-radius: 4px; overflow: hidden; border: 1px solid var(--border-color);
             background-color: var(--bg-placeholder); 
         }
 
-        .img-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .warranty-text h2 {
-            margin-bottom: 20px;
-        }
+        .img-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .warranty-text h2 { margin-bottom: 20px; }
 
         /* Блок-прослойка для перехода на партнерку */
         .partner-cta-section {
@@ -781,113 +650,63 @@
             text-align: center;
         }
         
-        .partner-cta-content h2 {
-            margin-bottom: 20px;
-        }
-        
-        .partner-cta-content p {
-            color: var(--text-body);
-            font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto 30px auto;
-        }
-        .partner-cta-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
+        .partner-cta-content h2 { margin-bottom: 20px; }
+        .partner-cta-content p { color: var(--text-body); font-size: 1.1rem; max-width: 800px; margin: 0 auto 30px auto; }
 
         /* Доставка */
         .delivery-section {
-            padding: 90px 0;
-            background: transparent;
-            border-top: 1px solid var(--border-color);
+            padding: 90px 0; background: transparent; border-top: 1px solid var(--border-color);
         }
         
         .delivery-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
         }
 
-        .logistics-logos {
-            display: flex;
-            gap: 20px;
-            margin-top: 35px;
-        }
-
+        .logistics-logos { display: flex; gap: 20px; margin-top: 35px; }
         .logo-box {
-            background-color: var(--bg-card);
-            padding: 15px 30px;
-            border-radius: 6px;
-            font-family: 'Benzin', sans-serif;
-            font-weight: 700;
-            border: 1px solid var(--border-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            background-color: var(--bg-card); padding: 15px 30px; border-radius: 6px;
+            font-family: 'Benzin', sans-serif; font-weight: 700; border: 1px solid var(--border-color);
+            text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
-        /* Исправленная безопасная ссылка для Яндекс Карт с Координатами */
         .map-link-wrapper {
-            display: block;
-            position: relative;
-            width: 100%;
-            height: 280px;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-decoration: none;
-            background-color: var(--bg-placeholder);
+            display: block; position: relative; width: 100%; height: 280px; border-radius: 6px;
+            overflow: hidden; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-decoration: none; background-color: var(--bg-placeholder);
         }
         
         .map-link-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-            pointer-events: none; 
+            width: 100%; height: 100%; border: 0; pointer-events: none; 
             filter: invert(90%) hue-rotate(180deg) grayscale(30%) contrast(100%); 
         }
 
         .map-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease;
         }
 
-        .map-link-wrapper:hover .map-overlay {
-            opacity: 1;
-        }
+        .map-link-wrapper:hover .map-overlay { opacity: 1; }
 
         .map-overlay span {
-            background: var(--primary-orange);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 4px;
-            font-family: 'Benzin', sans-serif;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+            background: var(--primary-orange); color: #fff; padding: 12px 24px; border-radius: 4px;
+            font-family: 'Benzin', sans-serif; font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 1px; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
         }
 
-        .delivery-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
-        .delivery-section.visible .delivery-content > div:nth-child(1) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 1s ease-out 0.1s; }
-        .delivery-section.visible .delivery-content > a:nth-child(2) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease-out 0.3s; }
-
-        /* CTA Поддержка (Только форма) */
+        /* CTA Поддержка (ДВЕ КОЛОНКИ СЛЕВА ТЕКСТ - СПРАВА ФОРМА) */
         .cta-section {
             background-color: #15171a;
-            padding: 80px 0;
+            padding: 60px 0 60px 0;
             border-top: 4px solid var(--primary-orange);
             box-shadow: inset 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .cta-grid {
-            display: block; 
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
         }
 
         .cta-text h2 {
@@ -897,9 +716,8 @@
         
         .cta-text p {
             color: var(--text-body);
-            margin-bottom: 30px;
             font-size: 1.1rem;
-            max-width: 700px;
+            max-width: 100%;
         }
 
         .cta-form {
@@ -907,7 +725,6 @@
             flex-direction: column;
             gap: 15px;
             width: 100%;
-            max-width: 440px;
         }
 
         .cta-form input {
@@ -953,7 +770,7 @@
         }
 
         .social-card {
-            background-color: #15171a; /* Чуть темнее для подвала */
+            background-color: #15171a; 
             padding: 14px 28px;
             border-radius: 6px;
             display: flex;
@@ -979,7 +796,7 @@
             text-align: center;
         }
 
-        /* Спец. стиль для иконки MAX, чтобы буква не вылезала */
+        /* Спец. стиль для иконки MAX */
         .social-card .icon-box.max-icon {
             font-size: 1rem;
             letter-spacing: 0;
@@ -992,48 +809,24 @@
             letter-spacing: 0.5px;
         }
 
-        .cta-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
-        .cta-section.visible .cta-text { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.8s ease-out 0.1s; }
-
         /* --- Адаптивность Планшеты --- */
         @media (max-width: 992px) {
-            .hero-grid, .model-grid, .delivery-content {
-                grid-template-columns: 1fr;
-            }
-            .cta-grid {
-                display: block;
-            }
-            .model-grid { 
-                text-align: center; 
-                min-height: auto; 
-            }
+            .hero-grid, .model-grid, .delivery-content, .cta-grid { grid-template-columns: 1fr; }
+            .model-grid { text-align: center; }
             .model-title { font-size: 2.5rem; }
             .model-features { align-items: center; }
             .feature-item-wrapper { max-width: 100%; }
             .model-specs { padding-left: 0; border-left: none; align-items: center; }
             
-            .model-viewer-container {
-                width: 100%;
-                margin-right: 0;
-                margin-top: 15px;
-                min-height: auto;
-            }
-
+            .model-viewer-container { width: 100%; margin-right: 0; margin-top: 15px; }
             .model-viewer-wrapper { height: 350px; }
             .cnc-description-wrapper { width: 100%; min-height: 80px;}
 
             .left-arrow { left: 10px; }
             .right-arrow { right: 10px; }
             
-            .model-box { transform: translate3d(0, 80px, 0); } 
-            .model-section.visible .model-box { transform: translate3d(0, 0, 0); }
-            
             .service-grid { grid-template-columns: 1fr; }
-            .service-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
-            }
+            .service-header { flex-direction: column; align-items: flex-start; gap: 20px; }
         }
 
         /* --- КОМПАКТНАЯ Адаптивность Телефоны --- */
@@ -1070,20 +863,9 @@
             
             .warranty-section { padding: 50px 0; }
             .warranty-wrapper { gap: 15px; }
-            .warranty-box { 
-                flex-direction: row; 
-                padding: 15px; 
-                gap: 15px; 
-                text-align: left; 
-            }
-            .warranty-box .img-placeholder { 
-                width: 70px; 
-                height: 90px; 
-                margin-bottom: 0; 
-            }
-            .warranty-box.minprom { 
-                transform: translate3d(0, calc(-100% - 15px), 0); 
-            }
+            .warranty-box { flex-direction: row; padding: 15px; gap: 15px; text-align: left; }
+            .warranty-box .img-placeholder { width: 70px; height: 90px; margin-bottom: 0; }
+            .warranty-box.minprom { margin-top: 0; }
             .warranty-text h2 { font-size: 1.1rem; margin-bottom: 8px; }
             .warranty-text p { font-size: 0.75rem !important; margin-bottom: 12px !important; line-height: 1.3; }
             .warranty-text .btn { padding: 8px 12px; font-size: 0.7rem; }
@@ -1101,6 +883,7 @@
             .partner-cta-content p { font-size: 0.85rem; }
 
             .cta-section { padding: 50px 0; }
+            .cta-grid { gap: 20px; }
             .cta-text h2 { font-size: 1.4rem; margin-bottom: 10px; }
             .cta-text p { font-size: 0.85rem; margin-bottom: 15px; }
             .cta-form { max-width: 100%; }
@@ -1283,6 +1066,7 @@
                 </div>
             </div>
             
+            <!-- Модель и описания -->
             <div class="model-viewer-container" id="mainModelContainer">
                 <div class="model-viewer-wrapper" id="modelWrapper">
                     
@@ -1312,7 +1096,6 @@
                     </div>
                 </div>
 
-                <!-- Блок с описаниями под 3D-моделью -->
                 <div class="cnc-description-wrapper">
                     <p class="cnc-desc active" data-desc-index="0"><strong>TITANIUM LIGHT:</strong> Оптимальное решение для базовых задач. Высокая надежность и интуитивно понятный интерфейс обеспечивают стабильную работу оборудования.</p>
                     <p class="cnc-desc" data-desc-index="1"><strong>TITANIUM DIGITAL:</strong> Продвинутая цифровая система для сложных производств. Обеспечивает максимальную точность и поддерживает интеграцию с современными промышленными сетями.</p>
@@ -1323,12 +1106,11 @@
                     <p class="cnc-desc" data-desc-index="6"><strong>CNC-18 TITANIUM LIGHT:</strong> Новое поколение производительности. Расширенная поддержка многоосевых систем для крупного машиностроения.</p>
                     <p class="cnc-desc" data-desc-index="7"><strong>CNC-18 TITANIUM DIGITAL:</strong> Абсолютный флагман линейки. Встроенная аналитика и максимальная вычислительная мощность для Индустрии 4.0.</p>
                 </div>
-            </div>
-        </div>
 
-        <!-- ЯРКАЯ КНОПКА ВНИЗУ 3D БЛОКА -->
-        <div class="container" style="text-align: center; margin-top: 20px; position: relative; z-index: 10;">
-            <a href="#support-section" class="btn btn-glow-center anim-element">Оставить заявку на покупку</a>
+                <!-- ЯРКАЯ КНОПКА ПОД ОПИСАНИЕМ -->
+                <a href="#support-section" class="btn btn-glow-center anim-element">Оставить заявку на покупку</a>
+
+            </div>
         </div>
     </section>
 
@@ -1426,13 +1208,15 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ПОДДЕРЖКА (Только форма) -->
+    <!-- СЕКЦИЯ: ФОРМА ЗАЯВКИ (НОВЫЙ МАКЕТ) -->
     <section class="cta-section" id="support-section">
         <div class="container cta-grid">
             <div class="cta-text anim-element">
                 <h2>ОСТАВИТЬ ЗАЯВКУ НА ПОКУПКУ</h2>
                 <p>Заполните форму ниже для оформления заказа. Наш менеджер свяжется с вами для уточнения всех деталей и составления КП.</p>
-                
+            </div>
+            
+            <div class="anim-element">
                 <form class="cta-form" id="consultationForm">
                     <input type="hidden" name="_subject" value="Новая заявка с сайта ТД НЭТ">
                     <input type="hidden" name="_captcha" value="false">
@@ -1455,7 +1239,6 @@
     <footer>
         <div class="container">
             
-            <!-- Социальные сети перенесены в подвал -->
             <div class="footer-social-links">
                 <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card anim-element">
                     <div class="icon-box">▶</div>
@@ -1471,8 +1254,8 @@
                 </a>
             </div>
 
-            <p>ООО «Торговый Дом Новые Электронные Технологии»</p>
-            <p style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
+            <p class="anim-element">ООО «Торговый Дом Новые Электронные Технологии»</p>
+            <p class="anim-element" style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
         </div>
     </footer>
 
@@ -1584,8 +1367,9 @@
                         });
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
+                    // Теперь футер тоже отслеживается для анимации кнопок
                     const sectionsToAnimate = document.querySelectorAll(
-                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, .btn-glow-center, .social-card'
+                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, footer'
                     );
                     sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
 
