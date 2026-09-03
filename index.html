@@ -880,7 +880,7 @@
         .delivery-section.visible .delivery-content > div:nth-child(1) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 1s ease-out 0.1s; }
         .delivery-section.visible .delivery-content > a:nth-child(2) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease-out 0.3s; }
 
-        /* CTA Поддержка (Обновленная форма) */
+        /* CTA Поддержка (Обновленный макет: форма слева, соц. сети снизу горизонтально) */
         .cta-section {
             background-color: #15171a;
             padding: 80px 0;
@@ -889,10 +889,7 @@
         }
 
         .cta-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 60px;
-            align-items: center;
+            display: block; /* Убрали grid, чтобы элементы шли сверху вниз */
         }
 
         .cta-text h2 {
@@ -904,6 +901,7 @@
             color: var(--text-body);
             margin-bottom: 30px;
             font-size: 1.1rem;
+            max-width: 700px;
         }
 
         .cta-form {
@@ -911,7 +909,7 @@
             flex-direction: column;
             gap: 15px;
             width: 100%;
-            max-width: 400px;
+            max-width: 440px;
         }
 
         .cta-form input {
@@ -938,15 +936,18 @@
             display: none;
         }
 
+        /* Социальные сети теперь внизу горизонтально */
         .social-links {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 40px; /* Отступ от формы сверху */
         }
 
         .social-card {
             background-color: #1e2226;
-            padding: 16px 20px;
+            padding: 14px 28px;
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -994,8 +995,11 @@
 
         /* --- Адаптивность Планшеты --- */
         @media (max-width: 992px) {
-            .hero-grid, .model-grid, .delivery-content, .cta-grid {
+            .hero-grid, .model-grid, .delivery-content {
                 grid-template-columns: 1fr;
+            }
+            .cta-grid {
+                display: block;
             }
             .model-grid { 
                 text-align: center; 
@@ -1095,13 +1099,12 @@
             .partner-cta-content p { font-size: 0.85rem; }
 
             .cta-section { padding: 50px 0; }
-            .cta-grid { gap: 20px; }
             .cta-text h2 { font-size: 1.4rem; margin-bottom: 10px; }
             .cta-text p { font-size: 0.85rem; margin-bottom: 15px; }
             .cta-form { max-width: 100%; }
             .cta-form input, .cta-form .btn { width: 100%; padding: 10px; font-size: 0.8rem; }
             
-            .social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+            .social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 30px;}
             .social-card { flex: 1 1 calc(50% - 10px); padding: 8px 10px; gap: 8px; justify-content: center; }
             .social-card .icon-box { font-size: 0.9rem; width: 20px; }
             .social-card span { font-size: 0.7rem; }
@@ -1420,18 +1423,14 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ПОДДЕРЖКА (ОБНОВЛЕНА ДЛЯ ПРЯМОЙ ОТПРАВКИ) -->
+    <!-- СЕКЦИЯ: ПОДДЕРЖКА (ОБНОВЛЕННЫЙ МАКЕТ С СОЦСЕТЯМИ ВНИЗУ) -->
     <section class="cta-section" id="support-section">
         <div class="container cta-grid">
             <div class="cta-text anim-element">
-                <h2>Служба технической поддержки</h2>
-                <p>Наши инженеры проконсультируют по всем вопросам подбора УЧПУ, плат, приводов и комплектов модернизации.</p>
+                <h2>ОСТАВИТЬ ЗАЯВКУ НА ПОКУПКУ</h2>
+                <p>Заполните форму ниже для оформления заказа. Наши инженеры свяжутся с вами и проконсультируют по всем вопросам подбора УЧПУ, плат, приводов и комплектов модернизации.</p>
                 
-                <!-- Новая расширенная форма с фоновой отправкой (AJAX) -->
-                <!-- Важно: при первом использовании на почту elektronika-net@mail.ru придет письмо для активации -->
                 <form class="cta-form" id="consultationForm">
-                    
-                    <!-- Скрытые настройки для FormSubmit -->
                     <input type="hidden" name="_subject" value="Новая заявка с сайта ТД НЭТ">
                     <input type="hidden" name="_captcha" value="false">
                     
@@ -1445,9 +1444,9 @@
                     
                     <button type="submit" class="btn">Оставить заявку</button>
                 </form>
-
             </div>
             
+            <!-- Социальные сети теперь находятся горизонтально внизу -->
             <div class="social-links">
                 <a href="#" class="social-card anim-element">
                     <div class="icon-box">▶</div>
@@ -1486,44 +1485,37 @@
 
             if (consultForm) {
                 consultForm.addEventListener('submit', function(e) {
-                    e.preventDefault(); // Останавливаем стандартную перезагрузку страницы
+                    e.preventDefault(); 
 
                     const spamAnswer = consultSpam.value.trim().toLowerCase();
                     
-                    // Проверяем ответ (4 или "четыре")
                     if (spamAnswer !== '4' && spamAnswer !== 'четыре') {
                         consultError.style.display = 'block';
                         consultSpam.style.borderColor = '#ff4d4d';
-                        return; // Прерываем отправку, если ответ неверный
+                        return; 
                     }
 
-                    // Если все верно, убираем ошибки
                     consultError.style.display = 'none';
                     consultSpam.style.borderColor = 'rgba(255,255,255,0.1)';
 
-                    // Меняем текст кнопки, чтобы показать процесс загрузки
                     const originalBtnText = submitBtn.innerText;
                     submitBtn.innerText = 'Отправка...';
                     submitBtn.disabled = true;
 
-                    // Собираем все данные из формы
                     const formData = new FormData(consultForm);
 
-                    // Фоновая отправка через бесплатный шлюз FormSubmit
                     fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
                         method: "POST",
                         body: formData
                     })
                     .then(response => response.json())
                     .then(data => {
-                        // При успешной отправке
                         alert("Спасибо! Ваша заявка успешно отправлена.");
                         consultForm.reset();
                         submitBtn.innerText = originalBtnText;
                         submitBtn.disabled = false;
                     })
                     .catch(error => {
-                        // Если произошла ошибка (например, нет интернета)
                         alert("Произошла ошибка при отправке. Пожалуйста, проверьте подключение к сети.");
                         submitBtn.innerText = originalBtnText;
                         submitBtn.disabled = false;
@@ -1588,7 +1580,7 @@
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
                     const sectionsToAnimate = document.querySelectorAll(
-                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, .btn-glow-center'
+                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, .btn-glow-center, .social-card'
                     );
                     sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
 
