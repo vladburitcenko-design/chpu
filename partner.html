@@ -9,16 +9,8 @@
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
     <style>
-        @font-face {
-            font-family: 'Benzin';
-            src: url('Benzin-Bold.woff2') format('woff2'), url('Benzin-Bold.woff') format('woff');
-            font-weight: 700; font-style: normal; font-display: swap; 
-        }
-        @font-face {
-            font-family: 'Benzin';
-            src: url('Benzin-ExtraBold.woff2') format('woff2'), url('Benzin-ExtraBold.woff') format('woff');
-            font-weight: 800; font-style: normal; font-display: swap;
-        }
+        @font-face { font-family: 'Benzin'; src: url('Benzin-Bold.woff2') format('woff2'), url('Benzin-Bold.woff') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
+        @font-face { font-family: 'Benzin'; src: url('Benzin-ExtraBold.woff2') format('woff2'), url('Benzin-ExtraBold.woff') format('woff'); font-weight: 800; font-style: normal; font-display: swap; }
 
         :root {
             --bg-card: #15171a;          
@@ -36,13 +28,7 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         h1, h2, h3, h4 { font-family: 'Benzin', 'Segoe UI', sans-serif; font-weight: 800; color: var(--text-light); }
 
-        .btn {
-            display: inline-block; background-color: var(--primary-orange); color: #ffffff;
-            padding: 16px 36px; text-decoration: none; border-radius: 4px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px; font-size: 0.95rem;
-            transition: all 0.3s ease; border: none; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2); text-align: center;
-        }
+        .btn { display: inline-block; background-color: var(--primary-orange); color: #ffffff; padding: 16px 36px; text-decoration: none; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.95rem; transition: all 0.3s ease; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2); text-align: center; }
         .btn:hover:not(:disabled) { background-color: var(--dark-orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4); }
         .btn:disabled { background-color: #555; color: #aaa; cursor: not-allowed; box-shadow: none; }
         .btn-black { background-color: #000; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); width: 100%; margin-top: 10px;}
@@ -54,24 +40,13 @@
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
-        .partner-hero {
-            padding: 120px 0;
-            background: radial-gradient(circle at 80% 50%, rgba(255, 107, 0, 0.08) 0%, transparent 50%), #0a0b0d;
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-        }
+        .partner-hero { padding: 120px 0; background: radial-gradient(circle at 80% 50%, rgba(255, 107, 0, 0.08) 0%, transparent 50%), #0a0b0d; min-height: 80vh; display: flex; align-items: center; }
         .partner-hero-content { max-width: 700px; }
         .partner-hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; text-transform: none; }
         .partner-hero p { font-size: 1.1rem; color: var(--text-body); margin-bottom: 40px; line-height: 1.8; }
         .partner-hero p a { color: var(--primary-orange); text-decoration: none; font-weight: 600; }
 
-        .orange-section {
-            background-color: var(--primary-orange); 
-            color: #000;
-            padding: 100px 0;
-            position: relative;
-        }
+        .orange-section { background-color: var(--primary-orange); color: #000; padding: 100px 0; position: relative; }
         .orange-section h2 { color: #000; font-size: 2.8rem; margin-bottom: 60px; }
 
         .benefits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 60px; margin-bottom: 60px; }
@@ -134,7 +109,6 @@
             </a>
             <div>
                 <a href="index.html" class="btn btn-outline" style="border: none;">Главная</a>
-                <!-- ИЗМЕНЕНИЕ 5: Номер Дмитрия в шапке -->
                 <a href="tel:+79185582299" class="btn">Связаться с нами</a>
             </div>
         </div>
@@ -144,7 +118,6 @@
         <div class="container">
             <div class="partner-hero-content">
                 <h1>Приглашаем интеграторов и модернизаторов ЧПУ</h1>
-                <!-- ИЗМЕНЕНИЕ 4: Почта изменена -->
                 <p>Ищем надежных и квалифицированных специалистов по модернизации станкового оборудования. Если это ВЫ, то пишите нам на почту: <a href="mailto:elektronika-net@mail.ru">elektronika-net@mail.ru</a>.<br><br>У нас Вы получите лучшие цены на комплектующие, обучитесь работе с нашими системами и получите статус сертифицированного партнера ТД НЭТ.</p>
                 <a href="#partner-form" class="btn">Стать партнером</a>
             </div>
@@ -214,7 +187,6 @@
 
             <div class="section-divider"></div>
 
-            <!-- ИЗМЕНЕНИЕ 2: Форма с поддержкой файлов и антиспамом -->
             <div class="form-section-inner" id="partner-form">
                 <div class="form-title">
                     <h2>Расскажите<br>о своей компании</h2>
@@ -236,11 +208,10 @@
                         <textarea name="Опыт_работы" placeholder="В каких регионах работаете? С какими станками имеете опыт?" required></textarea>
                     </div>
                     
-                    <!-- Антиспам поле для партнерки -->
                     <div class="form-group">
                         <label>Антиспам-проверка</label>
                         <input type="text" id="partnerSpam" placeholder="Количество букв в адресе chpu.net?" required>
-                        <div class="form-error" id="partnerError">Ошибка: Неверное количество букв! Подсказка: их 8.</div>
+                        <div class="form-error" id="partnerError">Ошибка: Неверное количество букв! Подсказка: их 7.</div>
                     </div>
 
                     <div class="form-group">
@@ -263,7 +234,6 @@
         <div class="container map-grid">
             <div class="contacts-left">
                 <h2>Где мы находимся</h2>
-                <!-- ИЗМЕНЕНИЯ 4 и 5: Обновленные контакты -->
                 <a href="mailto:elektronika-net@mail.ru" class="contact-big mail">elektronika-net@mail.ru</a>
                 
                 <div style="margin-bottom: 15px;">
@@ -292,7 +262,6 @@
         </div>
     </footer>
 
-    <!-- Скрипт отправки формы и файла -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const fileInput = document.getElementById('fileInput');
@@ -302,7 +271,6 @@
             const partnerError = document.getElementById('partnerError');
             const submitBtn = partnerForm ? partnerForm.querySelector('button[type="submit"]') : null;
 
-            // Отображение имени выбранного файла
             if (fileInput) {
                 fileInput.addEventListener('change', function() {
                     if (this.files && this.files.length > 0) {
@@ -313,15 +281,13 @@
                 });
             }
 
-            // AJAX Отправка формы + Антиспам
             if (partnerForm) {
                 partnerForm.addEventListener('submit', function(e) {
                     e.preventDefault();
 
                     const spamAnswer = partnerSpam.value.trim().toLowerCase();
                     
-                    // Слово "chpu.net" - 8 букв/символов
-                    if (spamAnswer !== '8' && spamAnswer !== 'восемь') {
+                    if (spamAnswer !== '7' && spamAnswer !== 'семь') {
                         partnerError.style.display = 'block';
                         partnerSpam.style.borderColor = '#8b0000';
                         return; 
@@ -336,10 +302,9 @@
 
                     const formData = new FormData(partnerForm);
 
-                    // Отправка на новую почту elektronika-net@mail.ru
                     fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
                         method: "POST",
-                        body: formData // ФормДата автоматически обрабатывает прикрепленные файлы
+                        body: formData 
                     })
                     .then(response => response.json())
                     .then(data => {
