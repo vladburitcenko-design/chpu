@@ -296,7 +296,7 @@
 
         /* --- РАЗДЕЛ: ИНТЕРАКТИВНАЯ 3D МОДЕЛЬ --- */
         .model-section {
-            padding: 90px 0 60px 0;
+            padding: 80px 0 50px 0;
             background-color: #0a0b0d; 
             border-bottom: 1px solid var(--border-color);
             overflow: hidden; 
@@ -307,7 +307,6 @@
             grid-template-columns: 3.8fr 6.2fr; 
             gap: 20px;
             align-items: start; 
-            min-height: 850px; 
         }
 
         .model-text {
@@ -488,7 +487,6 @@
             width: 125%; 
             margin-right: -25%; 
             margin-top: -30px; 
-            min-height: 750px; 
             transition: all 0.6s ease; 
         }
 
@@ -503,9 +501,9 @@
 
         .cnc-description-wrapper {
             position: relative;
-            min-height: 60px; 
+            min-height: 80px; 
             width: 80%; 
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: center;
         }
 
@@ -609,7 +607,6 @@
         /* Кнопка внизу 3D секции */
         .btn-glow-center {
             display: inline-block;
-            margin-top: 50px;
             padding: 16px 40px;
             font-size: 1rem;
             box-shadow: 0 0 15px rgba(255, 107, 0, 0.4);
@@ -881,7 +878,7 @@
         .delivery-section.visible .delivery-content > div:nth-child(1) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 1s ease-out 0.1s; }
         .delivery-section.visible .delivery-content > a:nth-child(2) { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1s ease-out 0.3s; }
 
-        /* CTA Поддержка (Обновленный макет: форма слева, соц. сети снизу горизонтально) */
+        /* CTA Поддержка (Только форма) */
         .cta-section {
             background-color: #15171a;
             padding: 80px 0;
@@ -890,7 +887,7 @@
         }
 
         .cta-grid {
-            display: block; /* Убрали grid, чтобы элементы шли сверху вниз */
+            display: block; 
         }
 
         .cta-text h2 {
@@ -937,17 +934,26 @@
             display: none;
         }
 
-        /* Социальные сети теперь внизу горизонтально */
-        .social-links {
+        /* ПОДВАЛ И СОЦСЕТИ */
+        footer {
+            background: #0d0e10;
+            color: var(--text-muted);
+            padding: 50px 0 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-social-links {
             display: flex;
-            flex-direction: row;
+            justify-content: center;
             flex-wrap: wrap;
             gap: 15px;
-            margin-top: 40px; /* Отступ от формы сверху */
+            margin-bottom: 40px; /* Отступ до текста с копирайтом */
         }
 
         .social-card {
-            background-color: #1e2226;
+            background-color: #15171a; /* Чуть темнее для подвала */
             padding: 14px 28px;
             border-radius: 6px;
             display: flex;
@@ -955,14 +961,14 @@
             gap: 15px;
             text-decoration: none;
             color: var(--text-light);
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(255,255,255,0.05);
             transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .social-card:hover {
             border-color: var(--primary-orange);
-            transform: translate3d(-5px, 0, 0);
-            background-color: #24292e;
+            transform: translate3d(0, -3px, 0);
+            background-color: #1e2226;
         }
 
         .social-card .icon-box {
@@ -970,6 +976,13 @@
             font-weight: bold;
             font-size: 1.2rem;
             width: 30px;
+            text-align: center;
+        }
+
+        /* Спец. стиль для иконки MAX, чтобы буква не вылезала */
+        .social-card .icon-box.max-icon {
+            font-size: 1rem;
+            letter-spacing: 0;
         }
 
         .social-card span {
@@ -981,18 +994,6 @@
 
         .cta-section.visible .anim-element { opacity: 1; transform: translate3d(0, 0, 0); }
         .cta-section.visible .cta-text { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.8s ease-out 0.1s; }
-        .cta-section.visible .social-card:nth-child(1) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 0.8s ease-out 0.2s; }
-        .cta-section.visible .social-card:nth-child(2) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, opacity 0.8s ease-out 0.35s; }
-        .cta-section.visible .social-card:nth-child(3) { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s, opacity 0.8s ease-out 0.5s; }
-
-        footer {
-            background: #0d0e10;
-            color: var(--text-muted);
-            padding: 40px 0;
-            text-align: center;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
 
         /* --- Адаптивность Планшеты --- */
         @media (max-width: 992px) {
@@ -1105,9 +1106,10 @@
             .cta-form { max-width: 100%; }
             .cta-form input, .cta-form .btn { width: 100%; padding: 10px; font-size: 0.8rem; }
             
-            .social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 30px;}
+            .footer-social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; margin-bottom: 25px;}
             .social-card { flex: 1 1 calc(50% - 10px); padding: 8px 10px; gap: 8px; justify-content: center; }
             .social-card .icon-box { font-size: 0.9rem; width: 20px; }
+            .social-card .icon-box.max-icon { font-size: 0.75rem; }
             .social-card span { font-size: 0.7rem; }
         }
 
@@ -1325,8 +1327,8 @@
         </div>
 
         <!-- ЯРКАЯ КНОПКА ВНИЗУ 3D БЛОКА -->
-        <div class="container" style="text-align: center; margin-top: 60px; position: relative; z-index: 10;">
-            <a href="#support-section" class="btn btn-glow-center anim-element">Оставить заявку на подбор</a>
+        <div class="container" style="text-align: center; margin-top: 20px; position: relative; z-index: 10;">
+            <a href="#support-section" class="btn btn-glow-center anim-element">Оставить заявку на покупку</a>
         </div>
     </section>
 
@@ -1424,7 +1426,7 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ПОДДЕРЖКА (ОБНОВЛЕННЫЙ МАКЕТ С СОЦСЕТЯМИ ВНИЗУ) -->
+    <!-- СЕКЦИЯ: ПОДДЕРЖКА (Только форма) -->
     <section class="cta-section" id="support-section">
         <div class="container cta-grid">
             <div class="cta-text anim-element">
@@ -1446,27 +1448,29 @@
                     <button type="submit" class="btn">Оставить заявку</button>
                 </form>
             </div>
-            
-            <!-- Социальные сети теперь находятся горизонтально внизу -->
-            <div class="social-links">
-                <a href="#" class="social-card anim-element">
-                    <div class="icon-box">▶</div>
-                    <span>RuTube канал</span>
-                </a>
-                <a href="#" class="social-card anim-element">
-                    <div class="icon-box">VK</div>
-                    <span>Сообщество VK</span>
-                </a>
-                <a href="#" class="social-card anim-element">
-                    <div class="icon-box">TG</div>
-                    <span>Telegram чат</span>
-                </a>
-            </div>
         </div>
     </section>
 
+    <!-- ПОДВАЛ И СОЦСЕТИ -->
     <footer>
         <div class="container">
+            
+            <!-- Социальные сети перенесены в подвал -->
+            <div class="footer-social-links">
+                <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card anim-element">
+                    <div class="icon-box">▶</div>
+                    <span>RuTube канал</span>
+                </a>
+                <a href="https://vk.com/chpu_net" target="_blank" class="social-card anim-element">
+                    <div class="icon-box">VK</div>
+                    <span>Сообщество VK</span>
+                </a>
+                <a href="https://web.max.ru/33269346" target="_blank" class="social-card anim-element">
+                    <div class="icon-box max-icon">MAX</div>
+                    <span>Сообщество MAX</span>
+                </a>
+            </div>
+
             <p>ООО «Торговый Дом Новые Электронные Технологии»</p>
             <p style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
         </div>
