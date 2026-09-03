@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ТД НЭТ | Системы ЧПУ и Комплектующие</title>
     
-    <!-- ОПТИМИЗАЦИЯ: Раннее подключение к серверам Google -->
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
-    
-    <!-- ОПТИМИЗАЦИЯ: Предзагрузка тяжелых 3D моделей, постера и главного шрифта -->
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
@@ -16,49 +13,19 @@
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- Подключаем библиотеку Google для отображения 3D моделей -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
-        /* Подключение вашего фирменного шрифта Benzin */
-        @font-face {
-            font-family: 'Benzin';
-            src: url('Benzin-Bold.woff2') format('woff2'),
-                 url('Benzin-Bold.woff') format('woff'),
-                 url('Benzin-Bold.ttf') format('truetype');
-            font-weight: 700;
-            font-style: normal;
-            font-display: swap; 
-        }
+        @font-face { font-family: 'Benzin'; src: url('Benzin-Bold.woff2') format('woff2'), url('Benzin-Bold.woff') format('woff'), url('Benzin-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+        @font-face { font-family: 'Benzin'; src: url('Benzin-ExtraBold.woff2') format('woff2'), url('Benzin-ExtraBold.woff') format('woff'), url('Benzin-ExtraBold.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
 
-        @font-face {
-            font-family: 'Benzin';
-            src: url('Benzin-ExtraBold.woff2') format('woff2'),
-                 url('Benzin-ExtraBold.woff') format('woff'),
-                 url('Benzin-ExtraBold.ttf') format('truetype');
-            font-weight: 800;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        /* Палитра */
         :root {
-            --bg-card: #15171a;          
-            --bg-card-hover: #0a0b0d;    
-            --bg-placeholder: #22262a;   
-            
+            --bg-card: #15171a; --bg-card-hover: #0a0b0d; --bg-placeholder: #22262a;   
             --bg-grad-main: linear-gradient(135deg, #2b3036 0%, #1e2126 100%); 
             --bg-grad-alt: linear-gradient(135deg, #32383e 0%, #262a30 100%); 
-            
-            --primary-orange: #ff6b00;   
-            --dark-orange: #d95a00;      
-            --text-light: #ffffff;       
-            --text-muted: #adb5bd;       
-            --text-body: #e9ecef;        
-            
-            --border-color: rgba(255, 255, 255, 0.06);     
-            --border-highlight: rgba(255, 255, 255, 0.15);      
-            --shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            --primary-orange: #ff6b00; --dark-orange: #d95a00; --text-light: #ffffff;       
+            --text-muted: #adb5bd; --text-body: #e9ecef; --border-color: rgba(255, 255, 255, 0.06);     
+            --border-highlight: rgba(255, 255, 255, 0.15); --shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
@@ -68,23 +35,19 @@
         h1, h2, h3, h4 { font-family: 'Benzin', 'Segoe UI', sans-serif; font-weight: 800; color: var(--text-light); }
         h2 { font-size: 2.2rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
 
-        .btn {
-            display: inline-block; background-color: var(--primary-orange); color: #ffffff;
-            padding: 14px 32px; text-decoration: none; border-radius: 4px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;
-            transition: all 0.3s ease; border: 1px solid transparent; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2); text-align: center;
-        }
+        .btn { display: inline-block; background-color: var(--primary-orange); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: all 0.3s ease; border: 1px solid transparent; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2); text-align: center; }
         .btn:hover:not(:disabled) { background-color: var(--dark-orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4); }
         .btn:disabled { background-color: #555; color: #aaa; cursor: not-allowed; box-shadow: none; border-color: #555; }
-        .btn-outline { background: transparent; color: var(--text-light); border: 2px solid rgba(255, 255, 255, 0.3); box-shadow: none; }
-        .btn-outline:hover { background: var(--primary-orange); border-color: var(--primary-orange); color: #ffffff; }
+        
+        /* НОВЫЕ ССЫЛКИ В ШАПКЕ */
+        .header-nav { display: flex; gap: 25px; align-items: center; margin-right: 20px; }
+        .nav-link { color: var(--text-light); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--primary-orange); }
 
         .header-buttons { display: flex; align-items: center; gap: 10px; }
-
         header { background-color: #1a1d21; color: var(--text-light); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--primary-orange); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .header-content { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; gap: 15px; }
-        .logo { font-family: 'Benzin', 'Segoe UI', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: 1.5px; display: flex; align-items: center; gap: 15px; color: var(--text-light); text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+        .logo { font-family: 'Benzin', 'Segoe UI', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: 1.5px; display: flex; align-items: center; gap: 15px; color: var(--text-light); text-decoration: none; text-transform: uppercase; white-space: nowrap; }
         .logo-img { height: 42px; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-orange); }
 
@@ -193,13 +156,10 @@
 
         .warranty-section { padding: 80px 0; background: transparent; overflow: hidden; }
         .warranty-wrapper { display: flex; flex-direction: column; gap: 0; }
-        
         .warranty-box { background-color: var(--bg-card); padding: 50px 60px; border-radius: 8px; border-left: 6px solid var(--primary-orange); box-shadow: 0 15px 40px rgba(0,0,0,0.35); position: relative; z-index: 3; opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.4s ease, opacity 0.4s ease; will-change: transform, opacity; }
         .warranty-box.minprom { z-index: 2; margin-top: -20px; transform: translate3d(0, -100%, 0); }
-        
         .warranty-section.visible .warranty-box { opacity: 1; transform: translate3d(0, 0, 0); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s ease-out 0.2s; }
         .warranty-section.visible .warranty-box.minprom { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.2s ease-out 0.6s; }
-
         .warranty-text h2 { margin-bottom: 20px; }
 
         .partner-cta-section { padding: 70px 0; background: linear-gradient(90deg, rgba(255,107,0,0.1) 0%, rgba(0,0,0,0) 100%), var(--bg-card); border-top: 1px solid var(--border-color); text-align: center; }
@@ -220,7 +180,6 @@
         .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
         .cta-text h2 { font-size: 2.4rem; margin-bottom: 20px; }
         .cta-text p { color: var(--text-body); font-size: 1.1rem; max-width: 100%; }
-        
         .cta-form { display: flex; flex-direction: column; gap: 15px; width: 100%; }
         .cta-form input { padding: 16px 20px; border: 1px solid rgba(255,255,255,0.1); background: #1e2226; border-radius: 4px; width: 100%; color: #ffffff; font-size: 1rem; transition: border-color 0.3s; }
         .cta-form input:focus { outline: none; border-color: var(--primary-orange); }
@@ -228,8 +187,19 @@
         .form-group label { font-weight: 700; font-size: 0.95rem; color: #fff; }
         .form-error { color: #ff4d4d; font-size: 0.85rem; font-weight: 600; margin-top: -5px; display: none; }
 
-        footer { background: #0d0e10; color: var(--text-muted); padding: 50px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
-        .footer-social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
+        /* НОВЫЙ ПОДВАЛ С КОНТАКТАМИ И СОЦСЕТЯМИ */
+        footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: flex; justify-content: center; align-items: center; gap: 50px; margin-bottom: 40px; flex-wrap: wrap; }
+        .footer-contacts { text-align: left; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 50px; }
+        .footer-mail { display: block; font-family: 'Benzin', sans-serif; color: var(--primary-orange); font-size: 1.2rem; text-decoration: none; margin-bottom: 15px; transition: color 0.3s;}
+        .footer-mail:hover { color: #fff; }
+        .footer-phones { display: flex; flex-direction: column; gap: 12px; }
+        .footer-phones div { display: flex; flex-direction: column; }
+        .footer-phones a { color: #fff; text-decoration: none; font-size: 1.15rem; font-weight: 700; font-family: 'Benzin', sans-serif; transition: color 0.3s;}
+        .footer-phones a:hover { color: var(--primary-orange); }
+        .footer-phones span { color: var(--text-muted); font-size: 0.85rem; }
+        
+        .footer-social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 0; }
         .social-card { background-color: #15171a; padding: 14px 28px; border-radius: 6px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-light); border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
         .social-card:hover { border-color: var(--primary-orange); transform: translate3d(0, -3px, 0); background-color: #1e2226; }
         .social-card .icon-box { color: var(--primary-orange); font-weight: bold; font-size: 1.2rem; width: 30px; text-align: center; }
@@ -237,6 +207,7 @@
         .social-card span { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; }
 
         @media (max-width: 992px) {
+            .header-nav { display: none; } /* Прячем текст. ссылки на планшетах для экономии места */
             .hero-grid, .model-grid, .delivery-content, .cta-grid { grid-template-columns: 1fr; }
             .model-grid { text-align: center; }
             .model-title { font-size: 2.5rem; }
@@ -259,10 +230,8 @@
             .header-content { padding: 12px 0; gap: 10px; }
             .logo { font-size: 1.1rem; gap: 8px; }
             .logo-img { height: 26px; }
-            
             .header-buttons { display: flex; gap: 5px; align-items: center; }
             .header-buttons .btn { padding: 6px 10px; font-size: 0.65rem; letter-spacing: 0; }
-            
             .hero-section { padding: 50px 0; }
             .hero-text h1 { font-size: 1.6rem; margin-bottom: 15px; }
             .hero-text p { font-size: 0.95rem; }
@@ -282,7 +251,6 @@
             .service-item { padding: 15px; }
             .service-item h4 { font-size: 0.95rem; margin-bottom: 5px; }
             .service-item p { font-size: 0.8rem; }
-            
             .warranty-section { padding: 50px 0; }
             .warranty-wrapper { gap: 0; }
             .warranty-box { padding: 25px 20px; text-align: left; }
@@ -290,7 +258,6 @@
             .warranty-text h2 { font-size: 1.1rem; margin-bottom: 8px; }
             .warranty-text p { font-size: 0.75rem !important; margin-bottom: 12px !important; line-height: 1.3; }
             .warranty-text .btn { padding: 8px 12px; font-size: 0.7rem; }
-            
             .delivery-section { padding: 50px 0; }
             .delivery-content { gap: 20px; }
             .map-link-wrapper { height: 200px !important; }
@@ -305,7 +272,12 @@
             .cta-text p { font-size: 0.85rem; margin-bottom: 15px; }
             .cta-form { max-width: 100%; }
             .cta-form input, .cta-form .btn { width: 100%; padding: 10px; font-size: 0.8rem; }
-            .footer-social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; margin-bottom: 25px;}
+            
+            /* Адаптивный подвал */
+            .footer-grid { flex-direction: column; gap: 30px; }
+            .footer-contacts { border-right: none; padding-right: 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; width: 100%; }
+            .footer-phones { align-items: center; }
+            .footer-social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; }
             .social-card { flex: 1 1 calc(50% - 10px); padding: 8px 10px; gap: 8px; justify-content: center; }
             .social-card .icon-box { font-size: 0.9rem; width: 20px; }
             .social-card .icon-box.max-icon { font-size: 0.75rem; }
@@ -328,9 +300,18 @@
                 <div>ТД <span>НЭТ</span></div>
                 <img src="logo.png" alt="ТД НЭТ" class="logo-img">
             </a>
-            <div class="header-buttons">
-                <a href="tel:+79185582299" class="btn">Связаться с нами</a>
+            
+            <!-- ИЗМЕНЕНИЕ 3: Новые ссылки в шапке -->
+            <div style="display: flex; align-items: center;">
+                <div class="header-nav">
+                    <a href="docs.html" class="nav-link">Документация</a>
+                    <a href="partner.html" class="nav-link">Партнерская программа</a>
+                </div>
+                <div class="header-buttons">
+                    <a href="tel:+79185582299" class="btn">Связаться с нами</a>
+                </div>
             </div>
+            
         </div>
     </header>
 
@@ -375,7 +356,7 @@
         </div>
     </section>
 
-    <!-- РАЗДЕЛ С ИНТЕРАКТИВНОЙ 3D МОДЕЛЬЮ И ХАРАКТЕРИСТИКАМИ -->
+    <!-- ИЗМЕНЕНИЕ 4: Обновленные характеристики ЧПУ -->
     <section class="model-section">
         <div class="container model-grid">
             
@@ -391,16 +372,16 @@
                                 <div class="sub-tab" data-index="1">DIGITAL</div>
                             </div>
                             <div class="model-specs active" data-index="0">
-                                <div class="spec-item">Количество осей: до 4-х</div>
-                                <div class="spec-item">Поддержка EtherCAT: Да</div>
-                                <div class="spec-item">Экран: 10.4" LCD Touchscreen</div>
+                                <div class="spec-item">Количество осей: до 4-х (импульс/направление)</div>
+                                <div class="spec-item">Интерфейс: 10.4" TFT Промышленный</div>
+                                <div class="spec-item">Протоколы: Modbus, CAN</div>
                                 <div class="spec-item">Защита корпуса: IP65</div>
                             </div>
                             <div class="model-specs" data-index="1">
-                                <div class="spec-item">Количество осей: до 5-ти</div>
-                                <div class="spec-item">Поддержка EtherCAT: Да (High-speed)</div>
-                                <div class="spec-item">Экран: 15" Промышленный HD</div>
-                                <div class="spec-item">Интерфейсы: CAN, USB, Ethernet</div>
+                                <div class="spec-item">Количество осей: до 5-ти (EtherCAT)</div>
+                                <div class="spec-item">Интерфейс: 15" Сенсорный экран</div>
+                                <div class="spec-item">Процессор: 4-ядерный ARM</div>
+                                <div class="spec-item">Поддержка энкодеров: Абсолютные</div>
                             </div>
                         </div>
                     </div>
@@ -414,15 +395,15 @@
                             </div>
                             <div class="model-specs" data-index="2">
                                 <div class="spec-item">Количество осей: до 3-х</div>
-                                <div class="spec-item">Поддержка EtherCAT: Опционально</div>
                                 <div class="spec-item">Исполнение: Компактный моноблок</div>
-                                <div class="spec-item">Энергопотребление: Ультранизкое</div>
+                                <div class="spec-item">Экран: 8.4" Встроенный</div>
+                                <div class="spec-item">Питание: 24В DC (низкое потребление)</div>
                             </div>
                             <div class="model-specs" data-index="3">
-                                <div class="spec-item">Количество осей: до 4-х</div>
-                                <div class="spec-item">Поддержка EtherCAT: Да</div>
-                                <div class="spec-item">Дисплей: 8.4" Сенсорный мультитач</div>
-                                <div class="spec-item">Маховик ручного управления: В комплекте</div>
+                                <div class="spec-item">Количество осей: до 4-х (EtherCAT)</div>
+                                <div class="spec-item">Габариты: Ультракомпактный корпус</div>
+                                <div class="spec-item">Цифровые входы/выходы: Расширяемые</div>
+                                <div class="spec-item">Маховик ручного управления: Поддерживается</div>
                             </div>
                         </div>
                     </div>
@@ -436,15 +417,15 @@
                             </div>
                             <div class="model-specs" data-index="4">
                                 <div class="spec-item">Количество осей: 2-3 оси</div>
-                                <div class="spec-item">Поддержка EtherCAT: Базовая</div>
-                                <div class="spec-item">Назначение: Для малых станков</div>
-                                <div class="spec-item">Гарантия: 2 года</div>
+                                <div class="spec-item">Назначение: Токарные и фрезерные станки</div>
+                                <div class="spec-item">Управление приводом: Аналоговое ±10В</div>
+                                <div class="spec-item">Панель оператора: Стандартная кнопочная</div>
                             </div>
                             <div class="model-specs" data-index="5">
                                 <div class="spec-item">Количество осей: до 4-х</div>
-                                <div class="spec-item">Поддержка EtherCAT: Полная</div>
-                                <div class="spec-item">Процессор: Высокопроизводительный ARM</div>
-                                <div class="spec-item">Охлаждение: Пассивное (без кулеров)</div>
+                                <div class="spec-item">Шина управления: EtherCAT</div>
+                                <div class="spec-item">Скорость цикла ПЛК: от 1 мс</div>
+                                <div class="spec-item">Совместимость: Сервоприводы 3-го поколения</div>
                             </div>
                         </div>
                     </div>
@@ -458,15 +439,15 @@
                             </div>
                             <div class="model-specs" data-index="6">
                                 <div class="spec-item">Количество осей: до 8-ми</div>
-                                <div class="spec-item">Поддержка EtherCAT: Да (Pro)</div>
-                                <div class="spec-item">Экран: 15" Multi-touch</div>
-                                <div class="spec-item">Интеграция: Индустрия 4.0</div>
+                                <div class="spec-item">Экран: 15" Multi-touch высокого разрешения</div>
+                                <div class="spec-item">Спец. функции: Наклонная плоскость, RTCP</div>
+                                <div class="spec-item">ПЛК: Встроенный высокоскоростной SoftPLC</div>
                             </div>
                             <div class="model-specs" data-index="7">
                                 <div class="spec-item">Количество осей: до 12-ти</div>
-                                <div class="spec-item">Поддержка EtherCAT: Ультра-скорость</div>
-                                <div class="spec-item">Экран: 19" HD + Доп. панель</div>
-                                <div class="spec-item">Аналитика: Встроенный ИИ</div>
+                                <div class="spec-item">Шина: Раздельный высокоскоростной EtherCAT</div>
+                                <div class="spec-item">Макс. скорость обработки: до 100 м/мин</div>
+                                <div class="spec-item">Аналитика: Интеграция Индустрия 4.0 (OPC UA)</div>
                             </div>
                         </div>
                     </div>
@@ -526,7 +507,7 @@
                     <h2>Услуги и сервис</h2>
                     <p>Процесс изготовления любой продукции выгодно отличается благодаря аттестованным специалистам и современному оборудованию.</p>
                 </div>
-                <a href="#support-section" class="btn btn-outline">Связаться с отделом</a>
+                <!-- ИЗМЕНЕНИЕ 8: Кнопка убрана -->
             </div>
             <div class="service-grid">
                 <div class="service-item anim-element">
@@ -536,7 +517,8 @@
                 
                 <a href="#partner-block" class="service-item special-partner anim-element">
                     <h4>Партнерская программа<br>для модернизаторщиков</h4>
-                    <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе, бесплатное обучение ваших инженеров и приоритетная поддержка 24/7.</p>
+                    <!-- ИЗМЕНЕНИЕ 5: Убрано про обучение и 24/7 -->
+                    <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе.</p>
                 </a>
                 
                 <div class="service-item anim-element">
@@ -571,7 +553,6 @@
         </div>
     </section>
 
-    <!-- БЛОК-ПРОСЛОЙКА ПАРТНЕРСКОЙ ПРОГРАММЫ -->
     <section id="partner-block" class="partner-cta-section">
         <div class="container partner-cta-content anim-element">
             <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">B2B Сотрудничество</p>
@@ -630,21 +611,40 @@
         </div>
     </section>
 
+    <!-- ИЗМЕНЕНИЕ 9: Обновленный подвал с контактами -->
     <footer>
         <div class="container">
-            <div class="footer-social-links">
-                <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card anim-element">
-                    <div class="icon-box">▶</div>
-                    <span>RuTube канал</span>
-                </a>
-                <a href="https://vk.com/chpu_net" target="_blank" class="social-card anim-element">
-                    <div class="icon-box">VK</div>
-                    <span>Сообщество VK</span>
-                </a>
-                <a href="https://web.max.ru/33269346" target="_blank" class="social-card anim-element">
-                    <div class="icon-box max-icon">MAX</div>
-                    <span>Сообщество MAX</span>
-                </a>
+            <div class="footer-grid">
+                
+                <div class="footer-contacts anim-element">
+                    <a href="mailto:elektronika-net@mail.ru" class="footer-mail">elektronika-net@mail.ru</a>
+                    <div class="footer-phones">
+                        <div>
+                            <a href="tel:+79185582299">+7 918 558 22 99</a>
+                            <span>Дмитрий (Менеджер Отдела продаж)</span>
+                        </div>
+                        <div>
+                            <a href="tel:+79185802194">+7 918 580 21 94</a>
+                            <span>Татьяна (Менеджер Отдела продаж)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-social-links">
+                    <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card anim-element">
+                        <div class="icon-box">▶</div>
+                        <span>RuTube канал</span>
+                    </a>
+                    <a href="https://vk.com/chpu_net" target="_blank" class="social-card anim-element">
+                        <div class="icon-box">VK</div>
+                        <span>Сообщество VK</span>
+                    </a>
+                    <a href="https://web.max.ru/33269346" target="_blank" class="social-card anim-element">
+                        <div class="icon-box max-icon">MAX</div>
+                        <span>Сообщество MAX</span>
+                    </a>
+                </div>
+
             </div>
 
             <p class="anim-element">ООО «Торговый Дом Новые Электронные Технологии»</p>
@@ -747,7 +747,7 @@
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
                     const sectionsToAnimate = document.querySelectorAll(
-                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, .btn-glow-center, footer'
+                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, .btn-glow-center, .footer-contacts, .social-card, footer p'
                     );
                     sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
 
