@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация и сертификаты | ТД НЭТ</title>
+    
+    <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
+    <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+
+    <style>
+        @font-face { font-family: 'Benzin'; src: url('Benzin-Bold.woff2') format('woff2'), url('Benzin-Bold.woff') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
+        @font-face { font-family: 'Benzin'; src: url('Benzin-ExtraBold.woff2') format('woff2'), url('Benzin-ExtraBold.woff') format('woff'); font-weight: 800; font-style: normal; font-display: swap; }
+
+        :root {
+            --bg-card: #15171a;          
+            --bg-grad-main: linear-gradient(135deg, #2b3036 0%, #1e2126 100%); 
+            --primary-orange: #ff6b00;   
+            --dark-orange: #d95a00;      
+            --text-light: #ffffff;       
+            --text-muted: #adb5bd;       
+            --text-body: #e9ecef;        
+            --border-color: rgba(255, 255, 255, 0.06);     
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { color: var(--text-light); background: #0a0b0d; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        h1, h2, h3, h4 { font-family: 'Benzin', 'Segoe UI', sans-serif; font-weight: 800; color: var(--text-light); }
+
+        .btn { display: inline-block; background-color: var(--primary-orange); color: #ffffff; padding: 16px 36px; text-decoration: none; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.95rem; transition: all 0.3s ease; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2); text-align: center; }
+        .btn:hover:not(:disabled) { background-color: var(--dark-orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4); }
+        .btn-outline { background: transparent; color: var(--text-light); border: 2px solid rgba(255, 255, 255, 0.3); box-shadow: none; padding: 12px 24px; font-size: 0.85rem;}
+        .btn-outline:hover { background: var(--primary-orange); border-color: var(--primary-orange); color: #ffffff; }
+
+        .header-buttons { display: flex; align-items: center; gap: 10px; }
+
+        header { background-color: #1a1d21; border-bottom: 3px solid var(--primary-orange); position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        .logo { font-family: 'Benzin', sans-serif; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 15px; color: var(--text-light); text-decoration: none; text-transform: uppercase; }
+        .logo-img { height: 42px; width: auto; object-fit: contain; }
+        .logo span { color: var(--primary-orange); }
+
+        /* HERO СЕКЦИЯ ДОКУМЕНТОВ */
+        .docs-hero { padding: 120px 0 80px 0; background: radial-gradient(circle at 80% 50%, rgba(255, 107, 0, 0.08) 0%, transparent 50%), #0a0b0d; display: flex; align-items: center; }
+        .docs-hero-content { max-width: 800px; }
+        .docs-hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 25px; text-transform: none; }
+        .docs-hero p { font-size: 1.1rem; color: var(--text-body); line-height: 1.8; }
+
+        /* СПИСОК ДОКУМЕНТОВ */
+        .docs-list-section { padding: 60px 0 100px 0; background: var(--bg-card); border-top: 1px solid var(--border-color); }
+        .docs-list-section h2 { font-size: 2.2rem; margin-bottom: 40px; }
+        .docs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        
+        .doc-card { 
+            background: #1e2226; 
+            padding: 35px 30px; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-color); 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .doc-card:hover {
+            transform: translate3d(0, -5px, 0);
+            border-color: var(--primary-orange);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .doc-card h4 { font-size: 1.25rem; color: var(--primary-orange); line-height: 1.4; text-transform: uppercase; letter-spacing: 0.5px;}
+        .doc-card p { color: var(--text-body); font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;}
+        .doc-card .btn-outline { margin-top: auto; width: max-content; }
+
+        /* ФУТЕР И КАРТА */
+        .map-footer-section { background-color: #0a0b0d; padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+        .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .contacts-left h2 { font-size: 3rem; margin-bottom: 40px; text-transform: none; }
+        .contact-big { font-family: 'Benzin', sans-serif; font-size: 1.5rem; color: var(--primary-orange); margin-bottom: 5px; display: block; text-decoration: none; }
+        .contact-big.mail { color: #fff; margin-bottom: 10px; }
+        .contacts-left p { margin-top: 30px; color: var(--text-body); font-size: 1.1rem; }
+        .map-container { width: 100%; height: 450px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        .map-container iframe { width: 100%; height: 100%; border: none; filter: invert(90%) hue-rotate(180deg) grayscale(30%) contrast(100%); }
+
+        footer { background: #0d0e10; color: var(--text-muted); padding: 50px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
+        .social-card { background-color: #15171a; padding: 14px 28px; border-radius: 6px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-light); border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
+        .social-card:hover { border-color: var(--primary-orange); transform: translate3d(0, -3px, 0); background-color: #1e2226; }
+        .social-card .icon-box { color: var(--primary-orange); font-weight: bold; font-size: 1.2rem; width: 30px; text-align: center; }
+        .social-card .icon-box.max-icon { font-size: 1rem; letter-spacing: 0; }
+        .social-card span { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; }
+
+        @media (max-width: 992px) {
+            .docs-hero h1 { font-size: 2.8rem; }
+            .map-grid { grid-template-columns: 1fr; gap: 40px; }
+            .contacts-left h2 { font-size: 2.5rem; }
+            .map-container { height: 350px; }
+        }
+        @media (max-width: 768px) {
+            .header-buttons { display: flex; gap: 5px; align-items: center; }
+            .header-buttons .btn { padding: 6px 10px; font-size: 0.65rem; letter-spacing: 0; }
+            
+            .docs-hero { padding: 80px 0 50px 0; }
+            .docs-hero h1 { font-size: 2rem; }
+            .docs-list-section { padding: 50px 0; }
+            .docs-list-section h2 { font-size: 1.8rem; margin-bottom: 30px;}
+            .contact-big { font-size: 1.2rem; }
+            
+            .footer-social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; margin-bottom: 25px;}
+            .social-card { flex: 1 1 calc(50% - 10px); padding: 8px 10px; gap: 8px; justify-content: center; }
+            .social-card .icon-box { font-size: 0.9rem; width: 20px; }
+            .social-card .icon-box.max-icon { font-size: 0.75rem; }
+            .social-card span { font-size: 0.7rem; }
+        }
+        @media (max-width: 480px) {
+            .logo { font-size: 0.95rem; }
+            .logo-img { height: 22px; }
+            .header-buttons .btn { padding: 5px 6px; font-size: 0.55rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div>ТД <span>НЭТ</span></div>
+                <img src="logo.png" alt="ТД НЭТ" class="logo-img">
+            </a>
+            <div class="header-buttons">
+                <a href="index.html" class="btn btn-outline" style="border: none;">Главная</a>
+                <a href="tel:+79185582299" class="btn">Связаться с нами</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="docs-hero">
+        <div class="container">
+            <div class="docs-hero-content">
+                <h1>Документация и сертификаты</h1>
+                <p>В данном разделе представлена необходимая техническая и юридическая документация, паспорта качества и сертификаты соответствия на продукцию Торгового Дома НЭТ.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="docs-list-section">
+        <div class="container">
+            <h2>Доступные файлы</h2>
+            
+            <div class="docs-grid">
+                <!-- Карточка документа 1 -->
+                <div class="doc-card">
+                    <h4>Сертификат Минпромторга</h4>
+                    <p>Официальный документ, подтверждающий присутствие в реестре отечественных производителей промышленной продукции.</p>
+                    <a href="#" class="btn btn-outline">Скачать PDF</a>
+                </div>
+                
+                <!-- Карточка документа 2 -->
+                <div class="doc-card">
+                    <h4>Паспорт качества ЧПУ TITANIUM</h4>
+                    <p>Технический паспорт изделия с полным описанием эксплуатационных характеристик и гарантийных обязательств.</p>
+                    <a href="#" class="btn btn-outline">Скачать PDF</a>
+                </div>
+                
+                <!-- Карточка документа 3 -->
+                <div class="doc-card">
+                    <h4>Руководство пользователя</h4>
+                    <p>Подробная инструкция для интеграторов по установке, настройке и повседневной эксплуатации системы.</p>
+                    <a href="#" class="btn btn-outline">Скачать PDF</a>
+                </div>
+                
+                <!-- Место для добавления новых карточек -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал с картой (как на странице партнерства) -->
+    <section class="map-footer-section">
+        <div class="container map-grid">
+            <div class="contacts-left">
+                <h2>Где мы находимся</h2>
+                <a href="mailto:elektronika-net@mail.ru" class="contact-big mail">elektronika-net@mail.ru</a>
+                
+                <div style="margin-bottom: 15px;">
+                    <a href="tel:+79185582299" class="contact-big" style="font-size: 1.25rem;">+7 918 558 22 99</a>
+                    <span style="color: var(--text-muted); font-size: 0.95rem;">Дмитрий (Менеджер Отдела продаж)</span>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <a href="tel:+79185802194" class="contact-big" style="font-size: 1.25rem;">+7 918 580 21 94</a>
+                    <span style="color: var(--text-muted); font-size: 0.95rem;">Татьяна (Менеджер Отдела продаж)</span>
+                </div>
+                
+                <p>Россия, Ростовская область, г. Азов,<br>Промышленная улица, 2<br>Принимаем звонки с 08:30 до 17:30</p>
+            </div>
+            
+            <div class="map-container">
+                <iframe src="https://yandex.ru/map-widget/v1/?ll=39.432650,47.094595&z=16&pt=39.432650,47.094595~pm2rdm"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Социальные сети и копирайт -->
+    <footer>
+        <div class="container">
+            <div class="footer-social-links">
+                <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card">
+                    <div class="icon-box">▶</div>
+                    <span>RuTube канал</span>
+                </a>
+                <a href="https://vk.com/chpu_net" target="_blank" class="social-card">
+                    <div class="icon-box">VK</div>
+                    <span>Сообщество VK</span>
+                </a>
+                <a href="https://web.max.ru/33269346" target="_blank" class="social-card">
+                    <div class="icon-box max-icon">MAX</div>
+                    <span>Сообщество MAX</span>
+                </a>
+            </div>
+
+            <p>ООО «Торговый Дом Новые Электронные Технологии»</p>
+            <p style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
+        </div>
+    </footer>
+
+</body>
+</html>
