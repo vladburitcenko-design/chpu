@@ -137,10 +137,7 @@
 
         .model-viewer-container { display: flex; flex-direction: column; align-items: center; position: relative; width: 125%; margin-right: -25%; margin-top: -30px; transition: all 0.6s ease; }
         .model-viewer-wrapper { position: relative; width: 100%; height: 500px; border: none; background: transparent; box-shadow: none; }
-        
-        /* ИЗМЕНЕНИЕ 1: Увеличена минимальная высота для устранения скачков */
         .cnc-description-wrapper { position: relative; min-height: 120px; width: 80%; margin-top: 10px; text-align: center; }
-        
         .cnc-desc { position: absolute; width: 100%; left: 0; top: 0; margin: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 1rem; color: var(--text-body); line-height: 1.5; opacity: 0; transform: translate3d(0, 15px, 0); transition: opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
         .cnc-desc.active { opacity: 1; transform: translate3d(0, 0, 0); pointer-events: auto; }
         .cnc-desc strong { color: var(--primary-orange); }
@@ -210,9 +207,12 @@
         .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
         .cta-text h2 { font-size: 2.4rem; margin-bottom: 20px; }
         .cta-text p { color: var(--text-body); font-size: 1.1rem; max-width: 100%; }
+        
         .cta-form { display: flex; flex-direction: column; gap: 15px; width: 100%; }
         .cta-form input { padding: 16px 20px; border: 1px solid rgba(255,255,255,0.1); background: #1e2226; border-radius: 4px; width: 100%; color: #ffffff; font-size: 1rem; transition: border-color 0.3s; }
         .cta-form input:focus { outline: none; border-color: var(--primary-orange); }
+        .form-group { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+        .form-group label { font-weight: 700; font-size: 0.95rem; color: #fff; }
         .form-error { color: #ff4d4d; font-size: 0.85rem; font-weight: 600; margin-top: -5px; display: none; }
 
         footer { background: #0d0e10; color: var(--text-muted); padding: 50px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -232,7 +232,6 @@
             .model-specs { padding-left: 0; border-left: none; align-items: center; }
             .model-viewer-container { width: 100%; margin-right: 0; margin-top: 15px; }
             .model-viewer-wrapper { height: 350px; }
-            /* ИЗМЕНЕНИЕ 1: для планшетов */
             .cnc-description-wrapper { width: 100%; min-height: 130px;}
             .left-arrow { left: 10px; }
             .right-arrow { right: 10px; }
@@ -260,7 +259,6 @@
             .feature-tag { font-size: 0.85rem; padding: 12px; text-align: left; }
             .model-arrow { width: 40px; height: 40px; font-size: 1rem; }
             .model-viewer-wrapper { height: 280px; }
-            /* ИЗМЕНЕНИЕ 1: для мобильных */
             .cnc-description-wrapper { min-height: 150px; }
             .cnc-desc { font-size: 0.85rem; }
             .service-section { padding: 50px 0; }
@@ -314,7 +312,6 @@
                 <img src="logo.png" alt="ТД НЭТ" class="logo-img">
             </a>
             <div>
-                <!-- ИЗМЕНЕНИЕ 5: Номер Дмитрия в шапке -->
                 <a href="tel:+79185582299" class="btn">Связаться с нами</a>
             </div>
         </div>
@@ -361,7 +358,6 @@
         </div>
     </section>
 
-    <!-- РАЗДЕЛ С ИНТЕРАКТИВНОЙ 3D МОДЕЛЬЮ И ХАРАКТЕРИСТИКАМИ -->
     <section class="model-section">
         <div class="container model-grid">
             
@@ -369,7 +365,6 @@
                 <h2 class="model-title">АССОРТИМЕНТ<br><span>В НАЛИЧИИ</span></h2>
                 
                 <div class="model-features">
-                    <!-- МАТЕРИНСКИЙ ПУНКТ 1: CNC-11 TITANIUM -->
                     <div class="feature-item-wrapper expanded" data-group="1">
                         <div class="feature-tag">CNC-11 TITANIUM</div>
                         <div class="sub-features">
@@ -377,7 +372,6 @@
                                 <div class="sub-tab active" data-index="0">LIGHT</div>
                                 <div class="sub-tab" data-index="1">DIGITAL</div>
                             </div>
-                            
                             <div class="model-specs active" data-index="0">
                                 <div class="spec-item">Количество осей: до 4-х</div>
                                 <div class="spec-item">Поддержка EtherCAT: Да</div>
@@ -393,7 +387,6 @@
                         </div>
                     </div>
 
-                    <!-- МАТЕРИНСКИЙ ПУНКТ 2: CNC-11 TITANIUM MINI -->
                     <div class="feature-item-wrapper" data-group="2">
                         <div class="feature-tag">CNC-11 TITANIUM MINI</div>
                         <div class="sub-features">
@@ -401,7 +394,6 @@
                                 <div class="sub-tab" data-index="2">LIGHT</div>
                                 <div class="sub-tab" data-index="3">DIGITAL</div>
                             </div>
-                            
                             <div class="model-specs" data-index="2">
                                 <div class="spec-item">Количество осей: до 3-х</div>
                                 <div class="spec-item">Поддержка EtherCAT: Опционально</div>
@@ -417,7 +409,6 @@
                         </div>
                     </div>
 
-                    <!-- МАТЕРИНСКИЙ ПУНКТ 3: CNC-11 TITANIUM BASIC -->
                     <div class="feature-item-wrapper" data-group="3">
                         <div class="feature-tag">CNC-11 TITANIUM BASIC</div>
                         <div class="sub-features">
@@ -425,7 +416,6 @@
                                 <div class="sub-tab" data-index="4">LIGHT</div>
                                 <div class="sub-tab" data-index="5">DIGITAL</div>
                             </div>
-                            
                             <div class="model-specs" data-index="4">
                                 <div class="spec-item">Количество осей: 2-3 оси</div>
                                 <div class="spec-item">Поддержка EtherCAT: Базовая</div>
@@ -441,7 +431,6 @@
                         </div>
                     </div>
 
-                    <!-- МАТЕРИНСКИЙ ПУНКТ 4: CNC-18 TITANIUM -->
                     <div class="feature-item-wrapper" data-group="4">
                         <div class="feature-tag">CNC-18 TITANIUM</div>
                         <div class="sub-features">
@@ -449,7 +438,6 @@
                                 <div class="sub-tab" data-index="6">LIGHT</div>
                                 <div class="sub-tab" data-index="7">DIGITAL</div>
                             </div>
-                            
                             <div class="model-specs" data-index="6">
                                 <div class="spec-item">Количество осей: до 8-ми</div>
                                 <div class="spec-item">Поддержка EtherCAT: Да (Pro)</div>
@@ -470,7 +458,6 @@
             
             <div class="model-viewer-container" id="mainModelContainer">
                 <div class="model-viewer-wrapper" id="modelWrapper">
-                    
                     <div class="model-arrow left-arrow" id="prevModel">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     </div>
@@ -508,14 +495,11 @@
                     <p class="cnc-desc" data-desc-index="7"><strong>CNC-18 TITANIUM DIGITAL:</strong> Абсолютный флагман линейки. Встроенная аналитика и максимальная вычислительная мощность для Индустрии 4.0.</p>
                 </div>
 
-                <!-- ЯРКАЯ КНОПКА ПОД ОПИСАНИЕМ -->
                 <a href="#support-section" class="btn btn-glow-center anim-element">Оставить заявку на покупку</a>
-
             </div>
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: УСЛУГИ И СЕРВИС -->
     <section class="service-section">
         <div class="container">
             <div class="service-header">
@@ -531,7 +515,6 @@
                     <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                 </div>
                 
-                <!-- ВЫДЕЛЕННАЯ КАРТОЧКА ПАРТНЕРА -->
                 <a href="#partner-block" class="service-item special-partner anim-element">
                     <h4>Партнерская программа<br>для модернизаторщиков</h4>
                     <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе, бесплатное обучение ваших инженеров и приоритетная поддержка 24/7.</p>
@@ -545,10 +528,8 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ГАРАНТИЯ И МИНПРОМТОРГ -->
     <section class="warranty-section">
         <div class="container warranty-wrapper">
-            
             <div class="warranty-box">
                 <div class="img-placeholder">
                     <img src="two-business-people-shaking-hands-in-deal-office-ai-generative-free-photo.jpg" alt="Гарантия и надежность">
@@ -572,11 +553,9 @@
                     <a href="#" class="btn btn-outline">Проверить в реестре</a>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- БЛОК-ПРОСЛОЙКА ПАРТНЕРСКОЙ ПРОГРАММЫ -->
     <section id="partner-block" class="partner-cta-section">
         <div class="container partner-cta-content anim-element">
             <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">B2B Сотрудничество</p>
@@ -586,13 +565,11 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ДОСТАВКА И КАРТА -->
     <section class="delivery-section">
         <div class="container delivery-content">
             <div class="anim-element">
                 <h2>Доставка по РФ и СНГ</h2>
                 <p style="margin-bottom: 35px; font-size: 1.1rem; color: var(--text-body);">Осуществляем поставку комплектующих и готовых систем ЧПУ проверенными логистическими партнерами.</p>
-                
                 <div class="logistics-logos">
                     <div class="logo-box">СДЭК</div>
                     <div class="logo-box">Деловые Линии</div>
@@ -605,11 +582,9 @@
                     <span>Проложить маршрут</span>
                 </div>
             </a>
-            
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: ФОРМА ЗАЯВКИ -->
     <section class="cta-section" id="support-section">
         <div class="container cta-grid">
             <div class="cta-text anim-element">
@@ -618,8 +593,6 @@
             </div>
             
             <div class="anim-element">
-                <!-- ИЗМЕНЕНИЕ 2: Форма с отправкой на новую почту -->
-                <!-- Важно: при первом использовании на почту elektronika-net@mail.ru придет письмо для активации FormSubmit -->
                 <form class="cta-form" id="consultationForm">
                     <input type="hidden" name="_subject" value="Новая заявка с сайта ТД НЭТ">
                     <input type="hidden" name="_captcha" value="false">
@@ -628,20 +601,21 @@
                     <input type="tel" name="Телефон" id="consultPhone" placeholder="+7 (000) 000-00-00" required>
                     <input type="email" name="Email" id="consultEmail" placeholder="Ваш Email" required>
                     <input type="text" name="Система" id="consultSystem" placeholder="Какую систему хотите заказать?" required>
-                    <input type="text" id="consultSpam" placeholder="Антиспам: количество букв в слове chpu?" required>
                     
-                    <div class="form-error" id="consultError">Ошибка: Неверное количество букв!</div>
+                    <div class="form-group">
+                        <label>Антиспам-проверка</label>
+                        <input type="text" id="consultSpam" placeholder="Количество букв в адресе chpu.net?" required style="margin-bottom: 0;">
+                        <div class="form-error" id="consultError">Ошибка: Неверное количество букв! Подсказка: их 7.</div>
+                    </div>
                     
-                    <button type="submit" class="btn">Оставить заявку</button>
+                    <button type="submit" class="btn" style="margin-top: 10px;">Оставить заявку</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- ПОДВАЛ И СОЦСЕТИ -->
     <footer>
         <div class="container">
-            
             <div class="footer-social-links">
                 <a href="https://rutube.ru/search/?q=CNC-TITANIUM+НЭТ" target="_blank" class="social-card anim-element">
                     <div class="icon-box">▶</div>
@@ -662,13 +636,8 @@
         </div>
     </footer>
 
-    <!-- JS Скрипты -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // ==========================================
-            // ЛОГИКА АНТИСПАМ-ФОРМЫ И ФОНОВОЙ ОТПРАВКИ (AJAX)
-            // ==========================================
             const consultForm = document.getElementById('consultationForm');
             const consultSpam = document.getElementById('consultSpam');
             const consultError = document.getElementById('consultError');
@@ -680,7 +649,7 @@
 
                     const spamAnswer = consultSpam.value.trim().toLowerCase();
                     
-                    if (spamAnswer !== '4' && spamAnswer !== 'четыре') {
+                    if (spamAnswer !== '7' && spamAnswer !== 'семь') {
                         consultError.style.display = 'block';
                         consultSpam.style.borderColor = '#ff4d4d';
                         return; 
@@ -695,7 +664,6 @@
 
                     const formData = new FormData(consultForm);
 
-                    // ИЗМЕНЕНИЕ 4: Отправка на почту elektronika-net@mail.ru
                     fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
                         method: "POST",
                         body: formData
@@ -715,10 +683,6 @@
                 });
             }
 
-
-            // ==========================================
-            // ЛОГИКА 3D МОДЕЛЕЙ И ПЕРЕКЛЮЧЕНИЙ
-            // ==========================================
             const modelViewer = document.getElementById('cncModel');
             const wrappers = document.querySelectorAll('.feature-item-wrapper');
             const subTabs = document.querySelectorAll('.sub-tab');
@@ -755,19 +719,14 @@
             }
             updateContainerPosition(currentIndex);
 
-            window.addEventListener('resize', () => {
-                updateContainerPosition(currentIndex);
-            });
+            window.addEventListener('resize', () => { updateContainerPosition(currentIndex); });
 
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     const mainObserver = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('visible');
-                            } else {
-                                entry.target.classList.remove('visible');
-                            }
+                            if (entry.isIntersecting) { entry.target.classList.add('visible'); } 
+                            else { entry.target.classList.remove('visible'); }
                         });
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
@@ -778,11 +737,8 @@
 
                     const featuresObserver = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('visible');
-                            } else {
-                                entry.target.classList.remove('visible');
-                            }
+                            if (entry.isIntersecting) { entry.target.classList.add('visible'); } 
+                            else { entry.target.classList.remove('visible'); }
                         });
                     }, { threshold: 0.05 }); 
 
@@ -850,9 +806,7 @@
             function lockHover() {
                 isHoverLocked = true;
                 clearTimeout(hoverLockTimeout);
-                hoverLockTimeout = setTimeout(() => {
-                    isHoverLocked = false;
-                }, 2000);
+                hoverLockTimeout = setTimeout(() => { isHoverLocked = false; }, 2000);
             }
 
             wrappers.forEach((wrapper) => {
@@ -861,24 +815,17 @@
                 wrapper.addEventListener('mouseenter', () => {
                     if (window.innerWidth > 992 && !isHoverLocked) {
                         const activeInside = wrapper.querySelector('.sub-tab.active');
-                        if (activeInside) {
-                            activateModel(parseInt(activeInside.getAttribute('data-index')));
-                        } else {
-                            activateModel(firstTabIdx);
-                        }
+                        if (activeInside) { activateModel(parseInt(activeInside.getAttribute('data-index'))); } 
+                        else { activateModel(firstTabIdx); }
                         lockHover(); 
                     }
                 });
                 
                 wrapper.addEventListener('click', (e) => {
                     if (e.target.classList.contains('sub-tab')) return;
-
                     const activeInside = wrapper.querySelector('.sub-tab.active');
-                    if (activeInside) {
-                        activateModel(parseInt(activeInside.getAttribute('data-index')));
-                    } else {
-                        activateModel(firstTabIdx);
-                    }
+                    if (activeInside) { activateModel(parseInt(activeInside.getAttribute('data-index'))); } 
+                    else { activateModel(firstTabIdx); }
                     if (window.innerWidth > 992) lockHover();
                 });
             });
@@ -890,7 +837,6 @@
                         lockHover(); 
                     }
                 });
-                
                 tab.addEventListener('click', (e) => {
                     e.stopPropagation();
                     activateModel(parseInt(tab.getAttribute('data-index')));
@@ -915,12 +861,8 @@
             });
 
             if (modelViewer) {
-                let currentX = 0;
-                let currentY = 0;
-                let targetX = 0;
-                let targetY = 0;
-                let autoTime = 0;
-                let isHovering = false;
+                let currentX = 0; let currentY = 0; let targetX = 0; let targetY = 0;
+                let autoTime = 0; let isHovering = false;
 
                 modelViewer.addEventListener('pointerdown', () => isDragging = true);
                 window.addEventListener('pointerup', () => isDragging = false);
@@ -949,8 +891,7 @@
                         currentY = ((orbit.phi * 180 / Math.PI) - 80) / 20;
                         let clampedX = Math.max(-1, Math.min(1, currentX));
                         autoTime = Math.asin(clampedX) || 0;
-                        targetX = currentX;
-                        targetY = currentY;
+                        targetX = currentX; targetY = currentY;
                     } else if (isHovering) {
                         currentX += (targetX - currentX) * 0.15;
                         currentY += (targetY - currentY) * 0.15;
@@ -969,6 +910,5 @@
             }
         });
     </script>
-
 </body>
 </html>
