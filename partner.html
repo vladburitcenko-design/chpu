@@ -79,7 +79,6 @@
         .form-disclaimer { font-size: 0.75rem; color: #333; text-align: center; margin-top: 5px; font-weight: 500; }
         .form-disclaimer a { color: #000; text-decoration: underline; }
 
-        /* ИЗМЕНЕНИЕ 9: Обновленный подвал с контактами */
         footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-grid { display: flex; justify-content: center; align-items: center; gap: 50px; margin-bottom: 40px; flex-wrap: wrap; }
         .footer-contacts { text-align: left; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 50px; }
@@ -100,7 +99,7 @@
 
         .anim-element { opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out; will-change: transform, opacity; }
         .visible .anim-element, .anim-element.visible { opacity: 1; transform: translate3d(0, 0, 0); }
-
+        
         @media (max-width: 992px) {
             .header-nav { display: none; }
             .partner-hero h1 { font-size: 2.8rem; }
@@ -232,7 +231,12 @@
                 <div class="form-title">
                     <h2>Расскажите<br>о своей компании</h2>
                 </div>
-                <form class="partner-form" id="partnerForm" enctype="multipart/form-data">
+                
+                <!-- СКРЫТЫЙ IFRAME ДЛЯ ФОНОВОЙ ОТПРАВКИ ФАЙЛОВ -->
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+                
+                <!-- ИЗМЕНЕНИЕ: Форма теперь отправляется стандартным методом POST в невидимый iframe -->
+                <form class="partner-form" id="partnerForm" action="https://formsubmit.co/elektronika-net@mail.ru" method="POST" target="hidden_iframe" enctype="multipart/form-data">
                     <input type="hidden" name="_subject" value="Новая заявка на партнерство ТД НЭТ">
                     <input type="hidden" name="_captcha" value="false">
 
@@ -271,7 +275,6 @@
         </div>
     </section>
 
-    <!-- ИЗМЕНЕНИЕ 9: Обновленный подвал с новой ссылкой на RuTube -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -291,7 +294,6 @@
                 </div>
 
                 <div class="footer-social-links">
-                    <!-- ОБНОВЛЕННАЯ ССЫЛКА НА RUTUBE -->
                     <a href="https://rutube.ru/channel/42544297/" target="_blank" class="social-card anim-element">
                         <div class="icon-box">▶</div>
                         <span>RuTube канал</span>
@@ -333,47 +335,46 @@
             }
 
             if (partnerForm) {
-                partnerForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
+                let isSubmitting = false;
 
+                partnerForm.addEventListener('submit', function(e) {
                     const spamAnswer = partnerSpam.value.trim().toLowerCase();
                     
                     if (spamAnswer !== '8' && spamAnswer !== 'восемь') {
+                        e.preventDefault(); // Блокируем, если спам не пройден
                         partnerError.style.display = 'block';
                         partnerSpam.style.borderColor = '#8b0000';
                         return; 
                     }
 
+                    // СПАМ ПРОЙДЕН: e.preventDefault() НЕТ! Форма отправляется в iframe.
                     partnerError.style.display = 'none';
                     partnerSpam.style.borderColor = '#ffffff';
 
-                    const originalBtnText = submitBtn.innerText;
                     submitBtn.innerText = 'Отправка...';
                     submitBtn.disabled = true;
-
-                    const formData = new FormData(partnerForm);
-
-                    fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
-                        method: "POST",
-                        body: formData 
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert("Спасибо! Ваша заявка на партнерство успешно отправлена.");
-                        partnerForm.reset();
-                        fileNameDisplay.textContent = "Прикрепить файл";
-                        submitBtn.innerText = originalBtnText;
-                        submitBtn.disabled = false;
-                    })
-                    .catch(error => {
-                        alert("Произошла ошибка при отправке. Пожалуйста, проверьте подключение к сети.");
-                        submitBtn.innerText = originalBtnText;
-                        submitBtn.disabled = false;
-                    });
+                    isSubmitting = true;
                 });
+
+                // Отслеживаем момент, когда скрытый iframe загрузит ответ от FormSubmit
+                const hiddenIframe = document.getElementById('hidden_iframe');
+                if (hiddenIframe) {
+                    hiddenIframe.addEventListener('load', function() {
+                        if (isSubmitting) {
+                            alert("Спасибо! Ваша заявка и файл успешно отправлены.");
+                            partnerForm.reset();
+                            if (fileNameDisplay) fileNameDisplay.textContent = "Прикрепить файл";
+                            if (submitBtn) {
+                                submitBtn.innerText = 'Отправить заявку';
+                                submitBtn.disabled = false;
+                            }
+                            isSubmitting = false;
+                        }
+                    });
+                }
             }
 
-            // Правильное отслеживание подвала
+            // Анимации подвала
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     const mainObserver = new IntersectionObserver((entries) => {
