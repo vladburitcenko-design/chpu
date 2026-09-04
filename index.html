@@ -4,35 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- СЕО ОПТИМИЗАЦИЯ: Мета-теги для поисковиков -->
+    <!-- 4.3. Базовые метаданные -->
     <title>ТД НЭТ | Системы ЧПУ и комплектующие от российского производителя</title>
-    <meta name="description" content="Производство и продажа систем числового программного управления (ЧПУ) TITANIUM. Комплексное оснащение и модернизация станков от ТД НЭТ. Гарантия до 2 лет, в реестре Минпромторга.">
-    <meta name="keywords" content="ЧПУ, системы ЧПУ, купить ЧПУ, российский производитель ЧПУ, модернизация станков, ТД НЭТ, CNC TITANIUM, ЧПУ для фрезерного станка, ЧПУ для токарного станка">
+    <meta name="description" content="Разработка и продажа систем числового программного управления TITANIUM. Комплексное оснащение и модернизация станков от ТД НЭТ. В реестре Минпромторга.">
     <meta name="robots" content="index, follow">
+    
+    <!-- 4.4. Технические барьеры (каноническая ссылка) -->
     <link rel="canonical" href="https://chpu.net/">
 
-    <!-- СЕО ОПТИМИЗАЦИЯ: Open Graph для красивых ссылок в соцсетях и мессенджерах (Telegram, VK, WhatsApp) -->
+    <!-- 4.3. Социальные сниппеты (Open Graph и Twitter Cards) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chpu.net/">
     <meta property="og:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
-    <meta property="og:description" content="Российский производитель систем числового программного управления TITANIUM. Модернизация станков, гарантия 2 года.">
+    <meta property="og:description" content="Российский производитель систем числового программного управления TITANIUM. Модернизация станков, прямая гарантия до 2 лет.">
     <meta property="og:site_name" content="ТД НЭТ">
     <meta property="og:locale" content="ru_RU">
-    
-    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
-    <meta name="twitter:description" content="Российский производитель систем числового программного управления TITANIUM. Модернизация станков, гарантия 2 года.">
+    <meta name="twitter:description" content="Российский производитель систем числового программного управления TITANIUM.">
 
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- СЕО ОПТИМИЗАЦИЯ: Микроразметка Schema.org для карточки компании в Яндексе и Google -->
+    <!-- 4.3. Микроразметка Schema.org (Organization) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -47,13 +43,6 @@
           "telephone": "+7-918-558-22-99",
           "contactType": "sales",
           "contactOption": "TollFree",
-          "areaServed": "RU",
-          "availableLanguage": "Russian"
-        },
-        {
-          "@type": "ContactPoint",
-          "telephone": "+7-918-580-21-94",
-          "contactType": "sales",
           "areaServed": "RU",
           "availableLanguage": "Russian"
         }
@@ -129,7 +118,9 @@
         .hero-section.visible .stat-wrapper:nth-child(4) { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.25s, opacity 1.2s ease-out 1.25s; }
         .stat-item { width: 100%; background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 30px 20px; border-radius: 6px; text-align: center; border-bottom: 4px solid var(--primary-orange); box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
         .stat-item:hover { transform: translate3d(0, -5px, 0); background-color: var(--bg-card-hover); border-color: var(--border-highlight); }
-        .stat-item h3 { font-family: 'Benzin', sans-serif; font-size: 2.5rem; color: var(--primary-orange); margin-bottom: 5px; }
+        
+        /* 4.2 Иерархия: Изменили стили для цифр статистики, чтобы убрать лишний тег h3 */
+        .stat-number { font-family: 'Benzin', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--primary-orange); margin-bottom: 5px; }
         .stat-item p { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-body); margin: 0; }
 
         .model-section { padding: 80px 0 120px 0; background-color: #0a0b0d; border-bottom: 1px solid var(--border-color); overflow: hidden; }
@@ -202,6 +193,9 @@
         .service-section.visible .service-item:nth-child(1) { transition-delay: 0.0s; }
         .service-section.visible .service-item:nth-child(2) { transition-delay: 0.15s; }
         .service-section.visible .service-item:nth-child(3) { transition-delay: 0.3s; }
+        footer.visible .social-card:nth-child(1) { transition-delay: 0.0s; }
+        footer.visible .social-card:nth-child(2) { transition-delay: 0.15s; }
+        footer.visible .social-card:nth-child(3) { transition-delay: 0.3s; }
 
         .service-section { padding: 90px 0; background: var(--bg-grad-alt); border-bottom: 1px solid var(--border-color); }
         .service-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px; }
@@ -211,8 +205,10 @@
         .service-item:hover { border-color: var(--primary-orange); background-color: var(--bg-card-hover); transform: translate3d(0, -3px, 0); box-shadow: var(--shadow); }
         .service-item.special-partner { border-color: var(--primary-orange); box-shadow: 0 0 15px rgba(255, 107, 0, 0.15); cursor: pointer; text-decoration: none; display: block; color: inherit; }
         .service-item.special-partner:hover { transform: translate3d(0, -5px, 0) scale(1.03); background-color: #1a0b00; box-shadow: 0 0 30px rgba(255, 107, 0, 0.4); border-color: var(--primary-orange); }
-        .service-item h4 { font-size: 1.15rem; margin-bottom: 15px; text-transform: uppercase; }
-        .service-item.special-partner h4 { color: var(--primary-orange); }
+        
+        /* 4.2 Иерархия: Карточки стали h3 (были h4) */
+        .service-item h3 { font-size: 1.15rem; margin-bottom: 15px; text-transform: uppercase; font-family: 'Benzin', sans-serif; font-weight: 800; color: var(--text-light); }
+        .service-item.special-partner h3 { color: var(--primary-orange); }
         .service-item p { color: var(--text-body); font-size: 0.95rem; }
 
         .warranty-section { padding: 80px 0; background: transparent; overflow: hidden; }
@@ -297,7 +293,7 @@
             .hero-text p { font-size: 0.95rem; }
             .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
             .stat-item { padding: 15px 10px; }
-            .stat-item h3 { font-size: 1.8rem; }
+            .stat-number { font-size: 1.8rem; }
             .stat-item p { font-size: 0.75rem; }
             .model-section { padding: 50px 0 80px 0; }
             .model-title { font-size: 2rem; }
@@ -309,7 +305,7 @@
             .service-section { padding: 50px 0; }
             .service-grid { gap: 10px; }
             .service-item { padding: 15px; }
-            .service-item h4 { font-size: 0.95rem; margin-bottom: 5px; }
+            .service-item h3 { font-size: 0.95rem; margin-bottom: 5px; }
             .service-item p { font-size: 0.8rem; }
             
             .warranty-section { padding: 50px 0; }
@@ -355,6 +351,7 @@
 </head>
 <body>
 
+    <!-- 4.1. Семантика: Добавлен тег nav -->
     <header>
         <div class="container header-content">
             <a href="index.html" class="logo">
@@ -363,345 +360,313 @@
             </a>
             
             <div style="display: flex; align-items: center;">
-                <div class="header-nav">
+                <nav class="header-nav">
                     <a href="docs.html" class="nav-link">Документация</a>
                     <a href="partner.html" class="nav-link">Партнерская программа</a>
-                </div>
+                </nav>
                 <div class="header-buttons">
                     <a href="tel:+79185582299" class="btn">Связаться с нами</a>
                 </div>
             </div>
-            
         </div>
     </header>
 
-    <section class="hero-section">
-        <div class="container hero-grid">
-            <div class="hero-text">
-                <div class="hero-title-group">
-                    <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">Торговый Дом Новые Электронные Технологии</p>
-                    <h1>Производитель и поставщик инновационного отечественного ЧПУ</h1>
+    <!-- 4.1. Семантика: Основной контент обернут в main -->
+    <main>
+        <section class="hero-section">
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <div class="hero-title-group">
+                        <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">Торговый Дом Новые Электронные Технологии</p>
+                        <h1>Производитель и поставщик инновационного отечественного ЧПУ</h1>
+                    </div>
+                    <div class="hero-desc-group">
+                        <p>Мы — передовая компания-изготовитель в России по разработке систем числового программного управления и комплексному оснащению станкового оборудования.</p>
+                        <p>С 2007 года мы предлагаем рынку новые решения, участвуем в промышленных выставках и опережаем конкурентов благодаря собственному конструкторскому отделу и строгим стандартам качества.</p>
+                    </div>
                 </div>
-                <div class="hero-desc-group">
-                    <p>Мы — передовая компания-изготовитель в России по разработке систем числового программного управления и комплексному оснащению станкового оборудования.</p>
-                    <p>С 2007 года мы предлагаем рынку новые решения, участвуем в промышленных выставках и опережаем конкурентов благодаря собственному конструкторскому отделу и строгим стандартам качества.</p>
+                <div class="stats-grid">
+                    <div class="stat-wrapper">
+                        <!-- 4.2. Иерархия заголовков: h3 заменен на div -->
+                        <div class="stat-item">
+                            <div class="stat-number">19 лет</div>
+                            <p>На рынке</p>
+                        </div>
+                    </div>
+                    <div class="stat-wrapper">
+                        <div class="stat-item">
+                            <div class="stat-number">1000+</div>
+                            <p>Станков с нашим ЧПУ</p>
+                        </div>
+                    </div>
+                    <div class="stat-wrapper">
+                        <div class="stat-item">
+                            <div class="stat-number">>1000</div>
+                            <p>Компаний-партнеров</p>
+                        </div>
+                    </div>
+                    <div class="stat-wrapper">
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <p>Сертификация</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="stats-grid">
-                <div class="stat-wrapper">
-                    <div class="stat-item">
-                        <h3>19 лет</h3>
-                        <p>На рынке</p>
-                    </div>
-                </div>
-                <div class="stat-wrapper">
-                    <div class="stat-item">
-                        <h3>1000+</h3>
-                        <p>Станков с нашим ЧПУ</p>
-                    </div>
-                </div>
-                <div class="stat-wrapper">
-                    <div class="stat-item">
-                        <h3>>1000</h3>
-                        <p>Компаний-партнеров</p>
-                    </div>
-                </div>
-                <div class="stat-wrapper">
-                    <div class="stat-item">
-                        <h3>100%</h3>
-                        <p>Сертификация</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="model-section" id="model-section-wrapper">
-        <div class="container model-grid">
-            
-            <div class="model-text">
-                <h2 class="model-title">КАТАЛОГ<br><span>ТОВАРОВ</span></h2>
+        <section class="model-section" id="model-section-wrapper">
+            <div class="container model-grid">
                 
-                <div class="model-features">
-                    <div class="feature-item-wrapper expanded" data-group="1">
-                        <div class="feature-tag">CNC-11 TITANIUM</div>
-                        <div class="sub-features">
-                            <div class="sub-tabs">
-                                <div class="sub-tab active" data-index="0">LIGHT</div>
-                                <div class="sub-tab" data-index="1">DIGITAL</div>
-                            </div>
-                            <div class="model-specs active" data-index="0">
-                                <div class="spec-item">Количество осей: до 4-х (импульс/направление)</div>
-                                <div class="spec-item">Интерфейс: 10.4" TFT Промышленный</div>
-                                <div class="spec-item">Протоколы: Modbus, CAN</div>
-                                <div class="spec-item">Защита корпуса: IP65</div>
-                            </div>
-                            <div class="model-specs" data-index="1">
-                                <div class="spec-item">Количество осей: до 5-ти (EtherCAT)</div>
-                                <div class="spec-item">Интерфейс: 15" Сенсорный экран</div>
-                                <div class="spec-item">Процессор: 4-ядерный ARM</div>
-                                <div class="spec-item">Поддержка энкодеров: Абсолютные</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="feature-item-wrapper" data-group="2">
-                        <div class="feature-tag">CNC-11 TITANIUM MINI</div>
-                        <div class="sub-features">
-                            <div class="sub-tabs">
-                                <div class="sub-tab" data-index="2">LIGHT</div>
-                                <div class="sub-tab" data-index="3">DIGITAL</div>
-                            </div>
-                            <div class="model-specs" data-index="2">
-                                <div class="spec-item">Количество осей: до 3-х</div>
-                                <div class="spec-item">Исполнение: Компактный моноблок</div>
-                                <div class="spec-item">Экран: 8.4" Встроенный</div>
-                                <div class="spec-item">Питание: 24В DC (низкое потребление)</div>
-                            </div>
-                            <div class="model-specs" data-index="3">
-                                <div class="spec-item">Количество осей: до 4-х (EtherCAT)</div>
-                                <div class="spec-item">Габариты: Ультракомпактный корпус</div>
-                                <div class="spec-item">Цифровые входы/выходы: Расширяемые</div>
-                                <div class="spec-item">Маховик ручного управления: Поддерживается</div>
+                <div class="model-text">
+                    <h2 class="model-title">КАТАЛОГ<br><span>ТОВАРОВ</span></h2>
+                    
+                    <div class="model-features">
+                        <div class="feature-item-wrapper expanded" data-group="1">
+                            <div class="feature-tag">CNC-11 TITANIUM</div>
+                            <div class="sub-features">
+                                <div class="sub-tabs">
+                                    <div class="sub-tab active" data-index="0">LIGHT</div>
+                                    <div class="sub-tab" data-index="1">DIGITAL</div>
+                                </div>
+                                <div class="model-specs active" data-index="0">
+                                    <div class="spec-item">Количество осей: до 4-х (импульс/направление)</div>
+                                    <div class="spec-item">Интерфейс: 10.4" TFT Промышленный</div>
+                                    <div class="spec-item">Протоколы: Modbus, CAN</div>
+                                    <div class="spec-item">Защита корпуса: IP65</div>
+                                </div>
+                                <div class="model-specs" data-index="1">
+                                    <div class="spec-item">Количество осей: до 5-ти (EtherCAT)</div>
+                                    <div class="spec-item">Интерфейс: 15" Сенсорный экран</div>
+                                    <div class="spec-item">Процессор: 4-ядерный ARM</div>
+                                    <div class="spec-item">Поддержка энкодеров: Абсолютные</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="feature-item-wrapper" data-group="3">
-                        <div class="feature-tag">CNC-11 TITANIUM BASIC</div>
-                        <div class="sub-features">
-                            <div class="sub-tabs">
-                                <div class="sub-tab" data-index="4">LIGHT</div>
-                                <div class="sub-tab" data-index="5">DIGITAL</div>
-                            </div>
-                            <div class="model-specs" data-index="4">
-                                <div class="spec-item">Количество осей: 2-3 оси</div>
-                                <div class="spec-item">Назначение: Токарные и фрезерные станки</div>
-                                <div class="spec-item">Управление приводом: Аналоговое ±10В</div>
-                                <div class="spec-item">Панель оператора: Стандартная кнопочная</div>
-                            </div>
-                            <div class="model-specs" data-index="5">
-                                <div class="spec-item">Количество осей: до 4-х</div>
-                                <div class="spec-item">Шина управления: EtherCAT</div>
-                                <div class="spec-item">Скорость цикла ПЛК: от 1 мс</div>
-                                <div class="spec-item">Совместимость: Сервоприводы 3-го поколения</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="feature-item-wrapper" data-group="4">
-                        <div class="feature-tag">CNC-18 TITANIUM</div>
-                        <div class="sub-features">
-                            <div class="sub-tabs">
-                                <div class="sub-tab" data-index="6">LIGHT</div>
-                                <div class="sub-tab" data-index="7">DIGITAL</div>
-                            </div>
-                            <div class="model-specs" data-index="6">
-                                <div class="spec-item">Количество осей: до 8-ми</div>
-                                <div class="spec-item">Экран: 15" Multi-touch высокого разрешения</div>
-                                <div class="spec-item">Спец. функции: Наклонная плоскость, RTCP</div>
-                                <div class="spec-item">ПЛК: Встроенный высокоскоростной SoftPLC</div>
-                            </div>
-                            <div class="model-specs" data-index="7">
-                                <div class="spec-item">Количество осей: до 12-ти</div>
-                                <div class="spec-item">Шина: Раздельный высокоскоростной EtherCAT</div>
-                                <div class="spec-item">Макс. скорость обработки: до 100 м/мин</div>
-                                <div class="spec-item">Аналитика: Интеграция Индустрия 4.0 (OPC UA)</div>
+                        <div class="feature-item-wrapper" data-group="2">
+                            <div class="feature-tag">CNC-11 TITANIUM MINI</div>
+                            <div class="sub-features">
+                                <div class="sub-tabs">
+                                    <div class="sub-tab" data-index="2">LIGHT</div>
+                                    <div class="sub-tab" data-index="3">DIGITAL</div>
+                                </div>
+                                <div class="model-specs" data-index="2">
+                                    <div class="spec-item">Количество осей: до 3-х</div>
+                                    <div class="spec-item">Исполнение: Компактный моноблок</div>
+                                    <div class="spec-item">Экран: 8.4" Встроенный</div>
+                                    <div class="spec-item">Питание: 24В DC (низкое потребление)</div>
+                                </div>
+                                <div class="model-specs" data-index="3">
+                                    <div class="spec-item">Количество осей: до 4-х (EtherCAT)</div>
+                                    <div class="spec-item">Габариты: Ультракомпактный корпус</div>
+                                    <div class="spec-item">Цифровые входы/выходы: Расширяемые</div>
+                                    <div class="spec-item">Маховик ручного управления: Поддерживается</div>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="feature-item-wrapper" data-group="3">
+                            <div class="feature-tag">CNC-11 TITANIUM BASIC</div>
+                            <div class="sub-features">
+                                <div class="sub-tabs">
+                                    <div class="sub-tab" data-index="4">LIGHT</div>
+                                    <div class="sub-tab" data-index="5">DIGITAL</div>
+                                </div>
+                                <div class="model-specs" data-index="4">
+                                    <div class="spec-item">Количество осей: 2-3 оси</div>
+                                    <div class="spec-item">Назначение: Токарные и фрезерные станки</div>
+                                    <div class="spec-item">Управление приводом: Аналоговое ±10В</div>
+                                    <div class="spec-item">Панель оператора: Стандартная кнопочная</div>
+                                </div>
+                                <div class="model-specs" data-index="5">
+                                    <div class="spec-item">Количество осей: до 4-х</div>
+                                    <div class="spec-item">Шина управления: EtherCAT</div>
+                                    <div class="spec-item">Скорость цикла ПЛК: от 1 мс</div>
+                                    <div class="spec-item">Совместимость: Сервоприводы 3-го поколения</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-item-wrapper" data-group="4">
+                            <div class="feature-tag">CNC-18 TITANIUM</div>
+                            <div class="sub-features">
+                                <div class="sub-tabs">
+                                    <div class="sub-tab" data-index="6">LIGHT</div>
+                                    <div class="sub-tab" data-index="7">DIGITAL</div>
+                                </div>
+                                <div class="model-specs" data-index="6">
+                                    <div class="spec-item">Количество осей: до 8-ми</div>
+                                    <div class="spec-item">Экран: 15" Multi-touch высокого разрешения</div>
+                                    <div class="spec-item">Спец. функции: Наклонная плоскость, RTCP</div>
+                                    <div class="spec-item">ПЛК: Встроенный высокоскоростной SoftPLC</div>
+                                </div>
+                                <div class="model-specs" data-index="7">
+                                    <div class="spec-item">Количество осей: до 12-ти</div>
+                                    <div class="spec-item">Шина: Раздельный высокоскоростной EtherCAT</div>
+                                    <div class="spec-item">Макс. скорость обработки: до 100 м/мин</div>
+                                    <div class="spec-item">Аналитика: Интеграция Индустрия 4.0 (OPC UA)</div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-
-                </div>
-            </div>
-            
-            <div class="model-viewer-container" id="mainModelContainer">
-                <div class="model-viewer-wrapper" id="modelWrapper">
-                    <div class="model-arrow left-arrow" id="prevModel">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    </div>
-                    <div class="model-arrow right-arrow" id="nextModel">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-
-                    <div class="model-box">
-                        <model-viewer 
-                            id="cncModel"
-                            src="чпу.glb" 
-                            poster="image_c63bc3.png"
-                            alt="3D модель ЧПУ панели" 
-                            camera-controls
-                            camera-orbit="0deg 80deg auto"
-                            min-camera-orbit="-35deg 60deg auto"
-                            max-camera-orbit="35deg 100deg auto"
-                            interaction-prompt="none"
-                            disable-zoom
-                            disable-pan
-                            loading="eager"
-                            style="touch-action: pan-y;">
-                        </model-viewer>
-                    </div>
-                </div>
-
-                <div class="cnc-description-wrapper">
-                    <p class="cnc-desc active" data-desc-index="0"><strong>TITANIUM LIGHT:</strong> Оптимальное решение для базовых задач. Высокая надежность и интуитивно понятный интерфейс обеспечивают стабильную работу оборудования.</p>
-                    <p class="cnc-desc" data-desc-index="1"><strong>TITANIUM DIGITAL:</strong> Продвинутая цифровая система для сложных производств. Обеспечивает максимальную точность и поддерживает интеграцию с современными промышленными сетями.</p>
-                    <p class="cnc-desc" data-desc-index="2"><strong>TITANIUM MINI LIGHT:</strong> Компактная версия без компромиссов в функционале. Идеально подходит для станков с ограниченным пространством установки.</p>
-                    <p class="cnc-desc" data-desc-index="3"><strong>TITANIUM MINI DIGITAL:</strong> Мощь цифровых технологий в миниатюрном корпусе. Быстрый отклик и поддержка EtherCAT делают её лидером в своем классе.</p>
-                    <p class="cnc-desc" data-desc-index="4"><strong>TITANIUM BASIC LIGHT:</strong> Экономичное и надежное решение. Проверенная временем архитектура гарантирует бесперебойную работу годами.</p>
-                    <p class="cnc-desc" data-desc-index="5"><strong>TITANIUM BASIC DIGITAL:</strong> Сочетание базовой надежности и современных цифровых возможностей. Полный контроль и гибкость настроек для любых задач.</p>
-                    <p class="cnc-desc" data-desc-index="6"><strong>CNC-18 TITANIUM LIGHT:</strong> Новое поколение производительности. Расширенная поддержка многоосевых систем для крупного машиностроения.</p>
-                    <p class="cnc-desc" data-desc-index="7"><strong>CNC-18 TITANIUM DIGITAL:</strong> Абсолютный флагман линейки. Встроенная аналитика и максимальная вычислительная мощность для Индустрии 4.0.</p>
-                </div>
-
-                <a href="#support-section" class="btn btn-glow-center anim-element">Оставить заявку на покупку</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="service-section">
-        <div class="container">
-            <div class="service-header">
-                <div>
-                    <h2>Услуги и сервис</h2>
-                    <p>Процесс изготовления любой продукции выгодно отличается благодаря аттестованным специалистам и современному оборудованию.</p>
-                </div>
-            </div>
-            <div class="service-grid">
-                <div class="service-item anim-element">
-                    <h4>Проектирование</h4>
-                    <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                 </div>
                 
-                <a href="#partner-block" class="service-item special-partner anim-element">
-                    <h4>Партнерская программа<br>для модернизаторщиков</h4>
-                    <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе.</p>
+                <div class="model-viewer-container" id="mainModelContainer">
+                    <div class="model-viewer-wrapper" id="modelWrapper">
+                        <div class="model-arrow left-arrow" id="prevModel">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </div>
+                        <div class="model-arrow right-arrow" id="nextModel">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+
+                        <div class="model-box">
+                            <model-viewer 
+                                id="cncModel"
+                                src="чпу.glb" 
+                                poster="image_c63bc3.png"
+                                alt="3D модель ЧПУ панели" 
+                                camera-controls
+                                camera-orbit="0deg 80deg auto"
+                                min-camera-orbit="-35deg 60deg auto"
+                                max-camera-orbit="35deg 100deg auto"
+                                interaction-prompt="none"
+                                disable-zoom
+                                disable-pan
+                                loading="eager"
+                                style="touch-action: pan-y;">
+                            </model-viewer>
+                        </div>
+                    </div>
+
+                    <div class="cnc-description-wrapper">
+                        <p class="cnc-desc active" data-desc-index="0"><strong>TITANIUM LIGHT:</strong> Оптимальное решение для базовых задач. Высокая надежность и интуитивно понятный интерфейс обеспечивают стабильную работу оборудования.</p>
+                        <p class="cnc-desc" data-desc-index="1"><strong>TITANIUM DIGITAL:</strong> Продвинутая цифровая система для сложных производств. Обеспечивает максимальную точность и поддерживает интеграцию с современными промышленными сетями.</p>
+                        <p class="cnc-desc" data-desc-index="2"><strong>TITANIUM MINI LIGHT:</strong> Компактная версия без компромиссов в функционале. Идеально подходит для станков с ограниченным пространством установки.</p>
+                        <p class="cnc-desc" data-desc-index="3"><strong>TITANIUM MINI DIGITAL:</strong> Мощь цифровых технологий в миниатюрном корпусе. Быстрый отклик и поддержка EtherCAT делают её лидером в своем классе.</p>
+                        <p class="cnc-desc" data-desc-index="4"><strong>TITANIUM BASIC LIGHT:</strong> Экономичное и надежное решение. Проверенная временем архитектура гарантирует бесперебойную работу годами.</p>
+                        <p class="cnc-desc" data-desc-index="5"><strong>TITANIUM BASIC DIGITAL:</strong> Сочетание базовой надежности и современных цифровых возможностей. Полный контроль и гибкость настроек для любых задач.</p>
+                        <p class="cnc-desc" data-desc-index="6"><strong>CNC-18 TITANIUM LIGHT:</strong> Новое поколение производительности. Расширенная поддержка многоосевых систем для крупного машиностроения.</p>
+                        <p class="cnc-desc" data-desc-index="7"><strong>CNC-18 TITANIUM DIGITAL:</strong> Абсолютный флагман линейки. Встроенная аналитика и максимальная вычислительная мощность для Индустрии 4.0.</p>
+                    </div>
+
+                    <a href="#support-section" class="btn btn-glow-center anim-element">Оставить заявку на покупку</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="service-section">
+            <div class="container">
+                <div class="service-header">
+                    <div>
+                        <h2>Услуги и сервис</h2>
+                        <p>Процесс изготовления любой продукции выгодно отличается благодаря аттестованным специалистам и современному оборудованию.</p>
+                    </div>
+                </div>
+                <div class="service-grid">
+                    <div class="service-item anim-element">
+                        <!-- 4.2. Иерархия заголовков: h4 заменен на h3 -->
+                        <h3>Проектирование</h3>
+                        <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
+                    </div>
+                    
+                    <a href="#partner-block" class="service-item special-partner anim-element">
+                        <h3>Партнерская программа<br>для модернизаторщиков</h3>
+                        <p>Масштабируйте свой бизнес вместе с ТД НЭТ! Эксклюзивные дилерские скидки на системы ЧПУ, передача готовых заказов в вашем регионе.</p>
+                    </a>
+                    
+                    <div class="service-item anim-element">
+                        <h3>Пусконаладка</h3>
+                        <p>Профессиональный ввод станков в эксплуатацию силами квалифицированных инженеров.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="warranty-section">
+            <div class="container warranty-wrapper">
+                
+                <div class="warranty-box">
+                    <div class="warranty-text">
+                        <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Стандарты качества</p>
+                        <h2>Сертификация и Гарантия до 2х лет</h2>
+                        <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Вся изготавливаемая продукция сопровождается сертификатами соответствия. Паспорта качества имеют защитную голограмму и содержат полную информацию по эксплуатации.</p>
+                        <a href="docs.html" class="btn">ПОДРОБНЕЕ</a>
+                    </div>
+                </div>
+
+                <div class="warranty-box minprom">
+                    <div class="warranty-text">
+                        <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Импортозамещение</p>
+                        <h2>МЫ В РЕЕСТРЕ МИНПРОМТОРГА</h2>
+                        <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Производимое нами оборудование полностью соответствует требованиям 719 постановления о подтверждении производства промышленной продукции на территории РФ (о «российскости»).</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="partner-block" class="partner-cta-section">
+            <div class="container partner-cta-content anim-element">
+                <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">B2B Сотрудничество</p>
+                <h2>ПРИГЛАШАЕМ К СОТРУДНИЧЕСТВУ<br>КОМПАНИИ ПО МОДЕРНИЗАЦИИ СТАНКОВ</h2>
+                <p>Мы ищем надежных партнеров для совместной реализации проектов по всей России. Получите статус официального интегратора систем ЧПУ TITANIUM, специальные коммерческие условия и стабильный поток горячих заявок от наших клиентов.</p>
+                <a href="partner.html" class="btn">Узнать условия программы</a>
+            </div>
+        </section>
+
+        <section class="delivery-section">
+            <div class="container delivery-content">
+                <div class="anim-element">
+                    <h2>Доставка по РФ и СНГ</h2>
+                    <p style="margin-bottom: 35px; font-size: 1.1rem; color: var(--text-body);">Осуществляем поставку комплектующих и готовых систем ЧПУ проверенными логистическими партнерами.</p>
+                    <div class="logistics-logos">
+                        <div class="logo-box">СДЭК</div>
+                        <div class="logo-box">Деловые Линии</div>
+                    </div>
+                </div>
+                
+                <a href="https://yandex.ru/maps/?rtext=~47.094595,39.432650" target="_blank" class="map-link-wrapper anim-element">
+                    <iframe src="https://yandex.ru/map-widget/v1/?ll=39.432650,47.094595&z=16&pt=39.432650,47.094595~pm2rdm" allowfullscreen="true"></iframe>
+                    <div class="map-overlay">
+                        <span>Проложить маршрут</span>
+                    </div>
                 </a>
+            </div>
+        </section>
+
+        <section class="cta-section" id="support-section">
+            <div class="container cta-grid">
+                <div class="cta-text anim-element">
+                    <h2>ОСТАВИТЬ ЗАЯВКУ НА ПОКУПКУ</h2>
+                    <p>Заполните форму ниже для оформления заказа. Наш менеджер свяжется с вами для уточнения всех деталей и составления КП.</p>
+                </div>
                 
-                <div class="service-item anim-element">
-                    <h4>Пусконаладка</h4>
-                    <p>Профессиональный ввод станков в эксплуатацию силами квалифицированных инженеров.</p>
+                <div class="anim-element">
+                    <form class="cta-form" id="consultationForm">
+                        <input type="hidden" name="_subject" value="Новая заявка с сайта ТД НЭТ">
+                        <input type="hidden" name="_captcha" value="false">
+                        
+                        <input type="text" name="Имя" id="consultName" placeholder="Ваше имя" required>
+                        <input type="tel" name="Телефон" id="consultPhone" placeholder="+7 (000) 000-00-00" required>
+                        <input type="email" name="Email" id="consultEmail" placeholder="Ваш Email" required>
+                        <input type="text" name="Система" id="consultSystem" placeholder="Какую систему хотите заказать?" required>
+                        
+                        <div class="form-group">
+                            <label>Антиспам-проверка</label>
+                            <input type="text" id="consultSpam" placeholder="Количество букв в адресе chpu.net?" required style="margin-bottom: 0;">
+                            <div class="form-error" id="consultError">Ошибка: Неверное количество букв! Подсказка: их 7.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="margin-top: 10px;">Оставить заявку</button>
+                    </form>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <section class="warranty-section">
-        <div class="container warranty-wrapper">
-            
-            <div class="warranty-box">
-                <div class="warranty-text">
-                    <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Стандарты качества</p>
-                    <h2>Сертификация и Гарантия до 2х лет</h2>
-                    <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Вся изготавливаемая продукция сопровождается сертификатами соответствия. Паспорта качества имеют защитную голограмму и содержат полную информацию по эксплуатации.</p>
-                    <a href="docs.html" class="btn">ПОДРОБНЕЕ</a>
-                </div>
-            </div>
-
-            <div class="warranty-box minprom">
-                <div class="warranty-text">
-                    <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 0.85rem;">Импортозамещение</p>
-                    <h2>МЫ В РЕЕСТРЕ МИНПРОМТОРГА</h2>
-                    <p style="margin-bottom: 25px; color: var(--text-body); font-size: 1.05rem;">Производимое нами оборудование полностью соответствует требованиям 719 постановления о подтверждении производства промышленной продукции на территории РФ (о «российскости»).</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="partner-block" class="partner-cta-section">
-        <div class="container partner-cta-content anim-element">
-            <p style="color: var(--primary-orange); font-family: 'Benzin', sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; font-size: 0.85rem;">B2B Сотрудничество</p>
-            <h2>ПРИГЛАШАЕМ К СОТРУДНИЧЕСТВУ<br>КОМПАНИИ ПО МОДЕРНИЗАЦИИ СТАНКОВ</h2>
-            <p>Мы ищем надежных партнеров для совместной реализации проектов по всей России. Получите статус официального интегратора систем ЧПУ TITANIUM, специальные коммерческие условия и стабильный поток горячих заявок от наших клиентов.</p>
-            <a href="partner.html" class="btn">Узнать условия программы</a>
-        </div>
-    </section>
-
-    <section class="delivery-section">
-        <div class="container delivery-content">
-            <div class="anim-element">
-                <h2>Доставка по РФ и СНГ</h2>
-                <p style="margin-bottom: 35px; font-size: 1.1rem; color: var(--text-body);">Осуществляем поставку комплектующих и готовых систем ЧПУ проверенными логистическими партнерами.</p>
-                <div class="logistics-logos">
-                    <div class="logo-box">СДЭК</div>
-                    <div class="logo-box">Деловые Линии</div>
-                </div>
-            </div>
-            
-            <a href="https://yandex.ru/maps/?rtext=~47.094595,39.432650" target="_blank" class="map-link-wrapper anim-element">
-                <iframe src="https://yandex.ru/map-widget/v1/?ll=39.432650,47.094595&z=16&pt=39.432650,47.094595~pm2rdm" allowfullscreen="true"></iframe>
-                <div class="map-overlay">
-                    <span>Проложить маршрут</span>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <section class="cta-section" id="support-section">
-        <div class="container cta-grid">
-            <div class="cta-text anim-element">
-                <h2>ОСТАВИТЬ ЗАЯВКУ НА ПОКУПКУ</h2>
-                <p>Заполните форму ниже для оформления заказа. Наш менеджер свяжется с вами для уточнения всех деталей и составления КП.</p>
-            </div>
-            
-            <div class="anim-element">
-                <form class="cta-form" id="consultationForm">
-                    <input type="hidden" name="_subject" value="Новая заявка с сайта ТД НЭТ">
-                    <input type="hidden" name="_captcha" value="false">
-                    
-                    <input type="text" name="Имя" id="consultName" placeholder="Ваше имя" required>
-                    <input type="tel" name="Телефон" id="consultPhone" placeholder="+7 (000) 000-00-00" required>
-                    <input type="email" name="Email" id="consultEmail" placeholder="Ваш Email" required>
-                    <input type="text" name="Система" id="consultSystem" placeholder="Какую систему хотите заказать?" required>
-                    
-                    <div class="form-group">
-                        <label>Антиспам-проверка</label>
-                        <input type="text" id="consultSpam" placeholder="Количество букв в адресе chpu.net?" required style="margin-bottom: 0;">
-                        <div class="form-error" id="consultError">Ошибка: Неверное количество букв! Подсказка: их 7.</div>
-                    </div>
-                    
-                    <button type="submit" class="btn" style="margin-top: 10px;">Оставить заявку</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- ИЗМЕНЕНИЕ: Ссылки на социальные сети обновлены в подвале -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "ООО «Торговый Дом Новые Электронные Технологии»",
-      "alternateName": "ТД НЭТ",
-      "url": "https://chpu.net/",
-      "logo": "https://chpu.net/logo.png",
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+7-918-558-22-99",
-          "contactType": "sales",
-          "contactOption": "TollFree",
-          "areaServed": "RU",
-          "availableLanguage": "Russian"
-        },
-        {
-          "@type": "ContactPoint",
-          "telephone": "+7-918-580-21-94",
-          "contactType": "sales",
-          "areaServed": "RU",
-          "availableLanguage": "Russian"
-        }
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Промышленная улица, 2",
-        "addressLocality": "Азов",
-        "addressRegion": "Ростовская область",
-        "postalCode": "346780",
-        "addressCountry": "RU"
-      }
-    }
-    </script>
     <footer>
         <div class="container">
             <div class="footer-grid">
