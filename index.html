@@ -3,15 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ТД НЭТ | Системы ЧПУ и Комплектующие</title>
     
+    <!-- СЕО ОПТИМИЗАЦИЯ -->
+    <title>ТД НЭТ | Системы ЧПУ и комплектующие от российского производителя</title>
+    <meta name="description" content="Производство и продажа систем числового программного управления (ЧПУ) TITANIUM. Комплексное оснащение и модернизация станков от ТД НЭТ. Гарантия до 2 лет, в реестре Минпромторга.">
+    <meta name="keywords" content="ЧПУ, системы ЧПУ, купить ЧПУ, российский производитель ЧПУ, модернизация станков, ТД НЭТ, CNC TITANIUM, ЧПУ для фрезерного станка, ЧПУ для токарного станка">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://chpu.net/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chpu.net/">
+    <meta property="og:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
+    <meta property="og:description" content="Российский производитель систем числового программного управления TITANIUM. Модернизация станков, гарантия 2 года.">
+    <meta property="og:site_name" content="ТД НЭТ">
+    <meta property="og:locale" content="ru_RU">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
+    <meta name="twitter:description" content="Российский производитель систем числового программного управления TITANIUM. Модернизация станков, гарантия 2 года.">
+
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
+    
+    <!-- ОПТИМИЗАЦИЯ ПРОИЗВОДИТЕЛЬНОСТИ: Оставляем предзагрузку только первой модели, чтобы не вешать слабые ПК -->
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="titanium monitor 3d model.glb" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ООО «Торговый Дом Новые Электронные Технологии»",
+      "alternateName": "ТД НЭТ",
+      "url": "https://chpu.net/",
+      "logo": "https://chpu.net/logo.png",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+7-918-558-22-99",
+          "contactType": "sales",
+          "contactOption": "TollFree",
+          "areaServed": "RU",
+          "availableLanguage": "Russian"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+7-918-580-21-94",
+          "contactType": "sales",
+          "areaServed": "RU",
+          "availableLanguage": "Russian"
+        }
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Промышленная улица, 2",
+        "addressLocality": "Азов",
+        "addressRegion": "Ростовская область",
+        "postalCode": "346780",
+        "addressCountry": "RU"
+      }
+    }
+    </script>
 
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
@@ -128,12 +180,11 @@
 
         model-viewer { 
             width: 100%; height: 100%; background-color: transparent; --poster-color: transparent; cursor: grab; 
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out; 
-            transform: translate3d(0, 0, 0); opacity: 1; 
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; 
+            transform: scale(1); opacity: 1; 
         }
         model-viewer:active { cursor: grabbing; }
-        model-viewer.slide-down { transform: translate3d(0, 100%, 0); opacity: 0; }
-        model-viewer.snap-top { transition: none !important; transform: translate3d(0, -100%, 0); opacity: 0; }
+        model-viewer.model-hidden { opacity: 0; transform: scale(0.96); }
 
         .btn-glow-center { display: inline-block; margin-top: 30px; padding: 16px 40px; font-size: 1rem; box-shadow: 0 0 15px rgba(255, 107, 0, 0.4); border: 1px solid var(--primary-orange); }
         .btn-glow-center:hover { box-shadow: 0 0 30px rgba(255, 107, 0, 0.8); transform: translateY(-2px) scale(1.02); }
@@ -467,6 +518,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
 
+                    <!-- ОПТИМИЗАЦИЯ: Добавлен атрибут loading="lazy" -->
                     <div class="model-box">
                         <model-viewer 
                             id="cncModel"
@@ -480,7 +532,7 @@
                             interaction-prompt="none"
                             disable-zoom
                             disable-pan
-                            loading="eager"
+                            loading="lazy"
                             style="touch-action: pan-y;">
                         </model-viewer>
                     </div>
@@ -716,6 +768,9 @@
             let isDragging = false; 
             let isSectionInView = false; 
 
+            // ОПТИМИЗАЦИЯ: Флаг для контроля рендеринга 3D-математики
+            let isRendering = false;
+
             function startAutoSwitch() {
                 clearInterval(autoSwitchTimer);
                 if (!isSectionInView) return; 
@@ -745,11 +800,16 @@
                 modelSection.addEventListener('click', resetInteractionTimer);
                 modelSection.addEventListener('mouseleave', resetInteractionTimer);
 
+                // ОПТИМИЗАЦИЯ: Умный наблюдатель за экраном. Отключает 3D вычисления когда блок не видно!
                 const visibilityObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         isSectionInView = entry.isIntersecting;
                         if (isSectionInView) {
                             startAutoSwitch();
+                            if (!isRendering && modelViewer) {
+                                isRendering = true;
+                                requestAnimationFrame(renderLoop);
+                            }
                         } else {
                             clearInterval(autoSwitchTimer);
                             clearTimeout(interactionTimeout);
@@ -833,18 +893,18 @@
                     parentWrapper.appendChild(mainModelContainer);
                 }
 
-                modelViewer.classList.add('slide-down');
+                modelViewer.classList.add('model-hidden');
 
                 clearTimeout(switchTimeout);
                 switchTimeout = setTimeout(() => {
-                    modelViewer.classList.add('snap-top');
-                    modelViewer.classList.remove('slide-down');
-                    
                     modelViewer.src = modelsArray[index];
-                    void modelViewer.offsetWidth;
-
-                    modelViewer.classList.remove('snap-top');
-                }, 500); 
+                    
+                    // ОПТИМИЗАЦИЯ: Ждем готовности модели, чтобы не фризило страницу
+                    modelViewer.addEventListener('load', function onLoad() {
+                        modelViewer.classList.remove('model-hidden');
+                        modelViewer.removeEventListener('load', onLoad);
+                    }, { once: true });
+                }, 400); 
             }
 
             function lockHover() {
@@ -904,69 +964,52 @@
                 if (window.innerWidth > 992) lockHover();
             });
 
-            if (modelViewer) {
-                let currentX = 0; let currentY = 0; let targetX = 0; let targetY = 0;
-                let autoDir = 1; let isHovering = false;
-                let cursorIdleTimer;
-                let isCursorIdle = false;
+            let currentX = 0; let currentY = 0; let targetX = 0; let targetY = 0;
+            let autoDir = 1; let isHovering = false;
+            let cursorIdleTimer;
+            let isCursorIdle = false;
 
-                modelViewer.addEventListener('pointerdown', () => isDragging = true);
-                window.addEventListener('pointerup', () => isDragging = false);
-
-                if (modelSection) {
-                    modelSection.addEventListener('mousemove', (e) => {
-                        isHovering = true;
-                        
-                        isCursorIdle = false;
-                        clearTimeout(cursorIdleTimer);
-                        cursorIdleTimer = setTimeout(() => { isCursorIdle = true; }, 2000);
-
-                        if (isDragging) return; 
-                        const rect = modelSection.getBoundingClientRect();
-                        targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-                        targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-                    });
-
-                    modelSection.addEventListener('mouseleave', () => {
-                        isHovering = false;
-                        isCursorIdle = true; 
-                        clearTimeout(cursorIdleTimer);
-                        if (isDragging) return;
-                    });
+            function renderLoop() {
+                // ОПТИМИЗАЦИЯ: Если блок ЧПУ вне поля зрения, отключаем вычисления!
+                if (!isSectionInView) {
+                    isRendering = false;
+                    return; 
                 }
 
-                function renderLoop() {
-                    if (isDragging) {
-                        const orbit = modelViewer.getCameraOrbit();
-                        currentX = (orbit.theta * 180 / Math.PI) / 70;
-                        currentY = ((orbit.phi * 180 / Math.PI) - 80) / 20;
-                        let clampedX = Math.max(-1, Math.min(1, currentX));
-                        targetX = currentX; targetY = currentY;
-                        autoDir = currentX > 0 ? -1 : 1; 
-                    } else if (isHovering && !isCursorIdle) {
-                        currentX += (targetX - currentX) * 0.15;
-                        currentY += (targetY - currentY) * 0.15;
-                        modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
-                    } else {
-                        currentX += 0.004 * autoDir; 
-                        
-                        if (currentX >= 1) { 
-                            currentX = 1; 
-                            autoDir = -1; 
-                        } else if (currentX <= -1) { 
-                            currentX = -1; 
-                            autoDir = 1; 
-                        }
-                        
-                        targetY = 0;
-                        currentY += (targetY - currentY) * 0.05;
-
-                        modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
-                        targetX = currentX; 
+                if (isDragging) {
+                    const orbit = modelViewer.getCameraOrbit();
+                    currentX = (orbit.theta * 180 / Math.PI) / 70;
+                    currentY = ((orbit.phi * 180 / Math.PI) - 80) / 20;
+                    let clampedX = Math.max(-1, Math.min(1, currentX));
+                    targetX = currentX; targetY = currentY;
+                    autoDir = currentX > 0 ? -1 : 1; 
+                } else if (isHovering && !isCursorIdle) {
+                    currentX += (targetX - currentX) * 0.15;
+                    currentY += (targetY - currentY) * 0.15;
+                    modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
+                } else {
+                    currentX += 0.004 * autoDir; 
+                    
+                    if (currentX >= 1) { 
+                        currentX = 1; 
+                        autoDir = -1; 
+                    } else if (currentX <= -1) { 
+                        currentX = -1; 
+                        autoDir = 1; 
                     }
-                    requestAnimationFrame(renderLoop);
+                    
+                    targetY = 0;
+                    currentY += (targetY - currentY) * 0.05;
+
+                    modelViewer.cameraOrbit = `${currentX * 70}deg ${80 + currentY * 20}deg auto`;
+                    targetX = currentX; 
                 }
                 requestAnimationFrame(renderLoop);
+            }
+
+            if (modelViewer) {
+                modelViewer.addEventListener('pointerdown', () => isDragging = true);
+                window.addEventListener('pointerup', () => isDragging = false);
             }
         });
     </script>
