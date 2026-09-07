@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- СЕО ОПТИМИЗАЦИЯ: Мета-теги для поисковиков -->
     <title>ТД НЭТ | Системы ЧПУ и комплектующие от российского производителя</title>
     <meta name="description" content="Производство и продажа систем числового программного управления (ЧПУ) TITANIUM. Комплексное оснащение и модернизация станков от ТД НЭТ. Гарантия до 2 лет, в реестре Минпромторга.">
     <meta name="keywords" content="ЧПУ, системы ЧПУ, купить ЧПУ, российский производитель ЧПУ, модернизация станков, ТД НЭТ, CNC TITANIUM, ЧПУ для фрезерного станка, ЧПУ для токарного станка">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://chpu.net/">
 
+    <!-- СЕО ОПТИМИЗАЦИЯ: Open Graph для красивых ссылок в соцсетях и мессенджерах -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chpu.net/">
     <meta property="og:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
@@ -17,6 +19,7 @@
     <meta property="og:site_name" content="ТД НЭТ">
     <meta property="og:locale" content="ru_RU">
     
+    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
     <meta name="twitter:description" content="Российский производитель систем числового программного управления TITANIUM. Модернизация станков, гарантия 2 года.">
@@ -29,6 +32,7 @@
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
+    <!-- СЕО ОПТИМИЗАЦИЯ: Микроразметка Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -113,6 +117,7 @@
         .hero-section.visible .hero-desc-group { opacity: 1; transform: translate3d(0, 0, 0); transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, opacity 1.5s ease-out 0.6s; }
         .hero-desc-group p { color: var(--text-body); font-size: 1.1rem; margin-bottom: 20px; }
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        
         .stat-wrapper { display: flex; opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; will-change: transform, opacity; }
         .stat-wrapper:nth-child(1) { transform: translate3d(-30%, -30%, 0) scale(0.4); }
         .stat-wrapper:nth-child(2) { transform: translate3d(30%, -30%, 0) scale(0.4); }
@@ -242,8 +247,6 @@
         .cta-form input:focus { outline: none; border-color: var(--primary-orange); }
         .form-group { display: flex; flex-direction: column; gap: 8px; text-align: left; }
         .form-group label { font-weight: 700; font-size: 0.95rem; color: #fff; }
-        
-        /* УБРАНА ПОДСКАЗКА ИЗ ТЕКСТА ОШИБКИ */
         .form-error { color: #ff4d4d; font-size: 0.85rem; font-weight: 600; margin-top: -5px; display: none; }
 
         footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -384,8 +387,8 @@
                         <h1>Производитель и поставщик инновационного отечественного ЧПУ</h1>
                     </div>
                     <div class="hero-desc-group">
-                        <p>Мы — передовая компания-изготовитель в России по разработке систем числового программного управления и комплексному оснащению станкового оборудования.</p>
-                        <p>С 2007 года мы предлагаем рынку новые решения, участвуем в промышленных выставках и опережаем конкурентов благодаря собственному конструкторскому отделу и строгим стандартам качества.</p>
+                        <p>Мы — российский разработчик и производитель систем числового программного управления (ЧПУ) и промышленной электроники.</p>
+                        <p>С 2007 года мы занимаемся производством, комплексным оснащением и поставкой систем ЧПУ для станкостроительных заводов, крупных производств, малого и среднего бизнеса.</p>
                     </div>
                 </div>
                 <div class="stats-grid">
@@ -563,7 +566,10 @@
                 <div class="service-header">
                     <div>
                         <h2>Услуги и сервис</h2>
-                        <p>Процесс изготовления любой продукции выгодно отличается благодаря аттестованным специалистам и современному оборудованию.</p>
+                        
+                        <!-- ИЗМЕНЕНИЕ: Обновлен текст описания блока услуг -->
+                        <p>Помимо производства и поставки ЧПУ систем, мы также предоставляем серию услуг, нацеленных на максимальную эффективность работы вашего оборудования.</p>
+                        
                     </div>
                 </div>
                 <div class="service-grid">
@@ -657,8 +663,6 @@
                         <div class="form-group">
                             <label>Антиспам-проверка</label>
                             <input type="text" id="consultSpam" placeholder="Количество букв в адресе chpu.net?" required style="margin-bottom: 0;">
-                            
-                            <!-- ИСПРАВЛЕНИЕ: Убрана подсказка -->
                             <div class="form-error" id="consultError">Ошибка: Неверное количество букв!</div>
                         </div>
                         
@@ -722,7 +726,6 @@
 
                     const spamAnswer = consultSpam.value.trim().toLowerCase();
                     
-                    // ИСПРАВЛЕНИЕ: Логика проверки на 7
                     if (spamAnswer !== '7' && spamAnswer !== 'семь') {
                         consultError.style.display = 'block';
                         consultSpam.style.borderColor = '#ff4d4d';
