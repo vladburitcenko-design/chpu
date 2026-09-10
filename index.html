@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- СЕО ОПТИМИЗАЦИЯ: Мета-теги для поисковиков -->
     <title>ТД НЭТ | Системы ЧПУ и комплектующие от российского производителя</title>
     <meta name="description" content="Производство и продажа систем числового программного управления (ЧПУ) TITANIUM. Комплексное оснащение и модернизация станков от ТД НЭТ. Гарантия до 2 лет, в реестре Минпромторга.">
     <meta name="keywords" content="ЧПУ, системы ЧПУ, купить ЧПУ, российский производитель ЧПУ, модернизация станков, ТД НЭТ, CNC TITANIUM, ЧПУ для фрезерного станка, ЧПУ для токарного станка">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://chpu.net/">
 
-    <!-- СЕО ОПТИМИЗАЦИЯ: Open Graph для красивых ссылок в соцсетях и мессенджерах -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chpu.net/">
     <meta property="og:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
@@ -19,7 +17,6 @@
     <meta property="og:site_name" content="ТД НЭТ">
     <meta property="og:locale" content="ru_RU">
     
-    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
     <meta name="twitter:description" content="Российский производитель систем числового программного управления TITANIUM. Модернизация станков, гарантия 2 года.">
@@ -32,7 +29,6 @@
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- СЕО ОПТИМИЗАЦИЯ: Микроразметка Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -100,6 +96,16 @@
         .header-nav { display: flex; gap: 25px; align-items: center; margin-right: 20px; }
         .nav-link { color: var(--text-light); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s ease; }
         .nav-link:hover { color: var(--primary-orange); }
+
+        /* Стили выпадающего меню */
+        .nav-dropdown { position: relative; display: flex; align-items: center; padding: 15px 0; cursor: pointer; }
+        .nav-dropdown::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 15px; } 
+        .dropdown-content { display: none; position: absolute; background-color: #1a1d21; min-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); z-index: 200; border-radius: 6px; top: 100%; left: 0; border: 1px solid var(--primary-orange); overflow: hidden; }
+        .dropdown-content a { color: var(--text-light); padding: 14px 20px; text-decoration: none; display: block; font-size: 0.85rem; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; line-height: 1.4; text-transform: none; letter-spacing: normal; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: var(--primary-orange); color: #ffffff; padding-left: 25px; }
+        .nav-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         .header-buttons { display: flex; align-items: center; gap: 10px; }
         header { background-color: #1a1d21; color: var(--text-light); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--primary-orange); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
@@ -367,7 +373,14 @@
             
             <div style="display: flex; align-items: center;">
                 <nav class="header-nav">
-                    <a href="docs.html" class="nav-link">Документация</a>
+                    <div class="nav-dropdown">
+                        <span class="nav-link" style="display: flex; align-items: center; gap: 6px;">Документация <span style="font-size: 0.6rem;">▼</span></span>
+                        <div class="dropdown-content">
+                            <a href="policy.html">Политика в отношении персональных данных</a>
+                            <a href="oferta.html">Оферта и политика конфиденциальности</a>
+                            <a href="docs.html">Документация</a>
+                        </div>
+                    </div>
                     <a href="partner.html" class="nav-link">Партнерская программа</a>
                 </nav>
                 <div class="header-buttons">
@@ -575,7 +588,7 @@
                         <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                     </div>
                     
-                    <a href="#partner-block" class="service-item special-partner anim-element">
+                    <a href="partner.html" class="service-item special-partner anim-element">
                         <h3>ОТДАЕМ СВОИ ЗАКАЗЫ ПО МОДЕРНИЗАЦИИ<br>НАШИМ ПАРТНЕРАМ</h3>
                         <p>К нам регулярно обращаются компании большого, среднего и малого сегментов бизнеса. И мы передаем их своим партнерам. Кликните на блок, чтобы узнать как стать нашим партнером.</p>
                     </a>
@@ -663,7 +676,7 @@
                             <div class="form-error" id="consultError">Ошибка: Неверное количество букв!</div>
                         </div>
                         
-                        <button type="submit" class="btn" style="margin-top: 10px;">Оставить заявку</button>
+                        <button type="submit" class="btn" style="margin-top: 10px;">Отправить заявку</button>
                         <p class="form-disclaimer" style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted); text-align: center; line-height: 1.5;">
                             Отправляя заполненную форму вы соглашаетесь на <a href="policy.html" target="_blank" style="color: var(--primary-orange); text-decoration: underline;">обработку персональных данных</a> согласно Федерального закона от 27.07.2006 N 152-ФЗ<br>(ред. от 08.08.2024) "О персональных данных"
                         </p>
