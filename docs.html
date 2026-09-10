@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- СЕО ОПТИМИЗАЦИЯ -->
     <title>Документация, инструкции и паспорта на системы ЧПУ TITANIUM | ТД НЭТ</title>
     <meta name="description" content="Официальная документация, руководства по технологическому программированию, инструкции оператора и паспорта качества на системы ЧПУ CNC-8 и CNC-11 от ТД НЭТ.">
     <meta name="robots" content="index, follow">
@@ -46,6 +45,18 @@
       ]
     }
     </script>
+
+    <style>
+        /* Стили выпадающего меню */
+        .nav-dropdown { position: relative; display: flex; align-items: center; padding: 15px 0; cursor: pointer; }
+        .nav-dropdown::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 15px; } 
+        .dropdown-content { display: none; position: absolute; background-color: #1a1d21; min-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); z-index: 200; border-radius: 6px; top: 100%; left: 0; border: 1px solid var(--primary-orange); overflow: hidden; }
+        .dropdown-content a { color: var(--text-light); padding: 14px 20px; text-decoration: none; display: block; font-size: 0.85rem; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; line-height: 1.4; text-transform: none; letter-spacing: normal; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: var(--primary-orange); color: #ffffff; padding-left: 25px; }
+        .nav-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
@@ -57,7 +68,14 @@
             </a>
             <div style="display: flex; align-items: center;">
                 <nav class="header-nav">
-                    <a href="docs.html" class="nav-link">Документация</a>
+                    <div class="nav-dropdown">
+                        <span class="nav-link" style="display: flex; align-items: center; gap: 6px;">Документация <span style="font-size: 0.6rem;">▼</span></span>
+                        <div class="dropdown-content">
+                            <a href="policy.html">Политика в отношении персональных данных</a>
+                            <a href="oferta.html">Оферта и политика конфиденциальности</a>
+                            <a href="docs.html">Документация</a>
+                        </div>
+                    </div>
                     <a href="partner.html" class="nav-link">Партнерская программа</a>
                 </nav>
                 <div class="header-buttons">
@@ -81,7 +99,6 @@
         <section class="docs-list-section">
             <div class="container">
 
-                <!-- КАТЕГОРИЯ: ОБЩИЕ ДОКУМЕНТЫ -->
                 <div class="docs-category" style="margin-bottom: 80px;">
                     <h2 style="border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 30px;">Общая документация</h2>
                     <div class="docs-grid">
@@ -98,7 +115,6 @@
                     </div>
                 </div>
 
-                <!-- КАТЕГОРИЯ: CNC-8 -->
                 <div class="docs-category" style="margin-bottom: 80px;">
                     <h2 style="border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 30px;">CNC-8</h2>
                     <div class="docs-grid">
@@ -125,7 +141,6 @@
                     </div>
                 </div>
 
-                <!-- КАТЕГОРИЯ: CNC-11 -->
                 <div class="docs-category" style="margin-bottom: 80px;">
                     <h2 style="border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 30px;">CNC-11</h2>
                     <div class="docs-grid">
@@ -152,7 +167,6 @@
                     </div>
                 </div>
 
-                <!-- КАТЕГОРИЯ: ДАТЧИКИ -->
                 <div class="docs-category" style="margin-bottom: 80px;">
                     <h2 style="border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 30px;">Датчики</h2>
                     <div class="docs-grid">
@@ -164,7 +178,6 @@
                     </div>
                 </div>
 
-                <!-- КАТЕГОРИЯ: ПРОЧЕЕ -->
                 <div class="docs-category" style="margin-bottom: 40px;">
                     <h2 style="border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 30px;">Прочее</h2>
                     <div class="docs-grid">
