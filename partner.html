@@ -45,6 +45,18 @@
       ]
     }
     </script>
+
+    <style>
+        /* Стили выпадающего меню */
+        .nav-dropdown { position: relative; display: flex; align-items: center; padding: 15px 0; cursor: pointer; }
+        .nav-dropdown::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 15px; } 
+        .dropdown-content { display: none; position: absolute; background-color: #1a1d21; min-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); z-index: 200; border-radius: 6px; top: 100%; left: 0; border: 1px solid var(--primary-orange); overflow: hidden; }
+        .dropdown-content a { color: var(--text-light); padding: 14px 20px; text-decoration: none; display: block; font-size: 0.85rem; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; line-height: 1.4; text-transform: none; letter-spacing: normal; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: var(--primary-orange); color: #ffffff; padding-left: 25px; }
+        .nav-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
@@ -57,7 +69,14 @@
             
             <div style="display: flex; align-items: center;">
                 <nav class="header-nav">
-                    <a href="docs.html" class="nav-link">Документация</a>
+                    <div class="nav-dropdown">
+                        <span class="nav-link" style="display: flex; align-items: center; gap: 6px;">Документация <span style="font-size: 0.6rem;">▼</span></span>
+                        <div class="dropdown-content">
+                            <a href="policy.html">Политика в отношении персональных данных</a>
+                            <a href="oferta.html">Оферта и политика конфиденциальности</a>
+                            <a href="docs.html">Документация</a>
+                        </div>
+                    </div>
                     <a href="partner.html" class="nav-link">Партнерская программа</a>
                 </nav>
                 <div class="header-buttons">
@@ -87,7 +106,6 @@
                 <div class="benefits-grid">
                     <div class="benefit-item">
                         <div class="benefit-icon">
-                            <!-- Иконка "Поток заказов" -->
                             <svg viewBox="0 0 24 24"><path d="M9 21h6"></path><path d="M12 21v-4"></path><path d="M10.5 17h3c1.5 0 3-1.5 3-3V9c0-2.5-2-4.5-4.5-4.5S7.5 6.5 7.5 9v5c0 1.5 1.5 3 3 3z"></path></svg>
                         </div>
                         <div class="benefit-text">
@@ -97,7 +115,6 @@
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">
-                            <!-- Иконка "Специальные цены" -->
                             <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                         </div>
                         <div class="benefit-text">
