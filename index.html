@@ -66,7 +66,6 @@
     </script>
 
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -94,7 +93,6 @@
                     <a href="tel:+79185582299" class="btn">Связаться с нами</a>
                 </div>
             </div>
-            
         </div>
     </header>
 
@@ -295,7 +293,6 @@
                         <p>Разработка проектов конструкторским отделом строго по техническому заданию заказчика.</p>
                     </div>
                     
-                    <!-- ССЫЛКА ИЗМЕНЕНА С partner.html НА #partner-block -->
                     <a href="#partner-block" class="service-item special-partner anim-element">
                         <h3>ОТДАЕМ СВОИ ЗАКАЗЫ ПО МОДЕРНИЗАЦИИ<br>НАШИМ ПАРТНЕРАМ</h3>
                         <p>К нам регулярно обращаются компании большого, среднего и малого сегментов бизнеса. И мы передаем их своим партнерам. Кликните на блок, чтобы узнать как стать нашим партнером.</p>
@@ -409,6 +406,18 @@
                             <a href="tel:+79185802194">+7 918 580 21 94</a>
                             <span>Татьяна (Менеджер Отдела продаж)</span>
                         </div>
+                        <div>
+                            <a href="tel:+79185055137">+7 918 505 51 37</a>
+                            <span>Владислав (Отдел маркетинга)</span>
+                        </div>
+                        <div>
+                            <a href="tel:+79185519128">+7 918 551 91 28</a>
+                            <span>Марина (Отдел снабжения)</span>
+                        </div>
+                        <div>
+                            <a href="tel:+79185802217">+7 918 580 22 17</a>
+                            <span>Техническая поддержка</span>
+                        </div>
                     </div>
                 </div>
 
@@ -428,7 +437,6 @@
                 </div>
 
             </div>
-
             <p class="anim-element">ООО «Торговый Дом Новые Электронные Технологии»</p>
             <p class="anim-element" style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
         </div>
@@ -444,22 +452,18 @@
             if (consultForm) {
                 consultForm.addEventListener('submit', function(e) {
                     e.preventDefault(); 
-
                     const spamAnswer = consultSpam.value.trim().toLowerCase();
-                    
                     if (spamAnswer !== '7' && spamAnswer !== 'семь') {
                         consultError.style.display = 'block';
                         consultSpam.style.borderColor = '#ff4d4d';
                         return; 
                     }
-
                     consultError.style.display = 'none';
                     consultSpam.style.borderColor = 'rgba(255,255,255,0.1)';
 
                     const originalBtnText = submitBtn.innerText;
                     submitBtn.innerText = 'Отправка...';
                     submitBtn.disabled = true;
-
                     const formData = new FormData(consultForm);
 
                     fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
@@ -492,14 +496,9 @@
             const modelGrid = document.querySelector('.model-grid');
             const modelSection = document.getElementById('model-section-wrapper');
             
-            let currentIndex = 0;
-            let autoSwitchTimer;
-            let interactionTimeout;
-            let isHoverLocked = false;
-            let hoverLockTimeout;
-            let isDragging = false; 
-            let isSectionInView = false; 
-            let isRendering = false;
+            let currentIndex = 0; let autoSwitchTimer; let interactionTimeout;
+            let isHoverLocked = false; let hoverLockTimeout; let isDragging = false; 
+            let isSectionInView = false; let isRendering = false;
 
             function startAutoSwitch() {
                 clearInterval(autoSwitchTimer);
@@ -579,7 +578,6 @@
                 }
             }
             updateContainerPosition(currentIndex);
-
             window.addEventListener('resize', () => { updateContainerPosition(currentIndex); });
 
             requestAnimationFrame(() => {
@@ -644,10 +642,8 @@
                 switchTimeout = setTimeout(() => {
                     modelViewer.classList.add('snap-top');
                     modelViewer.classList.remove('slide-down');
-                    
                     modelViewer.src = modelsArray[index];
                     void modelViewer.offsetWidth;
-
                     modelViewer.classList.remove('snap-top');
                 }, 500); 
             }
@@ -660,7 +656,6 @@
 
             wrappers.forEach((wrapper) => {
                 const firstTabIdx = parseInt(wrapper.querySelector('.sub-tab').getAttribute('data-index'));
-
                 wrapper.addEventListener('mouseenter', () => {
                     if (window.innerWidth > 992 && !isHoverLocked) {
                         const activeInside = wrapper.querySelector('.sub-tab.active');
@@ -669,7 +664,6 @@
                         lockHover(); 
                     }
                 });
-                
                 wrapper.addEventListener('click', (e) => {
                     if (e.target.classList.contains('sub-tab')) return;
                     const activeInside = wrapper.querySelector('.sub-tab.active');
@@ -710,9 +704,7 @@
             });
 
             let currentX = 0; let currentY = 0; let targetX = 0; let targetY = 0;
-            let autoDir = 1; let isHovering = false;
-            let cursorIdleTimer;
-            let isCursorIdle = false;
+            let autoDir = 1; let isHovering = false; let cursorIdleTimer; let isCursorIdle = false;
 
             function handleMouseMove(e) {
                 isHovering = true;
@@ -756,14 +748,8 @@
                     modelViewer.cameraOrbit = `${currentX * 35}deg ${80 + currentY * 20}deg auto`;
                 } else {
                     currentX += 0.004 * autoDir; 
-                    
-                    if (currentX >= 1) { 
-                        currentX = 1; 
-                        autoDir = -1; 
-                    } else if (currentX <= -1) { 
-                        currentX = -1; 
-                        autoDir = 1; 
-                    }
+                    if (currentX >= 1) { currentX = 1; autoDir = -1; } 
+                    else if (currentX <= -1) { currentX = -1; autoDir = 1; }
                     
                     targetY = 0;
                     currentY += (targetY - currentY) * 0.05;
