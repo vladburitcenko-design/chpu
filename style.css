@@ -57,14 +57,15 @@ header { background-color: #1a1d21; color: var(--text-light); position: sticky; 
     display: none; 
     position: absolute; 
     background-color: #1a1d21; 
-    min-width: 320px; 
+    width: 360px; /* Фиксируем ширину для выравнивания */
     box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
     z-index: 200; 
     border-radius: 6px; 
     top: 100%; 
     left: 0; 
     border: 1px solid var(--primary-orange); 
-    overflow: hidden; 
+    overflow: hidden; /* Скрывает углы слайдера за границами блока */
+    flex-direction: column; /* Делаем меню flex-контейнером */
 }
 
 /* Плавающий полупрозрачный фон (индикатор-слайдер) */
@@ -73,20 +74,20 @@ header { background-color: #1a1d21; color: var(--text-light); position: sticky; 
     position: absolute;
     left: 0;
     width: 100%;
-    height: 33.334%; /* Занимает ровно треть меню */
-    background-color: rgba(255, 107, 0, 0.25); /* Легкая прозрачная заливка */
-    border-left: 4px solid var(--primary-orange); /* Акцентная линия слева */
-    top: -33.334%; /* По умолчанию спрятан сверху */
+    height: calc(100% / 3); /* Идеально ровная 1/3 высоты */
+    background-color: rgba(255, 107, 0, 0.25);
+    border-left: 4px solid var(--primary-orange);
+    top: calc(-100% / 3);
     transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
     opacity: 0;
     pointer-events: none;
     z-index: 0;
 }
 
-/* Динамические позиции слайдера в зависимости от того, на какую ссылку наведен курсор */
+/* Динамические позиции слайдера */
 .dropdown-content:has(a:nth-child(1):hover)::before { top: 0; opacity: 1; }
-.dropdown-content:has(a:nth-child(2):hover)::before { top: 33.333%; opacity: 1; }
-.dropdown-content:has(a:nth-child(3):hover)::before { top: 66.666%; opacity: 1; }
+.dropdown-content:has(a:nth-child(2):hover)::before { top: calc(100% / 3); opacity: 1; }
+.dropdown-content:has(a:nth-child(3):hover)::before { top: calc((100% / 3) * 2); opacity: 1; }
 
 .dropdown-content a { 
     position: relative;
@@ -94,11 +95,13 @@ header { background-color: #1a1d21; color: var(--text-light); position: sticky; 
     color: var(--text-light); 
     padding: 14px 20px; 
     text-decoration: none; 
-    display: block; 
+    display: flex; 
+    align-items: center; /* Центрируем текст по вертикали */
+    flex: 1 1 0; /* Заставляем все ссылки быть идеально одинаковой высоты */
     font-size: 0.85rem; 
     font-weight: 600; 
     border-bottom: 1px solid rgba(255,255,255,0.05); 
-    transition: all 0.3s ease; 
+    transition: padding-left 0.3s ease, color 0.3s ease; 
     line-height: 1.4; 
     text-transform: none; 
     letter-spacing: normal; 
@@ -111,12 +114,12 @@ header { background-color: #1a1d21; color: var(--text-light); position: sticky; 
     padding-left: 25px; 
 }
 
-/* Fallback для старых браузеров (если не поддерживается :has) */
+/* Fallback для старых браузеров */
 @supports not selector(:has(*)) {
     .dropdown-content a:hover { background-color: rgba(255, 107, 0, 0.35); border-left: 4px solid var(--primary-orange); padding-left: 21px; }
 }
 
-.nav-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
+.nav-dropdown:hover .dropdown-content { display: flex; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ==========================================================================
