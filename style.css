@@ -49,7 +49,7 @@ header { background-color: #1a1d21; color: var(--text-light); position: sticky; 
 .nav-link:hover { color: var(--primary-orange); }
 .header-buttons { display: flex; align-items: center; gap: 10px; }
 
-/* DROPDOWN MENU (ОРИГИНАЛЬНЫЙ ВАРИАНТ) */
+/* DROPDOWN MENU */
 .nav-dropdown { position: relative; display: flex; align-items: center; padding: 15px 0; cursor: pointer; }
 .nav-dropdown::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 15px; } 
 .dropdown-content { display: none; position: absolute; background-color: #1a1d21; min-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); z-index: 200; border-radius: 6px; top: 100%; left: 0; border: 1px solid var(--primary-orange); overflow: hidden; }
@@ -206,9 +206,11 @@ model-viewer.snap-top { transition: none !important; transform: translate3d(0, -
 footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
 .footer-grid { display: flex; justify-content: center; align-items: center; gap: 50px; margin-bottom: 40px; flex-wrap: wrap; }
 .footer-contacts { text-align: left; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 50px; }
-.footer-mail { display: block; font-family: 'Benzin', sans-serif; color: var(--primary-orange); font-size: 1.2rem; text-decoration: none; margin-bottom: 15px; transition: color 0.3s;}
+.footer-mail { display: block; font-family: 'Benzin', sans-serif; color: var(--primary-orange); font-size: 1.2rem; text-decoration: none; margin-bottom: 20px; transition: color 0.3s;}
 .footer-mail:hover { color: #fff; }
-.footer-phones { display: flex; flex-direction: column; gap: 12px; }
+
+/* Две колонки для телефонов */
+.footer-phones { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 40px; }
 .footer-phones div { display: flex; flex-direction: column; }
 .footer-phones a { color: #fff; text-decoration: none; font-size: 1.15rem; font-weight: 700; font-family: 'Benzin', sans-serif; transition: color 0.3s;}
 .footer-phones a:hover { color: var(--primary-orange); }
@@ -349,7 +351,10 @@ footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; 
     
     .footer-grid { flex-direction: column; gap: 30px; }
     .footer-contacts { border-right: none; padding-right: 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; width: 100%; }
-    .footer-phones { align-items: center; }
+    
+    /* Для мобильных возвращаем телефоны в 1 колонку по центру */
+    .footer-phones { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 12px; }
+    
     .footer-social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; }
     .social-card { flex: 1 1 calc(50% - 10px); padding: 8px 10px; gap: 8px; justify-content: center; }
     .social-card .icon-box { font-size: 0.9rem; width: 20px; }
