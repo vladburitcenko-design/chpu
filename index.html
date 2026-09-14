@@ -266,7 +266,7 @@
             </div>
         </section>
 
-        <!-- НОВЫЙ РАЗДЕЛ С ВИДЕО И ИНТЕРАКТИВНОЙ МОДЕЛЬЮ ЧПУ -->
+        <!-- ОБНОВЛЕННЫЙ РАЗДЕЛ С ВИДЕО И ЧПУ-11 TITANIUM -->
         <section class="video-promo-section" id="videoPromo" itemscope itemtype="https://schema.org/WebPageElement">
             <div class="video-glow left"></div>
             <div class="video-glow right"></div>
@@ -275,9 +275,10 @@
                 <h2 class="promo-title">РАСКРОЙТЕ ВЕСЬ ПОТЕНЦИАЛ НАШИХ ЧПУ С ВИДЕОМАТЕРИАЛАМИ ОТ НАШИХ СПЕЦИАЛИСТОВ</h2>
                 
                 <div class="promo-model-wrapper">
+                    <!-- Заменили src на чпу.glb (CNC-11 TITANIUM) -->
                     <model-viewer 
                         id="promoPromoModel" 
-                        src="titanium monitor 3d model.glb" 
+                        src="чпу.glb" 
                         poster="image_c63bc3.png" 
                         loading="lazy" 
                         disable-zoom 
@@ -425,7 +426,6 @@
                 </div>
 
             </div>
-
             <p class="anim-element">ООО «Торговый Дом Новые Электронные Технологии»</p>
             <p class="anim-element" style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
         </div>
@@ -433,6 +433,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Принудительная очистка якоря при загрузке (чтобы сайт всегда открывался сверху)
+            if (window.location.hash) {
+                setTimeout(() => { window.scrollTo(0, 0); }, 1);
+            }
+
             const consultForm = document.getElementById('consultationForm');
             const consultSpam = document.getElementById('consultSpam');
             const consultError = document.getElementById('consultError');
@@ -441,22 +446,18 @@
             if (consultForm) {
                 consultForm.addEventListener('submit', function(e) {
                     e.preventDefault(); 
-
                     const spamAnswer = consultSpam.value.trim().toLowerCase();
-                    
                     if (spamAnswer !== '7' && spamAnswer !== 'семь') {
                         consultError.style.display = 'block';
                         consultSpam.style.borderColor = '#ff4d4d';
                         return; 
                     }
-
                     consultError.style.display = 'none';
                     consultSpam.style.borderColor = 'rgba(255,255,255,0.1)';
 
                     const originalBtnText = submitBtn.innerText;
                     submitBtn.innerText = 'Отправка...';
                     submitBtn.disabled = true;
-
                     const formData = new FormData(consultForm);
 
                     fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
@@ -584,7 +585,6 @@
                         });
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
-                    // ДОБАВИЛИ .video-promo-section В МАССИВ АНИМАЦИЙ
                     const sectionsToAnimate = document.querySelectorAll(
                         '.hero-section, .model-section, .service-section, .video-promo-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, footer'
                     );
@@ -761,7 +761,6 @@
             if (promoSection && promoModel) {
                 let isPromoInView = false;
                 
-                // Используем IntersectionObserver, чтобы модель реагировала только когда её видно
                 const promoObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         isPromoInView = entry.isIntersecting;
@@ -772,20 +771,16 @@
                 promoSection.addEventListener('mousemove', (e) => {
                     if (!isPromoInView) return;
                     const rect = promoSection.getBoundingClientRect();
-                    // Вычисляем позицию мыши от центра (-1 до 1)
                     const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
                     const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
                     
-                    // Максимальный угол поворота (35 градусов в обе стороны = 70 градусов)
                     const theta = x * 35;
-                    // Небольшой наклон вверх/вниз для эффекта объема
                     const phi = 90 + (y * 10);
                     
                     promoModel.cameraOrbit = `${theta}deg ${phi}deg auto`;
                 });
                 
                 promoSection.addEventListener('mouseleave', () => {
-                    // Плавно возвращаем в центр
                     promoModel.cameraOrbit = `0deg 90deg auto`;
                 });
             }
