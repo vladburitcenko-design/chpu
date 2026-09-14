@@ -17,10 +17,6 @@
     <meta property="og:site_name" content="ТД НЭТ">
     <meta property="og:locale" content="ru_RU">
     
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ТД НЭТ | Системы ЧПУ и комплектующие">
-    <meta name="twitter:description" content="Российский производитель систем числового программного управления TITANIUM. Модернизация станков, гарантия 2 года.">
-
     <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
     <link rel="preload" href="чпу.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="industrial control panel 3d model.glb" as="fetch" crossorigin="anonymous">
@@ -28,42 +24,6 @@
     <link rel="preload" href="model.glb" as="fetch" crossorigin="anonymous">
     <link rel="preload" href="image_c63bc3.png" as="image">
     <link rel="preload" href="Benzin-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "ООО «Торговый Дом Новые Электронные Технологии»",
-      "alternateName": "ТД НЭТ",
-      "url": "https://chpu.net/",
-      "logo": "https://chpu.net/logo.png",
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+7-918-558-22-99",
-          "contactType": "sales",
-          "contactOption": "TollFree",
-          "areaServed": "RU",
-          "availableLanguage": "Russian"
-        },
-        {
-          "@type": "ContactPoint",
-          "telephone": "+7-918-580-21-94",
-          "contactType": "sales",
-          "areaServed": "RU",
-          "availableLanguage": "Russian"
-        }
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Промышленная улица, 2",
-        "addressLocality": "Азов",
-        "addressRegion": "Ростовская область",
-        "postalCode": "346780",
-        "addressCountry": "RU"
-      }
-    }
-    </script>
 
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -306,6 +266,34 @@
             </div>
         </section>
 
+        <!-- НОВЫЙ РАЗДЕЛ С ВИДЕО И ИНТЕРАКТИВНОЙ МОДЕЛЬЮ ЧПУ -->
+        <section class="video-promo-section" id="videoPromo" itemscope itemtype="https://schema.org/WebPageElement">
+            <div class="video-glow left"></div>
+            <div class="video-glow right"></div>
+            
+            <div class="container video-promo-content">
+                <h2 class="promo-title">РАСКРОЙТЕ ВЕСЬ ПОТЕНЦИАЛ НАШИХ ЧПУ С ВИДЕОМАТЕРИАЛАМИ ОТ НАШИХ СПЕЦИАЛИСТОВ</h2>
+                
+                <div class="promo-model-wrapper">
+                    <model-viewer 
+                        id="promoPromoModel" 
+                        src="titanium monitor 3d model.glb" 
+                        poster="image_c63bc3.png" 
+                        loading="lazy" 
+                        disable-zoom 
+                        disable-pan 
+                        interaction-prompt="none" 
+                        camera-controls="false" 
+                        camera-orbit="0deg 90deg auto">
+                    </model-viewer>
+                </div>
+                
+                <div class="promo-btn-wrapper">
+                    <a href="video.html" class="btn">Перейти к видеоматериалам</a>
+                </div>
+            </div>
+        </section>
+
         <section class="warranty-section">
             <div class="container warranty-wrapper">
                 
@@ -391,7 +379,7 @@
         </section>
     </main>
 
-  <footer>
+    <footer>
         <div class="container">
             <div class="footer-grid">
                 
@@ -437,10 +425,12 @@
                 </div>
 
             </div>
+
             <p class="anim-element">ООО «Торговый Дом Новые Электронные Технологии»</p>
             <p class="anim-element" style="margin-top: 10px;">&copy; 2007-2026 Все права защищены. ИНН 6140009967</p>
         </div>
-    </footer> 
+    </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const consultForm = document.getElementById('consultationForm');
@@ -451,18 +441,22 @@
             if (consultForm) {
                 consultForm.addEventListener('submit', function(e) {
                     e.preventDefault(); 
+
                     const spamAnswer = consultSpam.value.trim().toLowerCase();
+                    
                     if (spamAnswer !== '7' && spamAnswer !== 'семь') {
                         consultError.style.display = 'block';
                         consultSpam.style.borderColor = '#ff4d4d';
                         return; 
                     }
+
                     consultError.style.display = 'none';
                     consultSpam.style.borderColor = 'rgba(255,255,255,0.1)';
 
                     const originalBtnText = submitBtn.innerText;
                     submitBtn.innerText = 'Отправка...';
                     submitBtn.disabled = true;
+
                     const formData = new FormData(consultForm);
 
                     fetch("https://formsubmit.co/ajax/elektronika-net@mail.ru", {
@@ -590,8 +584,9 @@
                         });
                     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
 
+                    // ДОБАВИЛИ .video-promo-section В МАССИВ АНИМАЦИЙ
                     const sectionsToAnimate = document.querySelectorAll(
-                        '.hero-section, .model-section, .service-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, footer'
+                        '.hero-section, .model-section, .service-section, .video-promo-section, .warranty-section, .partner-cta-section, .delivery-section, .cta-section, footer'
                     );
                     sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
 
@@ -757,6 +752,42 @@
                     targetX = currentX; 
                 }
                 requestAnimationFrame(renderLoop);
+            }
+
+            // ЛОГИКА ДЛЯ ИНТЕРАКТИВНОГО СЕКЦИИ С ВИДЕО
+            const promoSection = document.getElementById('videoPromo');
+            const promoModel = document.getElementById('promoPromoModel'); 
+            
+            if (promoSection && promoModel) {
+                let isPromoInView = false;
+                
+                // Используем IntersectionObserver, чтобы модель реагировала только когда её видно
+                const promoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isPromoInView = entry.isIntersecting;
+                    });
+                }, { threshold: 0 });
+                promoObserver.observe(promoSection);
+
+                promoSection.addEventListener('mousemove', (e) => {
+                    if (!isPromoInView) return;
+                    const rect = promoSection.getBoundingClientRect();
+                    // Вычисляем позицию мыши от центра (-1 до 1)
+                    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                    const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+                    
+                    // Максимальный угол поворота (35 градусов в обе стороны = 70 градусов)
+                    const theta = x * 35;
+                    // Небольшой наклон вверх/вниз для эффекта объема
+                    const phi = 90 + (y * 10);
+                    
+                    promoModel.cameraOrbit = `${theta}deg ${phi}deg auto`;
+                });
+                
+                promoSection.addEventListener('mouseleave', () => {
+                    // Плавно возвращаем в центр
+                    promoModel.cameraOrbit = `0deg 90deg auto`;
+                });
             }
         });
     </script>
