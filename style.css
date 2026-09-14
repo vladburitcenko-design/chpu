@@ -52,11 +52,16 @@ header { background-color: #1a1d21; color: var(--text-light); position: sticky; 
 /* DROPDOWN MENU */
 .nav-dropdown { position: relative; display: flex; align-items: center; padding: 15px 0; cursor: pointer; }
 .nav-dropdown::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 15px; } 
-.dropdown-content { display: none; position: absolute; background-color: #1a1d21; min-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); z-index: 200; border-radius: 6px; top: 100%; left: 0; border: 1px solid var(--primary-orange); overflow: hidden; }
-.dropdown-content a { color: var(--text-light); padding: 14px 20px; text-decoration: none; display: block; font-size: 0.85rem; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; line-height: 1.4; text-transform: none; letter-spacing: normal; }
+.dropdown-content { display: none; position: absolute; background-color: #1a1d21; width: 360px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); z-index: 200; border-radius: 6px; top: 100%; left: 0; border: 1px solid var(--primary-orange); overflow: hidden; flex-direction: column; }
+.dropdown-content::before { content: ''; position: absolute; left: 0; width: 100%; height: calc(100% / 3); background-color: rgba(255, 107, 0, 0.25); border-left: 4px solid var(--primary-orange); top: calc(-100% / 3); transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; opacity: 0; pointer-events: none; z-index: 0; }
+.dropdown-content:has(a:nth-child(1):hover)::before { top: 0; opacity: 1; }
+.dropdown-content:has(a:nth-child(2):hover)::before { top: calc(100% / 3); opacity: 1; }
+.dropdown-content:has(a:nth-child(3):hover)::before { top: calc((100% / 3) * 2); opacity: 1; }
+.dropdown-content a { position: relative; z-index: 1; color: var(--text-light); padding: 14px 20px; text-decoration: none; display: flex; align-items: center; flex: 1 1 0; font-size: 0.85rem; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); transition: padding-left 0.3s ease, color 0.3s ease; line-height: 1.4; text-transform: none; letter-spacing: normal; background-color: transparent; }
 .dropdown-content a:last-child { border-bottom: none; }
-.dropdown-content a:hover { background-color: var(--primary-orange); color: #ffffff; padding-left: 25px; }
-.nav-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
+.dropdown-content a:hover { color: #ffffff; padding-left: 25px; }
+@supports not selector(:has(*)) { .dropdown-content a:hover { background-color: rgba(255, 107, 0, 0.35); border-left: 4px solid var(--primary-orange); padding-left: 21px; } }
+.nav-dropdown:hover .dropdown-content { display: flex; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ==========================================================================
@@ -150,7 +155,7 @@ model-viewer.slide-down { transform: translate3d(0, 100%, 0); opacity: 0; }
 model-viewer.snap-top { transition: none !important; transform: translate3d(0, -100%, 0); opacity: 0; }
 
 /* ==========================================================================
-   SERVICES & WARRANTY (INDEX)
+   SERVICES (INDEX)
    ========================================================================== */
 .service-section { padding: 90px 0; background: var(--bg-grad-alt); border-bottom: 1px solid var(--border-color); }
 .service-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px; }
@@ -176,10 +181,22 @@ model-viewer.snap-top { transition: none !important; transform: translate3d(0, -
 
 .promo-title { font-size: 2.2rem; max-width: 950px; margin: 0 auto 30px auto; line-height: 1.3; opacity: 0; transform: translateY(-40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
 
-.promo-model-wrapper { width: 70%; height: 55vh; min-height: 400px; margin: 0 auto 40px auto; opacity: 0; transform: translateY(100px); transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
-/* Блокируем стандартное вращение мышкой, чтобы работал наш скрипт */
-.promo-model-wrapper model-viewer { width: 100%; height: 100%; background: transparent; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
-.promo-model-wrapper:hover model-viewer { transform: scale(1.08); }
+.promo-model-wrapper { width: 85%; max-width: 1000px; height: 60vh; min-height: 450px; margin: 0 auto 40px auto; opacity: 0; transform: translateY(100px); transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* --- УВЕЛИЧЕНО НА 50% --- */
+.promo-model-wrapper model-viewer { 
+    width: 100%; 
+    height: 100%; 
+    background: transparent; 
+    transform: scale(1.5); /* Базовое увеличение модели на 50% */
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+    pointer-events: none; 
+}
+
+/* Эффект увеличения при наведении мышки на модель */
+.promo-model-wrapper:hover model-viewer { 
+    transform: scale(1.6); /* Плавно становится еще чуть больше */
+}
 
 .promo-btn-wrapper { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
 
@@ -188,6 +205,9 @@ model-viewer.snap-top { transition: none !important; transform: translate3d(0, -
 .video-promo-section.visible .promo-model-wrapper { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
 .video-promo-section.visible .promo-btn-wrapper { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
 
+/* ==========================================================================
+   WARRANTY (INDEX)
+   ========================================================================== */
 .warranty-section { padding: 80px 0; background: transparent; overflow: hidden; }
 .warranty-wrapper { display: flex; flex-direction: column; gap: 0; }
 .warranty-box { background-color: var(--bg-card); padding: 50px 60px; border-radius: 8px; border-left: 6px solid var(--primary-orange); box-shadow: 0 15px 40px rgba(0,0,0,0.35); position: relative; z-index: 3; opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.4s ease, opacity 0.4s ease; will-change: transform, opacity; display: block; }
@@ -316,12 +336,14 @@ footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; 
     .service-grid { grid-template-columns: 1fr; }
     .service-header { flex-direction: column; align-items: flex-start; gap: 20px; }
     
-    .promo-model-wrapper { width: 90%; height: 40vh; }
+    .promo-model-wrapper { width: 95%; height: 45vh; }
+    .promo-model-wrapper model-viewer { transform: scale(1.3); }
+    .promo-model-wrapper:hover model-viewer { transform: scale(1.4); }
     .promo-title { font-size: 1.8rem; }
     .video-glow { width: 300px; height: 300px; bottom: -50px; }
     .video-glow.left { left: -100px; }
     .video-glow.right { right: -100px; }
-    
+
     .partner-hero h1 { font-size: 2.8rem; }
     .benefits-grid { grid-template-columns: 1fr; gap: 30px; }
     .form-section-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -356,7 +378,9 @@ footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; 
     .service-item h3 { font-size: 0.95rem; margin-bottom: 5px; }
     .service-item p { font-size: 0.8rem; }
     
-    .promo-model-wrapper { width: 100%; height: 35vh; }
+    .promo-model-wrapper { width: 100%; height: 40vh; }
+    .promo-model-wrapper model-viewer { transform: scale(1.2); }
+    .promo-model-wrapper:hover model-viewer { transform: scale(1.25); }
     .promo-title { font-size: 1.3rem; }
     
     .warranty-section { padding: 50px 0; }
