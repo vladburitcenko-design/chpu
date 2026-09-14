@@ -164,6 +164,30 @@ model-viewer.snap-top { transition: none !important; transform: translate3d(0, -
 .service-item.special-partner h3 { color: var(--primary-orange); }
 .service-item p { color: var(--text-body); font-size: 0.95rem; }
 
+/* ==========================================================================
+   VIDEO PROMO SECTION (NEW)
+   ========================================================================== */
+.video-promo-section { position: relative; background-color: #060709; padding: 120px 0; overflow: hidden; border-bottom: 1px solid var(--border-color); }
+.video-glow { position: absolute; bottom: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 107, 0, 0.15) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; }
+.video-glow.left { left: -150px; }
+.video-glow.right { right: -150px; }
+
+.video-promo-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+.promo-title { font-size: 2.2rem; max-width: 950px; margin: 0 auto 30px auto; line-height: 1.3; opacity: 0; transform: translateY(-40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.promo-model-wrapper { width: 70%; height: 55vh; min-height: 400px; margin: 0 auto 40px auto; opacity: 0; transform: translateY(100px); transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+/* Блокируем стандартное вращение мышкой, чтобы работал наш скрипт */
+.promo-model-wrapper model-viewer { width: 100%; height: 100%; background: transparent; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
+.promo-model-wrapper:hover model-viewer { transform: scale(1.08); }
+
+.promo-btn-wrapper { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Анимации появления секции при скролле */
+.video-promo-section.visible .promo-title { opacity: 1; transform: translateY(0); }
+.video-promo-section.visible .promo-model-wrapper { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.video-promo-section.visible .promo-btn-wrapper { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+
 .warranty-section { padding: 80px 0; background: transparent; overflow: hidden; }
 .warranty-wrapper { display: flex; flex-direction: column; gap: 0; }
 .warranty-box { background-color: var(--bg-card); padding: 50px 60px; border-radius: 8px; border-left: 6px solid var(--primary-orange); box-shadow: 0 15px 40px rgba(0,0,0,0.35); position: relative; z-index: 3; opacity: 0; transform: translate3d(0, 40px, 0); transition: transform 0.4s ease, opacity 0.4s ease; will-change: transform, opacity; display: block; }
@@ -209,7 +233,6 @@ footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; 
 .footer-mail { display: block; font-family: 'Benzin', sans-serif; color: var(--primary-orange); font-size: 1.2rem; text-decoration: none; margin-bottom: 20px; transition: color 0.3s;}
 .footer-mail:hover { color: #fff; }
 
-/* Две колонки для телефонов */
 .footer-phones { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 40px; }
 .footer-phones div { display: flex; flex-direction: column; }
 .footer-phones a { color: #fff; text-decoration: none; font-size: 1.15rem; font-weight: 700; font-family: 'Benzin', sans-serif; transition: color 0.3s;}
@@ -292,6 +315,13 @@ footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; 
     .model-section.visible .model-box { transform: translate3d(0, 0, 0); }
     .service-grid { grid-template-columns: 1fr; }
     .service-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+    
+    .promo-model-wrapper { width: 90%; height: 40vh; }
+    .promo-title { font-size: 1.8rem; }
+    .video-glow { width: 300px; height: 300px; bottom: -50px; }
+    .video-glow.left { left: -100px; }
+    .video-glow.right { right: -100px; }
+    
     .partner-hero h1 { font-size: 2.8rem; }
     .benefits-grid { grid-template-columns: 1fr; gap: 30px; }
     .form-section-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -326,6 +356,9 @@ footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; 
     .service-item h3 { font-size: 0.95rem; margin-bottom: 5px; }
     .service-item p { font-size: 0.8rem; }
     
+    .promo-model-wrapper { width: 100%; height: 35vh; }
+    .promo-title { font-size: 1.3rem; }
+    
     .warranty-section { padding: 50px 0; }
     .warranty-wrapper { gap: 0; }
     .warranty-box { padding: 25px 20px; text-align: left; display: block;}
@@ -351,10 +384,7 @@ footer { background: #0d0e10; color: var(--text-muted); padding: 60px 0 40px 0; 
     
     .footer-grid { flex-direction: column; gap: 30px; }
     .footer-contacts { border-right: none; padding-right: 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; width: 100%; }
-    
-    /* Для мобильных возвращаем телефоны в 1 колонку по центру */
     .footer-phones { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 12px; }
-    
     .footer-social-links { flex-direction: row; flex-wrap: wrap; gap: 10px; }
     .social-card { flex: 1 1 calc(50% - 10px); padding: 8px 10px; gap: 8px; justify-content: center; }
     .social-card .icon-box { font-size: 0.9rem; width: 20px; }
