@@ -18,7 +18,10 @@
         .video-card { background: #1e2226; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .video-card:hover { transform: translate3d(0, -5px, 0); box-shadow: 0 15px 30px rgba(0,0,0,0.4); border-color: var(--primary-orange); }
         .video-player-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; /* Пропорции 16:9 */ background: #000; }
-        .video-player-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        
+        /* Изменено на contain, чтобы видео не обрезалось и элементы управления плеера были видны полностью */
+        .video-player-wrapper iframe, .video-player-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; object-fit: contain; }
+        
         .video-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
         .video-info h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--text-light); text-transform: none; line-height: 1.4; }
         .video-info p { color: var(--text-body); font-size: 0.95rem; margin-bottom: 0; }
@@ -73,10 +76,23 @@
                 
                 <div class="video-grid">
                     
+                    <!-- ПРЯМАЯ ССЫЛКА НА ФАЙЛ НА ВАШЕМ ХОСТИНГЕ -->
+                    <div class="video-card anim-element">
+                        <div class="video-player-wrapper">
+                            <video controls preload="metadata"> 
+                                <source src="Создание бэкапа и восстановление системы-720p.mp4" type="video/mp4">
+                                Ваш браузер не поддерживает встроенные видео.
+                            </video>
+                        </div>
+                        <div class="video-info">
+                            <h3>Создание резервной копии и восстановление системы TITANIUM</h3>
+                            <p>Подробная инструкция по созданию бэкапа рабочего проекта на служебную USB-флешку и восстановлению системы в случае сбоя. Разобраны все шаги и признаки непривязанной флешки.</p>
+                        </div>
+                    </div>
+
                     <!-- ПРИМЕР БЛОКА С ВИДЕО (ЗАГЛУШКА) -->
                     <div class="video-card anim-element">
                         <div class="video-player-wrapper">
-                            <!-- Сюда позже вставите iframe код с RuTube или YouTube -->
                             <div style="position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#15171a; color:var(--text-muted);">Видео скоро появится</div>
                         </div>
                         <div class="video-info">
@@ -88,7 +104,6 @@
                     <!-- ПРИМЕР БЛОКА С ВИДЕО (ЗАГЛУШКА) -->
                     <div class="video-card anim-element">
                         <div class="video-player-wrapper">
-                            <!-- Сюда позже вставите iframe код с RuTube или YouTube -->
                             <div style="position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#15171a; color:var(--text-muted);">Видео скоро появится</div>
                         </div>
                         <div class="video-info">
