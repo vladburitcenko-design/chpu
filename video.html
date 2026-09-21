@@ -19,7 +19,6 @@
         .video-card:hover { transform: translate3d(0, -5px, 0); box-shadow: 0 15px 30px rgba(0,0,0,0.4); border-color: var(--primary-orange); }
         .video-player-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; /* Пропорции 16:9 */ background: #000; }
         
-        /* Изменено на contain, чтобы видео не обрезалось и элементы управления плеера были видны полностью */
         .video-player-wrapper iframe, .video-player-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; object-fit: contain; }
         
         .video-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
@@ -76,10 +75,9 @@
                 
                 <div class="video-grid">
                     
-                    <!-- ПЕРВОЕ ВИДЕО: БЭКАП -->
+                    <!-- 1. БЭКАП -->
                     <div class="video-card anim-element">
                         <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
                             <video controls preload="metadata"> 
                                 <source src="Создание бэкапа и восстановление системы-720p.mp4" type="video/mp4">
                                 Ваш браузер не поддерживает встроенные видео.
@@ -91,10 +89,9 @@
                         </div>
                     </div>
 
-                    <!-- ВТОРОЕ ВИДЕО: НАСТРОЙКА ПРИВОДА -->
+                    <!-- 2. НАСТРОЙКА ПРИВОДА -->
                     <div class="video-card anim-element">
                         <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
                             <video controls preload="metadata"> 
                                 <source src="Настройка привода SINSEGYU для ЧПУ TITANIUM-720p.mp4" type="video/mp4">
                                 Ваш браузер не поддерживает встроенные видео.
@@ -106,10 +103,9 @@
                         </div>
                     </div>
 
-                    <!-- ТРЕТЬЕ ВИДЕО: ИНСТРУКЦИЯ ОПЕРАТОРА CHEVALIER №1 -->
+                    <!-- 3. CHEVALIER №1 -->
                     <div class="video-card anim-element">
                         <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
                             <video controls preload="metadata"> 
                                 <source src="Инструкция оператора CHEVALIER №1-480p.mp4" type="video/mp4">
                                 Ваш браузер не поддерживает встроенные видео.
@@ -121,10 +117,9 @@
                         </div>
                     </div>
 
-                    <!-- ЧЕТВЕРТОЕ ВИДЕО: ИНСТРУКЦИЯ ОПЕРАТОРА CHEVALIER №2 -->
+                    <!-- 4. CHEVALIER №2 -->
                     <div class="video-card anim-element">
                         <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
                             <video controls preload="metadata"> 
                                 <source src="Инструкция оператора CHEVALIER №2-480p.mp4" type="video/mp4">
                                 Ваш браузер не поддерживает встроенные видео.
@@ -136,10 +131,9 @@
                         </div>
                     </div>
 
-                    <!-- ПЯТОЕ ВИДЕО: РАБОТА ПРИВОДА НА ГРАФИКЕ -->
+                    <!-- 5. ОСЦИЛЛОГРАФ -->
                     <div class="video-card anim-element">
                         <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
                             <video controls preload="metadata"> 
                                 <source src="Работа привода на графике осциллографа ЧПУ TITANIUM-720p.mp4" type="video/mp4">
                                 Ваш браузер не поддерживает встроенные видео.
@@ -150,19 +144,46 @@
                             <p>Видеоинструкция по проверке настройки сервопривода (на примере SINSEGYU) с использованием графиков встроенного в систему ЧПУ TITANIUM осциллографа. Отслеживание заданной и реальной скорости, контроль рассогласования.</p>
                         </div>
                     </div>
-                    
-                     <!-- ШЕСТОЕ ВИДЕО: ИНСТРУКЦИЯ ОПЕРАТОРА CHEVALIER (ПОСЛЕДНЕЕ ДОБАВЛЕННОЕ) -->
+
+                    <!-- 6. СТАНОК 1А740 -->
                     <div class="video-card anim-element">
                         <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
                             <video controls preload="metadata"> 
-                                <source src="Инструкция оператора CHEVALIER №1-480p_2.mp4" type="video/mp4">
+                                <source src="video_3c0c7487666cce0d4f1713e2ebf40a7c_720_20250820103356.mp4" type="video/mp4">
                                 Ваш браузер не поддерживает встроенные видео.
                             </video>
                         </div>
                         <div class="video-info">
-                            <h3>Обзор модернизированного плоскошлифовального станка Chevalier</h3>
-                            <p>Демонстрация работы станка с ЧПУ TITANIUM после модернизации. Замена электроавтоматики, приводов, обзор компоновки электрошкафа и отзыв оператора.</p>
+                            <h3>Обзор токарного станка 1А740 с ЧПУ TITANIUM</h3>
+                            <p>Демонстрация работы станка в реальных производственных условиях (г. Волжский). Обзор гидравлики, приводов подачи, главного двигателя и шкафа управления на реле CNC-8. Оценка точности обработки деталей до 1 микрона.</p>
+                        </div>
+                    </div>
+
+                    <!-- 7. СТАНОК 53D50 CNC-8 -->
+                    <div class="video-card anim-element">
+                        <div class="video-player-wrapper">
+                            <video controls preload="metadata"> 
+                                <source src="video_3c7f64e2fd03b3282f15666dc975db90_720_20250820103213.mp4" type="video/mp4">
+                                Ваш браузер не поддерживает встроенные видео.
+                            </video>
+                        </div>
+                        <div class="video-info">
+                            <h3>Зубофрезерный станок 53D50 под управлением CNC-8 TITANIUM</h3>
+                            <p>Процесс нарезки шестерен и обработка металла. Работа приводов «Инстарт», двигателя АСДД 25 и оптических микронных линеек. Осмотр состояния электронных компонентов шкафа после двух лет непрерывной эксплуатации.</p>
+                        </div>
+                    </div>
+
+                    <!-- 8. СТАНОК 2Е450 -->
+                    <div class="video-card anim-element">
+                        <div class="video-player-wrapper">
+                            <video controls preload="metadata"> 
+                                <source src="video_1d3d02ffb145d6dce779a92276e1f5a2_720_20250820104619.mp4" type="video/mp4">
+                                Ваш браузер не поддерживает встроенные видео.
+                            </video>
+                        </div>
+                        <div class="video-info">
+                            <h3>Координатно-расточной станок 2Е450 с ЧПУ TITANIUM</h3>
+                            <p>Пошаговый обзор интерфейса и базовых операций: запуск, сброс ошибок, вывод осей X, Y, Z в ноль и ручное позиционирование стола. Работа с выносным маховиком (шаг 100, 10, 1 мкм) и автоматический зажим инструмента.</p>
                         </div>
                     </div>
 
