@@ -266,30 +266,19 @@
             </div>
         </section>
 
-        <!-- ОБНОВЛЕННЫЙ РАЗДЕЛ С ВИДЕО И ЧПУ-11 TITANIUM -->
+        <!-- СЕКЦИЯ С ФОНОВЫМ ВИДЕО (ЛЕНИВАЯ ЗАГРУЗКА И ПОЯВЛЕНИЕ НА СЕРЕДИНЕ РОЛИКА) -->
         <section class="video-promo-section" id="videoPromo" itemscope itemtype="https://schema.org/WebPageElement">
-            <div class="video-glow left"></div>
-            <div class="video-glow right"></div>
-            
+            <video id="promoVideo" class="bg-promo-video" muted playsinline loop preload="none">
+                <!-- Оптимизация: используем data-src, чтобы видео загружалось только при скролле к нему -->
+                <source data-src="gemini_generated_video_4c9b8857.mp4">
+                Ваш браузер не поддерживает встроенное видео.
+            </video>
+            <div class="video-overlay"></div>
+
             <div class="container video-promo-content">
-                <h2 class="promo-title">РАСКРОЙТЕ ВЕСЬ ПОТЕНЦИАЛ НАШИХ ЧПУ С ВИДЕОМАТЕРИАЛАМИ ОТ НАШИХ СПЕЦИАЛИСТОВ</h2>
+                <h2 class="promo-title" id="promoTitle">РАСКРОЙТЕ ВЕСЬ ПОТЕНЦИАЛ НАШИХ ЧПУ С ВИДЕОМАТЕРИАЛАМИ ОТ НАШИХ СПЕЦИАЛИСТОВ</h2>
                 
-                <div class="promo-model-wrapper">
-                    <!-- Заменили src на чпу.glb (CNC-11 TITANIUM) -->
-                    <model-viewer 
-                        id="promoPromoModel" 
-                        src="чпу.glb" 
-                        poster="image_c63bc3.png" 
-                        loading="lazy" 
-                        disable-zoom 
-                        disable-pan 
-                        interaction-prompt="none" 
-                        camera-controls="false" 
-                        camera-orbit="0deg 90deg auto">
-                    </model-viewer>
-                </div>
-                
-                <div class="promo-btn-wrapper">
+                <div class="promo-btn-wrapper" id="promoBtn">
                     <a href="video.html" class="btn">Перейти к видеоматериалам</a>
                 </div>
             </div>
@@ -433,7 +422,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Принудительная очистка якоря при загрузке (чтобы сайт всегда открывался сверху)
             if (window.location.hash) {
                 setTimeout(() => { window.scrollTo(0, 0); }, 1);
             }
@@ -754,34 +742,43 @@
                 requestAnimationFrame(renderLoop);
             }
 
-            // ЛОГИКА ДЛЯ ИНТЕРАКТИВНОГО СЕКЦИИ С ВИДЕО
+            // ЛОГИКА ДЛЯ ФОНОВОГО ВИДЕО (ЛЕНИВАЯ ЗАГРУЗКА И ПОЯВЛЕНИЕ ЭЛЕМЕНТОВ НА СЕРЕДИНЕ РОЛИКА)
             const promoSection = document.getElementById('videoPromo');
-            const promoModel = document.getElementById('promoPromoModel'); 
-            
-            if (promoSection && promoModel) {
-                let isPromoInView = false;
-                
-                const promoObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        isPromoInView = entry.isIntersecting;
-                    });
-                }, { threshold: 0 });
-                promoObserver.observe(promoSection);
+            const promoVideo = document.getElementById('promoVideo');
+            const promoTitle = document.getElementById('promoTitle');
+            const promoBtn = document.getElementById('promoBtn');
 
-                promoSection.addEventListener('mousemove', (e) => {
-                    if (!isPromoInView) return;
-                    const rect = promoSection.getBoundingClientRect();
-                    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-                    const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-                    
-                    const theta = x * 35;
-                    const phi = 90 + (y * 10);
-                    
-                    promoModel.cameraOrbit = `${theta}deg ${phi}deg auto`;
-                });
-                
-                promoSection.addEventListener('mouseleave', () => {
-                    promoModel.cameraOrbit = `0deg 90deg auto`;
+            if (promoVideo && promoSection) {
+                // 1. Ленивая загрузка видео через IntersectionObserver
+                const videoObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const source = promoVideo.querySelector('source');
+                            if (source && source.dataset.src) {
+                                source.src = source.dataset.src;     // Подменяем ссылку
+                                promoVideo.load();                   // Загружаем видео
+                                promoVideo.play().catch(e => console.log("Autoplay prevented:", e)); // Запускаем
+                                source.removeAttribute('data-src');
+                            }
+                            observer.disconnect(); // Перестаем следить после загрузки
+                        }
+                    });
+                }, { rootMargin: "0px 0px 400px 0px" }); // Начинаем грузить за 400px до появления секции
+
+                videoObserver.observe(promoSection);
+
+                // 2. Затемнение и появление текста на середине ролика
+                let shown = false;
+                promoVideo.addEventListener('timeupdate', () => {
+                    if (promoVideo.duration && !shown) {
+                        const halfDuration = promoVideo.duration / 2;
+                        if (promoVideo.currentTime >= halfDuration) {
+                            shown = true;
+                            if (promoTitle) promoTitle.classList.add('show-content');
+                            if (promoBtn) promoBtn.classList.add('show-content');
+                            promoSection.classList.add('darkened');
+                        }
+                    }
                 });
             }
         });
