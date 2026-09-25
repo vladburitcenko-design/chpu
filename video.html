@@ -14,20 +14,170 @@
     
     <style>
         .video-list-section { padding: 60px 0 100px 0; background: var(--bg-card); border-top: 1px solid var(--border-color); }
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; }
+        
+        /* СТИЛИ ПОИСКА */
+        .video-search-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        .video-search-wrapper input {
+            width: 100%;
+            padding: 14px 45px 14px 45px;
+            background: #1e2226;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .video-search-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 15px rgba(255, 107, 0, 0.2);
+        }
+        .video-search-wrapper::before {
+            content: "🔍";
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            opacity: 0.6;
+        }
+        .search-clear-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: none;
+            transition: color 0.2s;
+        }
+        .search-clear-btn:hover {
+            color: var(--text-light);
+        }
+
+        .no-results-message {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            background: #1e2226;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+
+        /* КАТЕГОРИИ И ВКЛАДКИ */
+        .video-categories-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(255,255,255,0.08);
+            padding-bottom: 20px;
+        }
+        .cat-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .cat-btn:hover {
+            background: rgba(255, 107, 0, 0.15);
+            color: var(--text-light);
+            border-color: rgba(255, 107, 0, 0.4);
+        }
+        .cat-btn.active {
+            background: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+        }
+
+        /* СЕТКА ВИДЕО И КАРТОЧКИ */
+        .video-category-group {
+            display: none;
+            margin-bottom: 60px;
+        }
+        .video-category-group.active-group {
+            display: block;
+            animation: fadeInGroup 0.6s ease-out forwards;
+        }
+        .video-category-group.search-active-mode {
+            display: block !important;
+        }
+        @keyframes fadeInGroup {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            color: var(--primary-orange);
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-left: 4px solid var(--primary-orange);
+            padding-left: 12px;
+        }
+
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; }
         .video-card { background: #1e2226; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .video-card:hover { transform: translate3d(0, -5px, 0); box-shadow: 0 15px 30px rgba(0,0,0,0.4); border-color: var(--primary-orange); }
-        .video-player-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; /* Пропорции 16:9 */ background: #000; }
+        .video-player-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
         
-        /* Изменено на contain, чтобы видео не обрезалось и элементы управления плеера были видны полностью */
         .video-player-wrapper iframe, .video-player-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; object-fit: contain; }
         
         .video-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
-        .video-info h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--text-light); text-transform: none; line-height: 1.4; }
-        .video-info p { color: var(--text-body); font-size: 0.95rem; margin-bottom: 0; }
+        .video-info h3 { font-size: 1.15rem; margin-bottom: 10px; color: var(--text-light); text-transform: none; line-height: 1.4; }
+        .video-info p { color: var(--text-body); font-size: 0.9rem; margin-bottom: 0; }
+
+        /* ПЛАВНЫЕ АНИМАЦИИ ПОЯВЛЕНИЯ */
+        .docs-hero-content.anim-element {
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .docs-hero-content.anim-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-card.anim-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.3s ease, 
+                        border-color 0.3s ease;
+        }
+
+        .video-card.anim-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-grid .video-card:nth-child(1) { transition-delay: 0.08s; }
+        .video-grid .video-card:nth-child(2) { transition-delay: 0.16s; }
+        .video-grid .video-card:nth-child(3) { transition-delay: 0.24s; }
+        .video-grid .video-card:nth-child(n+4) { transition-delay: 0.32s; }
         
         @media (max-width: 768px) {
             .video-grid { grid-template-columns: 1fr; }
+            .video-categories-nav { gap: 8px; }
+            .cat-btn { padding: 8px 14px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -62,9 +212,13 @@
     <main>
         <section class="docs-hero">
             <div class="container">
-                <div class="docs-hero-content">
-                    <h1>Видеоматериалы</h1>
-                    <p>В этом разделе мы собрали обучающие видео, технические инструкции и обзоры функций систем ЧПУ TITANIUM от наших ведущих инженеров.</p>
+                <div class="docs-hero-content anim-element">
+                    <h1>Видеоматериалы и инструкции</h1>
+                    <p>База знаний, обучающие видеоролики, настройки приводов и видеоинструкции по обслуживанию систем ЧПУ TITANIUM.</p>
+                    <p style="margin-top: 20px; font-size: 1.05rem; color: var(--text-body);">Не знаете с чего начать? Начните с самых основ вместе с нашей программой обучения.</p>
+                    <div style="margin-top: 25px;">
+                        <a href="titanium_training_program_v3_cert (2).pdf" download class="btn">Скачать программу обучения</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -72,85 +226,304 @@
         <section class="video-list-section">
             <div class="container">
                 
-                <h2 style="border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 40px;">Обучение и обзоры</h2>
-                
-                <div class="video-grid">
-                    
-                    <!-- ПЕРВОЕ ВИДЕО: БЭКАП -->
-                    <div class="video-card anim-element">
-                        <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
-                            <video controls preload="metadata"> 
-                                <source src="Создание бэкапа и восстановление системы-720p.mp4" type="video/mp4">
-                                Ваш браузер не поддерживает встроенные видео.
-                            </video>
-                        </div>
-                        <div class="video-info">
-                            <h3>Создание резервной копии и восстановление системы TITANIUM</h3>
-                            <p>Подробная инструкция по созданию бэкапа рабочего проекта на служебную USB-флешку и восстановлению системы в случае сбоя. Разобраны все шаги и признаки непривязанной флешки.</p>
-                        </div>
-                    </div>
+                <!-- Строка поиска -->
+                <div class="video-search-wrapper">
+                    <input type="text" id="videoSearchInput" placeholder="Поиск" autocomplete="off">
+                    <button class="search-clear-btn" id="clearSearch">&times;</button>
+                </div>
 
-                    <!-- ВТОРОЕ ВИДЕО: НАСТРОЙКА ПРИВОДА -->
-                    <div class="video-card anim-element">
-                        <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
-                            <video controls preload="metadata"> 
-                                <source src="Настройка привода SINSEGYU для ЧПУ TITANIUM-720p.mp4" type="video/mp4">
-                                Ваш браузер не поддерживает встроенные видео.
-                            </video>
-                        </div>
-                        <div class="video-info">
-                            <h3>Настройка привода Science Guide через SV3 Designer</h3>
-                            <p>Пошаговое руководство по отладке и автонастройке сервопривода. Поиск устройства, загрузка конфигурации под конкретный мотор, автотюнинг и разбор кодов ошибок.</p>
-                        </div>
-                    </div>
+                <!-- Навигация по категориям -->
+                <div class="video-categories-nav" id="categoriesNav">
+                    <button class="cat-btn active" data-target="all">Все видео</button>
+                    <button class="cat-btn" data-target="service">Обслуживание и бэкапы</button>
+                    <button class="cat-btn" data-target="drives">Приводы и электроника</button>
+                    <button class="cat-btn" data-target="lathe-milling">Токарные и фрезерные станки</button>
+                    <button class="cat-btn" data-target="grinding-boring">Шлифовальные и расточные станки</button>
+                </div>
 
-                    <!-- ТРЕТЬЕ ВИДЕО: ИНСТРУКЦИЯ ОПЕРАТОРА CHEVALIER №1 -->
-                    <div class="video-card anim-element">
-                        <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
-                            <video controls preload="metadata"> 
-                                <source src="Инструкция оператора CHEVALIER №1-480p.mp4" type="video/mp4">
-                                Ваш браузер не поддерживает встроенные видео.
-                            </video>
-                        </div>
-                        <div class="video-info">
-                            <h3>Инструкция оператора плоскошлифовального станка Chevalier - Часть 1</h3>
-                            <p>Обучающее видео для операторов плоскошлифовальных станков Chevalier с ЧПУ TITANIUM. Описание базовых функций, интерфейса и работы в ручном режиме.</p>
-                        </div>
-                    </div>
+                <!-- Сообщение, если ничего не найдено -->
+                <div class="no-results-message" id="noResultsMessage">
+                    По вашему запросу ничего не найдено. Попробуйте изменить поисковый запрос.
+                </div>
 
-                    <!-- ЧЕТВЕРТОЕ ВИДЕО: ИНСТРУКЦИЯ ОПЕРАТОРА CHEVALIER №2 -->
-                    <div class="video-card anim-element">
-                        <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
-                            <video controls preload="metadata"> 
-                                <source src="Инструкция оператора CHEVALIER №2-480p.mp4" type="video/mp4">
-                                Ваш браузер не поддерживает встроенные видео.
-                            </video>
+                <!-- ГРУППА 1: Обслуживание, бэкапы и системные настройки -->
+                <div class="video-category-group active-group" data-category="service">
+                    <h3 class="category-title">Обслуживание, бэкапы и системные настройки</h3>
+                    <div class="video-grid">
+                        
+                        <!-- Оптимизация: data-src вместо src, preload="none" -->
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="Создание бэкапа и восстановление системы-720p (2).mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Создание резервной копии и восстановление системы TITANIUM</h3>
+                                <p>Инструкция по созданию бэкапа рабочего проекта на служебную USB-флешку и восстановлению системы в случае сбоя.</p>
+                            </div>
                         </div>
-                        <div class="video-info">
-                            <h3>Инструкция оператора плоскошлифовального станка Chevalier - Часть 2</h3>
-                            <p>Продолжение обучающего видео. Настройка автоматических циклов шлифования, правка круга, привязка инструмента и запуск программы обработки.</p>
-                        </div>
-                    </div>
 
-                    <!-- ПЯТОЕ ВИДЕО: РАБОТА ПРИВОДА НА ГРАФИКЕ -->
-                    <div class="video-card anim-element">
-                        <div class="video-player-wrapper">
-                            <!-- ИМЯ ФАЙЛА УКАЗАНО НИЖЕ. ПОЛОЖИТЕ ЕГО В ПАПКУ С САЙТОМ -->
-                            <video controls preload="metadata"> 
-                                <source src="Работа привода на графике осциллографа ЧПУ TITANIUM-720p.mp4" type="video/mp4">
-                                Ваш браузер не поддерживает встроенные видео.
-                            </video>
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_dde22eedc7f82ca806f5befabdfeedba_720_20250820110709.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Демонтаж и установка материнской платы для ЧПУ TITANIUM Lite</h3>
+                                <p>Быстрый демонтаж выносной материнской платы с помощью боковых застежек и ее установка в электрошкаф.</p>
+                            </div>
                         </div>
-                        <div class="video-info">
-                            <h3>Анализ работы сервопривода с помощью встроенного осциллографа</h3>
-                            <p>Видеоинструкция по проверке настройки сервопривода (на примере SINSEGYU) с использованием графиков встроенного в систему ЧПУ TITANIUM осциллографа. Отслеживание заданной и реальной скорости, контроль рассогласования.</p>
-                        </div>
-                    </div>
 
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_3d49a23c3b219bd92a50b16797747da8_720_20250820120338.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Настройка конфигурации модуля входов/выходов EtherCAT</h3>
+                                <p>Сохранение файла конфигурации (`config_io_1.json`) в разделе диагностики и привязка в параметрах системы.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_6d2be59c7559d8ca0644f1e78b266b5e_720_20250820104036_compressed.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Инструкция по загрузке сертификата поддержки</h3>
+                                <p>Порядок перехода в служебный раздел, выбора архива с сертификатом на USB-накопителе и перезапуска сервера.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_e8caf16b60590941ab3084c25e208d92_720_20250820120501.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Установка времени, даты и часового пояса</h3>
+                                <p>Настройка системного времени в панели диагностики ЧПУ TITANIUM.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_ec5e7ea7fd3281930f9ab27656daf420_720_20250820124002.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Демонтаж и установка выносной платы версии Light</h3>
+                                <p>Порядок обслуживания аппаратной части контроллеров TITANIUM Light.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ГРУППА 2: Настройка приводов и электроники -->
+                <div class="video-category-group" data-category="drives">
+                    <h3 class="category-title">Настройка приводов и электроники</h3>
+                    <div class="video-grid">
+                        
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="Настройка привода SINSEGYU для ЧПУ TITANIUM-720p.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Настройка привода Science Guide через SV3 Designer</h3>
+                                <p>Поиск устройства, загрузка конфигурации под мотор, автотюнинг и разбор кодов ошибок.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="Работа привода на графике осциллографа ЧПУ TITANIUM-720p.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Анализ работы сервопривода с помощью осциллографа</h3>
+                                <p>Проверка настройки сервопривода (SINSEGYU) с использованием встроенного осциллографа.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_6dc7111395c904bda0735b57f4ad485f_720_20250820114554_compressed.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Настройка сервоприводов Delta (EtherCAT)</h3>
+                                <p>Сброс приводов Delta до заводских параметров и автоопределение в интерфейсе ЧПУ.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_eff69d55084597a70e785a9715ac5482_720_20250820103918.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Подключение и проверка линейного датчика (ЛИР)</h3>
+                                <p>Индикация на плате при движении штока и контроль координат на экране ЧПУ.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ГРУППА 3: Токарные и фрезерные станки -->
+                <div class="video-category-group" data-category="lathe-milling">
+                    <h3 class="category-title">Токарные и фрезерные станки (Модернизация и обработка)</h3>
+                    <div class="video-grid">
+                        
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_f865226cb222078dc7613b29b76b7d5a_720_20250820110514.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Модернизация токарного станка 1М65 с ЧПУ TITANIUM</h3>
+                                <p>Превращение универсального станка в ЧПУ: ШВП, моторы EtherCAT и револьверная головка.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_3c0c7487666cce0d4f1713e2ebf40a7c_720_20250820103356.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Обзор модернизированного токарного станка 1А740</h3>
+                                <p>Устройство электрошкафа, гидравлики и главных приводов на базе системы TITANIUM.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_dcc30005652f01b2bff8881c1c9155c6_720_20250820121753.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Фрезеровка на ЧПУ и нанесение покрытия WIRON</h3>
+                                <p>Подготовка программы в CAM-системе, фрезеровка и видеоинструкция по нанесению покрытия WIRON.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_dcc30005652f01b2bff8881c1c9155c6_720_20250820121646.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Программирование и контурная обработка детали</h3>
+                                <p>Генерация G-кода в CAM-системе и послойное фрезерование заготовки.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ГРУППА 4: Шлифовальные и расточные станки -->
+                <div class="video-category-group" data-category="grinding-boring">
+                    <h3 class="category-title">Шлифовальные, расточные и специальные станки</h3>
+                    <div class="video-grid">
+                        
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="Инструкция оператора CHEVALIER №1-480p.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Инструкция оператора Chevalier (Часть 1)</h3>
+                                <p>Описание базовых функций, интерфейса и работы в ручном режиме на плоскошлифовальном станке.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="Инструкция оператора CHEVALIER №2-480p.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Инструкция оператора Chevalier (Часть 2)</h3>
+                                <p>Настройка автоматических циклов шлифования, правка круга и привязка инструмента.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_f68cc855fc025369c7eda52f7ade6657_720_20250820102657 (1).mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Настройка серводрайвера HCFA и работа на Chevalier</h3>
+                                <p>Программная настройка серводвигателя и запуск автоматического цикла шлифования.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_3c7f64e2fd03b3282f15666dc975db90_720_20250820103213.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Обзор станка 53Д50 с ЧПУ TITANIUM и отзыв оператора</h3>
+                                <p>Проверка точности оборудования и реальный отзыв спустя два года эксплуатации.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card anim-element">
+                            <div class="video-player-wrapper">
+                                <video controls preload="none"> 
+                                    <source data-src="video_1d3d02ffb145d6dce779a92276e1f5a2_720_20250820104619.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает встроенные видео.
+                                </video>
+                            </div>
+                            <div class="video-info">
+                                <h3>Руководство по пульту станка 2Е450 с ЧПУ TITANIUM</h3>
+                                <p>Вывод осей в ноль, ручной режим с маховиком и зажим инструмента.</p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
@@ -210,17 +583,207 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    const mainObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) { entry.target.classList.add('visible'); } 
-                        });
-                    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }); 
-                    const sectionsToAnimate = document.querySelectorAll('.anim-element');
-                    sectionsToAnimate.forEach(sec => mainObserver.observe(sec));
-                }, 60);
+            
+            // 1. Оптимизация производительности: кэширование поиска при загрузке
+            function getSearchVariants(str) {
+                if (!str) return "";
+                let s = str.toLowerCase().trim();
+
+                s = s.replace(/станк[аиоуые]|станков|станках/g, 'станок stanok stanki');
+                s = s.replace(/привод[аоуые]?|приводы|приводов/g, 'привод приводы privod privody');
+                s = s.replace(/плат[ауые]?|плат/g, 'плата платы плату плат plata');
+                s = s.replace(/настройк[аиуое]|настроек/g, 'настройка настройки настройку nastroika');
+                s = s.replace(/инструкци[яиюе]|инструкций/g, 'инструкция инструкции instruktsiya');
+                s = s.replace(/обзор[ауые]?|обзоров/g, 'обзор обзоры obzor');
+                s = s.replace(/систем[ауые]|систем/g, 'система системы систему систем sistema');
+                s = s.replace(/обработк[аиуое]/g, 'обработка обработки обработку obrabotka');
+                s = s.replace(/детал[ьиея]|деталей/g, 'деталь детали деталей detal');
+                s = s.replace(/\бось\b|\босей\b|\боси\b|\босях\b/g, 'ось оси осей осях os');
+                s = s.replace(/бэкап[ауые]?|бэкапов/g, 'бэкап бэкапы backup bakap');
+                s = s.replace(/фрезеровк[аиуое]|фрезеровки/g, 'фрезеровка фрезеровки frezervka');
+                s = s.replace(/токарн[аяыогоеь]+/g, 'токарный токарные токарного tokarniy');
+                s = s.replace(/шлифовальн[аяыогоеь]+|шлифования/g, 'шлифовальный шлифования');
+
+                const synonyms = {
+                    'stanok': 'станок', 'stanki': 'станки',
+                    'chpu': 'чпу', 'cnc': 'чпу',
+                    'privod': 'привод', 'privody': 'приводы',
+                    'nastroika': 'настройка', 'instruktsiya': 'инструкция',
+                    'backup': 'бэкап', 'bakap': 'бэкап',
+                    'siemens': 'сименс', 'симанс': 'сименс', 'симэнс': 'сименс', 'seymens': 'сименс',
+                    'frezervka': 'фрезеровка', 'tokarniy': 'токарный'
+                };
+
+                for (let [en, ru] of Object.entries(synonyms)) {
+                    s = s.split(en).join(ru);
+                }
+                return s;
+            }
+
+            // Предварительный расчёт поисковых строк для карточек (оптимизация)
+            const allCards = document.querySelectorAll('.video-card');
+            allCards.forEach(card => {
+                const title = card.querySelector('h3').textContent;
+                const desc = card.querySelector('p').textContent;
+                card.dataset.searchString = getSearchVariants(title + ' ' + desc);
             });
+
+            // 2. Логика поиска с Debounce (защита от лишних срабатываний)
+            const searchInput = document.getElementById('videoSearchInput');
+            const clearBtn = document.getElementById('clearSearch');
+            const noResults = document.getElementById('noResultsMessage');
+            const categoryGroups = document.querySelectorAll('.video-category-group');
+            const catButtons = document.querySelectorAll('.cat-btn');
+            const categoriesNav = document.getElementById('categoriesNav');
+
+            function filterVideos() {
+                const query = searchInput.value.trim();
+                if (query.length > 0) {
+                    clearBtn.style.display = 'block';
+                    categoriesNav.style.display = 'none';
+                } else {
+                    clearBtn.style.display = 'none';
+                    categoriesNav.style.display = 'flex';
+                }
+
+                const expandedQuery = getSearchVariants(query);
+                const queryWords = expandedQuery.split(/\s+/).filter(w => w.length > 0);
+
+                let totalVisible = 0;
+
+                categoryGroups.forEach(group => {
+                    group.classList.add('search-active-mode');
+                    let groupVisibleCount = 0;
+                    const cards = group.querySelectorAll('.video-card');
+                    const titleEl = group.querySelector('.category-title');
+
+                    cards.forEach(card => {
+                        const cardText = card.dataset.searchString;
+                        const matches = queryWords.every(word => cardText.includes(word));
+
+                        if (matches || queryWords.length === 0) {
+                            card.style.display = 'flex';
+                            groupVisibleCount++;
+                            totalVisible++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    if (groupVisibleCount === 0 && query.length > 0) {
+                        titleEl.style.display = 'none';
+                    } else {
+                        titleEl.style.display = 'block';
+                    }
+                });
+
+                if (totalVisible === 0 && query.length > 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+
+                if (query.length === 0) {
+                    const activeBtn = document.querySelector('.cat-btn.active');
+                    if (activeBtn) activeBtn.click();
+                }
+            }
+
+            // Функция Debounce
+            function debounce(func, wait) {
+                let timeout;
+                return function(...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), wait);
+                };
+            }
+
+            searchInput.addEventListener('input', debounce(filterVideos, 150));
+            
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.style.display = 'none';
+                categoriesNav.style.display = 'flex';
+                noResults.style.display = 'none';
+                const activeBtn = document.querySelector('.cat-btn.active');
+                if (activeBtn) activeBtn.click();
+            });
+
+            // 3. Вкладки навигации
+            catButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    catButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const target = btn.getAttribute('data-target');
+
+                    categoryGroups.forEach(group => {
+                        group.classList.remove('search-active-mode');
+                        group.querySelector('.category-title').style.display = 'block';
+                        const cards = group.querySelectorAll('.video-card');
+                        cards.forEach(c => c.style.display = 'flex');
+
+                        if (target === 'all' || group.getAttribute('data-category') === target) {
+                            group.classList.add('active-group');
+                        } else {
+                            group.classList.remove('active-group');
+                        }
+                    });
+
+                    checkVisibleElements();
+                });
+            });
+
+            // 4. Оптимизация производительности: Lazy Loading видео и запуск анимаций
+            const observerOptions = {
+                threshold: 0.03,
+                rootMargin: "0px 0px 100px 0px" // Подгружаем чуть заранее
+            };
+
+            const mainObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // Lazy load видео файлов
+                        const video = entry.target.querySelector('video');
+                        if (video) {
+                            const source = video.querySelector('source');
+                            if (source && source.dataset.src) {
+                                source.src = source.dataset.src;
+                                video.load();
+                                source.removeAttribute('data-src');
+                            }
+                        }
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            function checkVisibleElements() {
+                const sectionsToAnimate = document.querySelectorAll('.anim-element:not(.visible)');
+                sectionsToAnimate.forEach(sec => {
+                    mainObserver.observe(sec);
+                    const rect = sec.getBoundingClientRect();
+                    // Защита для элементов, уже попавших в экран при загрузке
+                    if (rect.top < window.innerHeight + 100) {
+                        sec.classList.add('visible');
+                        const video = sec.querySelector('video');
+                        if (video) {
+                            const source = video.querySelector('source');
+                            if (source && source.dataset.src) {
+                                source.src = source.dataset.src;
+                                video.load();
+                                source.removeAttribute('data-src');
+                            }
+                        }
+                        mainObserver.unobserve(sec);
+                    }
+                });
+            }
+
+            checkVisibleElements();
         });
     </script>
 </body>
